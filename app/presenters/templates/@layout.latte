@@ -6,22 +6,79 @@
 
 	<title>{ifset title}{include title|striptags} | {/ifset}Nette Web</title>
 
+
+    <!-- Open Layers -->
+    <script src="{$basePath}/v3.11.2/build/ol.js"></script>
 	<link rel="stylesheet" href="{$basePath}/v3.11.2/css/ol.css" type="text/css">
-    <style>
-      .map {
-        height: 90%;
-        width: 100%;
-      }
-    </style>
-    <script src="{$basePath}/v3.11.2/build/ol.js" type="text/javascript"></script>
+	<script src="{$basePath}/v3.11.2/build/ol.js" type="text/javascript"></script>
+
+
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
+
+    <link href="{$basePath}/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="{$basePath}/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- jQuerry -->
+    <script src="{$basePath}/jquery/dist/jquery.min.js"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="{$basePath}/assets/css/carousel.css" rel="stylesheet">
+    <link href="{$basePath}/assets/css/custom.css" rel="stylesheet">
+    <link href="{$basePath}/assets/fonts/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
 <body>
-	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
-	{include content}
 
+        <div class="navbar-wrapper">
+            <div class="container">
+
+                <nav class="navbar navbar-inverse navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="#">BrNOC</a>
+                        </div>
+                        <div id="navbar" class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav">
+                                <li {ifCurrent Homepage:* }class="active"{/ifCurrent}><a n:href="Homepage:default">Home</a></li>
+                                <li {ifCurrent Map:* }class="active"{/ifCurrent}><a n:href="Map:default">Mapa</a></li>
+                                <li {ifCurrent Homepage:* }class="active"{/ifCurrent}><a n:href="Homepage:">Statistiky</a></li>
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li n:if="$user->loggedIn" class="dropdown {ifCurrent }active{/ifCurrent}">
+                                    <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administrace<span class="caret"></span></a>
+                                </li>
+                                <li n:if="!$user->loggedIn" {ifCurrent }class="active"{/ifCurrent}><a n:href="Homepage:">Administrace</a></li>
+
+                                <li class=""><a href="#" class="navbar-link"><i class="fa fa-facebook-square"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+            </div>
+        </div>
+
+        <div class="">
+        <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+
+            {include content}
+
+        </div>
 	{block scripts}
 	<script src="//nette.github.io/resources/js/netteForms.min.js"></script>
 	{/block}
