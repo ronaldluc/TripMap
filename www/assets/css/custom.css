@@ -23,14 +23,14 @@
 .map {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 90%;
     z-index: 0;
 }
 
 .container-wraper {
     position: absolute;
-    width: 700px;
-    height: 700px;
+    width: 100%;
+    height: 100%;
 }
 
 /* measure CSS */

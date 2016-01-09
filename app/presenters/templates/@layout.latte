@@ -59,10 +59,8 @@
                                 <li {ifCurrent Homepage:* }class="active"{/ifCurrent}><a n:href="Homepage:">Statistiky</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
-                                <li n:if="$user->loggedIn" class="dropdown {ifCurrent }active{/ifCurrent}">
-                                    <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administrace<span class="caret"></span></a>
-                                </li>
-                                <li n:if="!$user->loggedIn" {ifCurrent }class="active"{/ifCurrent}><a n:href="Homepage:">Administrace</a></li>
+                                <li {ifCurrent User:registration }class="active"{/ifCurrent}><a n:href="User:registration">Registrace</a></li>
+                                <li {ifCurrent User:login }class="active"{/ifCurrent}><a n:href="User:login">Přihlásit</a></li>
 
                                 <li class=""><a href="#" class="navbar-link"><i class="fa fa-facebook-square"></i></a></li>
                             </ul>
@@ -73,12 +71,13 @@
             </div>
         </div>
 
-        <div class="">
+        {*n:if="$user->loggedIn"        přihlášení uživatele*}
+
         <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
             {include content}
 
-        </div>
+
 	{block scripts}
 	<script src="//nette.github.io/resources/js/netteForms.min.js"></script>
 	{/block}
