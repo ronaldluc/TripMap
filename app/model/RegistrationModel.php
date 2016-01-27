@@ -6,9 +6,11 @@
 namespace App\Model;
 
 use Nette,
-    Nette\Utils\DateTime;
+    Nette\Security as NS,
+    Nette\Utils\DateTime,
+    Nette\Security\Passwords;
 
-class UserModel
+class RegistrationModel
 {
     private $database;
 
@@ -22,11 +24,11 @@ class UserModel
         $selection = $this->database->table('user');
         $temp = $selection->where('email = ?', $values->email)->fetch();
 
+
         if (!$temp) {
             $this->database->table('user')->insert([
                 'username' => $values->username,
-                'password' => $values->password,
-                'home' => [16.6071, 49.2089],
+                'password' => Passwords::hash($values->password),
                 'email' => $values->email,
                 'joined' => new DateTime(),
             ]);
@@ -40,5 +42,4 @@ class UserModel
 
         return $temp;
     }
-
 }
