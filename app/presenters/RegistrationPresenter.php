@@ -5,19 +5,21 @@
 
 namespace App\Presenters;
 
-use App\Model\UserModel;
-use Nette;
+use Nette,
+    Nette\Application\UI\Form,
+    App\Model\RegistrationModel,
+    Helpers;
 
 
-class UserPresenter extends Nette\Application\UI\Presenter
+class RegistrationPresenter extends Nette\Application\UI\Presenter
 {
-    /** @var RegistrationTalkModel */
-    private $UserModel;
+    /** @var RegistrationModel */
+    private $registrationModel;
 
 
-    public function __construct(UserModel $userModel)
+    public function __construct(RegistrationModel $registrationModel)
     {
-        $this->userModel = $userModel;
+        $this->registrationModel = $registrationModel;
     }
 
     protected function createComponentUserRegistrationForm()
@@ -37,19 +39,19 @@ class UserPresenter extends Nette\Application\UI\Presenter
         $form->addText('email', 'Email')
             ->setRequired()->addRule($form::EMAIL);
 
-        $form->addSubmit('send', 'Registrovat přednášku');
+        $form->addSubmit('send', 'Registrovat se');
 
-        $form->onSuccess[] = array($this, 'registerTalkFormSucceeded');
+        $form->onSuccess[] = array($this, 'registrationFormSucceeded');
 
-        Helpers::bootstrapForm($form);
+    Helpers::bootstrapForm($form);
 
         return $form;
     }
 
 
-    public function userRegistrationFormSucceeded($form, $values)
+    public function registrationFormSucceeded($form, $values)
     {
-        $temp = $this->userModel->createUser($values);
+        $temp = $this->registrationModel->createUser($values);
 
         if ($temp)
         {
