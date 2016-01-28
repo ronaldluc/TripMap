@@ -189,6 +189,9 @@ function addInteraction() {
             measureTooltipElement = null;
             createMeasureTooltip();
             ol.Observable.unByKey(listener);
+            // get polygon coords
+            var geom = evt.target;
+            console.log(JSON.stringify(geom.S));
         }, this);
 }
 
@@ -271,12 +274,13 @@ var formatLength = function(line) {
  * @param { ol.geom.Polygon} polygon
  * @return { string}
  */
+var coordinates;
 var formatArea = function(polygon) {
     var area;
     var sourceProj = map.getView().getProjection();
     var geom = /** @type { ol.geom.Polygon} */(polygon.clone().transform(
         sourceProj, 'EPSG:4326'));
-    var coordinates = geom.getLinearRing(0).getCoordinates();
+    coordinates = geom.getLinearRing(0).getCoordinates();
     area = Math.abs(wgs84Sphere.geodesicArea(coordinates));
     var output;
     if (area > 10000) {
@@ -288,6 +292,8 @@ var formatArea = function(polygon) {
     }
     return output;
 };
+
+$(frm-mapForm-test).val(coordinates);
 
 addInteraction();
 
