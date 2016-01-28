@@ -14,11 +14,28 @@
             <option value="area">Area</option>
         </select>
         <label class="checkbox"><input type="checkbox" id="geodesic"/>use geodesic measures</label>
+        {control mapForm}
     </form>
+
+
 
 </div>
 
-<script src="{$basePath}/assets/js/map.js"></script>
+<script>
+    function newTrip(trip) {
+        $.nette.ajax({
+            type: "POST",
+            url: {link NewTrip!},
+            data: { trip: trip}
+        });
+        console.log(trip); //tady to je v poradku, je tam to co ma
+    }</script>
+
+<script src="{$basePath}/assets/js/map.js">
+
+
+
+</script>
 
 
 

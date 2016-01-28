@@ -192,6 +192,7 @@ function addInteraction() {
             // get polygon coords
             var geom = evt.target;
             console.log(JSON.stringify(geom.S));
+            newTrip(JSON.stringify(geom.S));
         }, this);
 }
 
