@@ -6,11 +6,21 @@
 
 	<title>{ifset title}{include title|striptags} | {/ifset}Nette Web</title>
 
+    <!-- jQuerry -->
+    <script src="{$basePath}/jquery/dist/jquery.min.js"></script>
 
     <!-- Open Layers -->
     <script src="{$basePath}/v3.11.2/build/ol.js"></script>
+    <script src="{$basePath}/v3.11.2/build/ol.js" type="text/javascript"></script>
 	<link rel="stylesheet" href="{$basePath}/v3.11.2/css/ol.css" type="text/css">
-	<script src="{$basePath}/v3.11.2/build/ol.js" type="text/javascript"></script>
+
+    <!-- Nette ajax -->
+    <script src="{$basePath}/assets/js/nette.ajax.js">
+        $(function () {
+            $.nette.init();
+            // And you fly...
+        });
+    </script>
 
 
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
@@ -19,15 +29,6 @@
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="{$basePath}/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- jQuerry -->
-    <script src="{$basePath}/jquery/dist/jquery.min.js"></script>
 
     <!-- Custom styles for this template -->
     <link href="{$basePath}/assets/css/carousel.css" rel="stylesheet">
@@ -77,7 +78,11 @@
 
         </div>
 	{block scripts}
+
+
 	<script src="//nette.github.io/resources/js/netteForms.min.js"></script>
+    <!-- Nette ajax -->
+
 	{/block}
 </body>
 </html>
