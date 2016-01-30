@@ -55,12 +55,13 @@
                         <div id="navbar" class="navbar-collapse collapse">
                             <ul class="nav navbar-nav">
                                 <li {ifCurrent Homepage:* }class="active"{/ifCurrent}><a n:href="Homepage:default">Home</a></li>
-                                <li {ifCurrent Map:* }class="active"{/ifCurrent}><a n:href="Map:default">Mapa</a></li>
-                                <li {ifCurrent Homepage:* }class="active"{/ifCurrent}><a n:href="Homepage:">Statistiky</a></li>
+                                <li n:if="$user->loggedIn" {ifCurrent Map:* }class="active"{/ifCurrent}><a n:href="Map:default">Mapa</a></li>
+                                <li {ifCurrent Statistics:* }class="active"{/ifCurrent}><a n:href="Statistics:">Statistiky</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
-                                <li {ifCurrent Registration: }class="active"{/ifCurrent}><a n:href="Registration:">Registrace</a></li>
-                                <li {ifCurrent Login: }class="active"{/ifCurrent}><a n:href="Login:">Přihlásit</a></li>
+                                <li n:if="!$user->loggedIn" {ifCurrent Registration: }class="active"{/ifCurrent}><a n:href="Registration:">Registrace</a></li>
+                                <li n:if="!$user->loggedIn" {ifCurrent Login: }class="active"{/ifCurrent}><a n:href="Login:">Přihlásit</a></li>
+                                <li n:if="$user->loggedIn" {ifCurrent Login:}class="active"{/ifCurrent}><a n:href="Login:out">Odhlásit</a></li>
 
                                 <li class=""><a href="#" class="navbar-link"><i class="fa fa-facebook-square"></i></a></li>
                             </ul>
@@ -70,8 +71,6 @@
             </div>
         </div>
 
-        {*n:if="$user->loggedIn"        přihlášení uživatele*}
-
         <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
                 {include content}
@@ -79,9 +78,9 @@
         </div>
 	{block scripts}
 
-
+    <!-- Nette forms -->
 	<script src="//nette.github.io/resources/js/netteForms.min.js"></script>
-    <!-- Nette ajax -->
+
 
 	{/block}
 </body>
