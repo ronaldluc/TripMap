@@ -14,20 +14,17 @@ use Nette,
 
 class MapPresenter extends Nette\Application\UI\Presenter
 {
-    /**
-     * @var MapModel @inject
-     */
+    /** @var MapModel @inject*/
     public $mapModel;
 
-    /**
-     * MapPresenter constructor
-     */
+    /** MapPresenter constructor*/
     protected function startUp()
     {
         parent::startup();
         if (!$this->user->isLoggedIn())
         {
-            $this->redirect('Login');
+            $this->flashMessage('Pro přístup k mapám je nutné se přihlásit.', 'danger');
+            $this->redirect('Login:');
         }
     }
 
@@ -59,8 +56,8 @@ class MapPresenter extends Nette\Application\UI\Presenter
 //        dump($polygon);
 
 
-//    public function renderDefault() {
-//        $this->mapModel->addTrip('asdasd', 10);
-//    }
+    public function renderDefault() {
+        $this->template->trips = $this->mapModel->loadTrips($this->user->id);
+    }
 
 }
