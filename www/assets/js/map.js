@@ -8,10 +8,10 @@ var raster = new ol.layer.Tile({
     source: new ol.source.OSM()
 });
 
-var source = new ol.source.Vector();
+var vectorSource = new ol.source.Vector();
 
-var vector = new ol.layer.Vector({
-    source: source,
+var vectorLayer = new ol.layer.Vector({
+    source: vectorSource,
     style: new ol.style.Style({
         fill: new ol.style.Fill({
             color: 'rgba(0, 0, 0, 0.4)'
@@ -107,7 +107,7 @@ var pointerMoveHandler = function(evt) {
 
 
 var map = new ol.Map({
-    layers: [raster, vector],
+    layers: [raster, vectorLayer],
     target: 'map',
     view: new ol.View({
         center: [1849078.596618163,6308254.135275547],
@@ -115,20 +115,20 @@ var map = new ol.Map({
     })
 });
 
+addInteraction();
+
 map.on('pointermove', pointerMoveHandler);
 
 $(map.getViewport()).on('mouseout', function() {
     $(helpTooltipElement).addClass('hidden');
 });
 
-var typeSelect = document.getElementById('type');
-var geodesicCheckbox = document.getElementById('geodesic');
-
 var draw; // global so we can remove it later
 function addInteraction() {
-    var type = (typeSelect.value == 'area' ? 'Polygon' : 'LineString');
+    var type = 'Polygon';
+    console.log(type);
     draw = new ol.interaction.Draw({
-        source: source,
+        source: vectorSource,
         type: /** @type { ol.geom.GeometryType} */ (type),
         style: new ol.style.Style({
             fill: new ol.style.Fill({
@@ -237,10 +237,10 @@ function createMeasureTooltip() {
  * Let user change the geometry type.
  * @param { Event} e Change event.
  */
-typeSelect.onchange = function(e) {
-    map.removeInteraction(draw);
-    addInteraction();
-};
+//typeSelect.onchange = function(e) {
+//    map.removeInteraction(draw);
+//    addInteraction();
+//};
 
 
 /**
@@ -298,6 +298,10 @@ $(frm-mapForm-test).val(coordinates);
 
 addInteraction();
 
+
+/**
+ * Loads trips from DB into map vectorLayer
+ */
 function loadTrips(text) {
     var trip = JSON.parse(text);
     var polygon = new ol.geom.Polygon([trip]);
@@ -307,7 +311,7 @@ function loadTrips(text) {
     var feature = new ol.Feature(polygon);
 
     // Create vector source and the feature to it.
-    source.addFeature(feature);
+    vectorSource.addFeature(feature);
 
 };
 
