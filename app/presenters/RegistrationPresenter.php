@@ -14,7 +14,7 @@ use Nette,
 class RegistrationPresenter extends Nette\Application\UI\Presenter
 {
     /** @var RegistrationModel */
-    private $registrationModel;
+    private $registrationModel; //TODO change to best practise
 
 
     public function __construct(RegistrationModel $registrationModel)

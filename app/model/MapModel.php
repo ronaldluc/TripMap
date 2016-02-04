@@ -19,7 +19,8 @@ class MapModel
         $this->database = $database;
     }
 
-    public function addTrip($trip, $userId) {
+    public function addTrip($trip, $userId)
+    {
         $this->database->table($this->tableName)->insert([
             'user_id' => $userId,
             'name' => 'plainName',
@@ -30,5 +31,13 @@ class MapModel
             'polygon' => $trip,
             'distance' => 16,
         ]);
+    }
+
+    public function loadTrips($id)
+    {
+        $selection = $this->database->table('trip');
+        $trips = $selection->where('user_id = ?', $id)->fetchAll();
+
+        return $trips;
     }
 }

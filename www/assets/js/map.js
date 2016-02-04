@@ -110,8 +110,8 @@ var map = new ol.Map({
     layers: [raster, vector],
     target: 'map',
     view: new ol.View({
-        center: [-11000000, 4600000],
-        zoom: 15
+        center: [1849078.596618163,6308254.135275547],
+        zoom: 13
     })
 });
 
@@ -297,5 +297,18 @@ var formatArea = function(polygon) {
 $(frm-mapForm-test).val(coordinates);
 
 addInteraction();
+
+function loadTrips(text) {
+    var trip = JSON.parse(text);
+    var polygon = new ol.geom.Polygon([trip]);
+    console.log(polygon);
+
+    // Create feature with polygon.
+    var feature = new ol.Feature(polygon);
+
+    // Create vector source and the feature to it.
+    source.addFeature(feature);
+
+};
 
 
