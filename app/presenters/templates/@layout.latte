@@ -13,6 +13,10 @@
     <script src="{$basePath}/v3.11.2/build/ol.js"></script>=
 	<link rel="stylesheet" href="{$basePath}/v3.11.2/css/ol.css" type="text/css">
 
+    <!-- Open Layers search -->
+    <link href="//cdn.jsdelivr.net/openlayers.geocoder/latest/ol3-geocoder.min.css" rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/openlayers.geocoder/latest/ol3-geocoder.js"></script>
+
     <!-- Nette ajax -->
     <script src="{$basePath}/assets/js/nette.ajax.js">
         $(function () {
@@ -55,9 +59,11 @@
                             <ul class="nav navbar-nav">
                                 <li {ifCurrent Homepage:* }class="active"{/ifCurrent}><a n:href="Homepage:default">Home</a></li>
                                 <li n:if="$user->loggedIn" {ifCurrent Map:* }class="active"{/ifCurrent}><a n:href="Map:default">Mapa</a></li>
+                                <li n:if="$user->loggedIn" {ifCurrent Management:* }class="active"{/ifCurrent}><a n:href="Management:default">Správa</a></li>
                                 <li {ifCurrent Statistics:* }class="active"{/ifCurrent}><a n:href="Statistics:">Statistiky</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
+                                <li n:if="$user->loggedIn"><a href="#">Nastavení</a></li>
                                 <li n:if="!$user->loggedIn" {ifCurrent Registration: }class="active"{/ifCurrent}><a n:href="Registration:">Registrace</a></li>
                                 <li n:if="!$user->loggedIn" {ifCurrent Login: }class="active"{/ifCurrent}><a n:href="Login:">Přihlásit</a></li>
                                 <li n:if="$user->loggedIn" {ifCurrent Login:}class="active"{/ifCurrent}><a n:href="Login:out">Odhlásit</a></li>
