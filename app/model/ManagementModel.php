@@ -5,6 +5,7 @@
 
 namespace App\Model;
 
+use Nette;
 
 class ManagementModel
 {

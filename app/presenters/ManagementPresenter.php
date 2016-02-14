@@ -10,12 +10,12 @@ use Nette,
 
 class ManagementPresenter extends Nette\Application\UI\Presenter
 {
-    /** @var ManagementModel @inject*/
-    public $managementModel;
+//    /** @var ManagementModel @inject*/
+//    public $managementModel;
 
     public function renderManagement()
     {
-        $this->template->statistics = $this->statisticsModel->getByUser();
+
     }
 
 }

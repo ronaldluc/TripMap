@@ -316,3 +316,25 @@ function loadTrips(text) {
 };
 
 
+/**
+ * Search engine
+ */
+var geocoder = new Geocoder('nominatim', {
+    provider: 'osm',
+    lang: 'pt-BR', //en-US, fr-FR
+    placeholder: 'Search for ...',
+    limit: 5,
+    keepOpen: true
+});
+map.addControl(geocoder);
+
+geocoder.on('addresschosen', function(evt){
+    var
+        feature = evt.feature,
+        coord = evt.coordinate,
+        address_html = feature.get('address_html')
+        ;
+    content.innerHTML = '<p>'+address_html+'</p>';
+    overlay.setPosition(coord);
+});
+

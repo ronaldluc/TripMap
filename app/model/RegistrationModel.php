@@ -23,9 +23,12 @@ class RegistrationModel
     {
         $selection = $this->database->table('user');
         $temp = $selection->where('email = ?', $values->email)->fetch();
+        $temp2 = $selection->where('username = ?', $values->username)->fetch();
 
+        $check = 0;
+        if ((!$temp)and(!$temp2)) $check = 1;
 
-        if (!$temp) {
+        if ($check) {
             $this->database->table('user')->insert([
                 'username' => $values->username,
                 'password' => Passwords::hash($values->password),
@@ -40,6 +43,6 @@ class RegistrationModel
                 ->setBody("Byl jsi přihlášen jako účastník BrNOCi 2015. \n \nBrNOC tým");*/
         }
 
-        return $temp;
+        return $check;
     }
 }
