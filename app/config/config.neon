@@ -25,3 +25,6 @@ services:
 	- App\Models\MapModel
 	- App\Models\StatisticsModel
 	- App\Models\ManagementModel
+
+extensions:
+    formDateTime: IPub\FormDateTime\DI\FormDateTimeExtension

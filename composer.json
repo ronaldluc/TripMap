@@ -19,7 +19,8 @@
 		"nette/security": "^2.3",
 		"nette/utils": "^2.3",
 		"latte/latte": "^2.3",
-		"tracy/tracy": "^2.3"
+		"tracy/tracy": "^2.3",
+		"ipub/form-datetime": "@dev"
 	},
 	"require-dev": {
 		"nette/tester": "^1.6"

@@ -9,7 +9,8 @@ use App\Models\AuthenticatorModel;
 use Nette,
     Nette\Application\UI\Form,
     Helpers,
-    App\Models\MapModel;
+    App\Models\MapModel,
+    IPub\FormDateTime\DI\FormDateTimeExtension;
 
 
 class MapPresenter extends Nette\Application\UI\Presenter
@@ -42,6 +43,8 @@ class MapPresenter extends Nette\Application\UI\Presenter
 
         $form->addText('text', 'Poznámka')
             ->setRequired();
+
+        $form->addDatePicker('date', 'Začátek:');
 
         $form->addText('lenght', 'Délka trasy');
 
@@ -79,7 +82,8 @@ class MapPresenter extends Nette\Application\UI\Presenter
     {
         $polygon = $this->getHttpRequest()->getPost('trip');
         $id = $this->getHttpRequest()->getPost('id');
-        $this->mapModel->changeTrip($polygon, $id);
+        $modified = Helpers::modifyPolygon($polygon);
+        $this->mapModel->changeTrip($modified, $id);
     }
 
 }
