@@ -1,12 +1,14 @@
+/**
+ * Created by norik on 9.1.16.
+ */
+
 var wgs84Sphere = new ol.Sphere(6378137);
 
 var raster = new ol.layer.Tile({
     source: new ol.source.OSM()
 });
 
-
-var features = new ol.Collection;
-var vectorSource = new ol.source.Vector({features: features});
+var vectorSource = new ol.source.Vector();
 
 var vectorLayer = new ol.layer.Vector({
     source: vectorSource,
@@ -113,17 +115,17 @@ var map = new ol.Map({
     })
 });
 
-var modify = new ol.interaction.Modify({
-    features: features,
-    source: vectorSource,
-    // the SHIFT key must be pressed to delete vertices, so
-    // that new vertices can be drawn at the same position
-    // of existing vertices
-    deleteCondition: function(event) {
-        return ol.events.condition.shiftKeyOnly(event) &&
-            ol.events.condition.singleClick(event);
-    }
+//Modify
+var select = new ol.interaction.Select({
+    style: overlayStyle
 });
+
+var modify = new ol.interaction.Modify({
+    features: select.getFeatures(),
+    style: overlayStyle
+});
+
+map.addInteraction(select);
 map.addInteraction(modify);
 
 addInteraction();
@@ -206,6 +208,7 @@ function addInteraction() {
             newTrip(JSON.stringify(geom.S));
         }, this);
 }
+
 
 /**
  * Creates a new help tooltip
@@ -294,15 +297,14 @@ var formatArea = function(polygon) {
     coordinates = geom.getLinearRing(0).getCoordinates();
     area = Math.abs(wgs84Sphere.geodesicArea(coordinates));
     var output;
+
     output = (Math.round(area / 1000000 * 100) / 100)
+    //+ ' ' + 'km<sup>2</sup>';
 
     return output;
 };
 
-
 addInteraction();
-
-
 
 
 /**
@@ -340,5 +342,10 @@ geocoder.on('addresschosen', function(evt){
         coord = evt.coordinate,
         address_html = feature.get('address_html')
         ;
-    overlay.setPosition(coord);
+    //content.innerHTML = '<p>'+address_html+'</p>';
+    //view.setPosition(coord);
 });
+
+/**
+ * Created by norik on 16.2.16.
+ */

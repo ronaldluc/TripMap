@@ -72,6 +72,7 @@ body {
 .form-control-shadow {
     background-color: rgba(0, 0, 0, 0.58);
     border-color: black;
+    color: whitesmoke;
 }
 
 .btn-shadow {

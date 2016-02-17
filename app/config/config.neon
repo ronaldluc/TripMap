@@ -20,7 +20,8 @@ session:
 
 services:
 	router: App\RouterFactory::createRouter
-	- App\Model\RegistrationModel
-	authenticator: App\Model\AuthenticatorModel
-	- App\Model\MapModel
-	- App\Model\StatisticsModel
+	- App\Models\RegistrationModel
+	authenticator: App\Models\AuthenticatorModel
+	- App\Models\MapModel
+	- App\Models\StatisticsModel
+	- App\Models\ManagementModel

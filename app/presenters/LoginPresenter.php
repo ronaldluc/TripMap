@@ -5,7 +5,7 @@
 
 namespace App\Presenters;
 
-use App\Model\AuthenticatorModel;
+use App\Models\AuthenticatorModel;
 use Nette,
     Nette\Application\UI\Form,
     Helpers;

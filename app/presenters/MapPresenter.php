@@ -5,11 +5,11 @@
 
 namespace App\Presenters;
 
-use App\Model\AuthenticatorModel;
+use App\Models\AuthenticatorModel;
 use Nette,
     Nette\Application\UI\Form,
     Helpers,
-    App\Model\MapModel;
+    App\Models\MapModel;
 
 
 class MapPresenter extends Nette\Application\UI\Presenter
@@ -29,24 +29,35 @@ class MapPresenter extends Nette\Application\UI\Presenter
     }
 
 
-    protected function createComponentMapForm()
+    protected function createComponentNewTripForm()
     {
         $form = new Nette\Application\UI\Form;
 
+        $form->getElementPrototype()->class = "ajax";
+
         $form->addHidden('polygon');
 
-        $form->addText('test');
+        $form->addText('name', 'Název')
+            ->setRequired();
 
-        $form->onSuccess[] = array($this, 'mapFormSucceeded');
+        $form->addText('text', 'Poznámka')
+            ->setRequired();
+
+        $form->addText('lenght', 'Délka trasy');
+
+        $form->addSubmit('send', 'Vytvořit');
+
+        $form->onSuccess[] = array($this, 'newTripFormSucceeded');
 
         Helpers::bootstrapForm($form);
 
         return $form;
     }
 
-    public function mapFormSucceeded($form)
+    public function newTripFormSucceeded($form, $values)
     {
-        dump($form->values->test);
+        $this->redrawControl("newTrip");
+        $this->mapModel->addNewTrip($values, $this->user->id);
     }
 
     public function handleNewTrip($trip) {

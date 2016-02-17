@@ -7,7 +7,7 @@ namespace App\Presenters;
 
 use Nette,
     Nette\Application\UI\Form,
-    App\Model\RegistrationModel,
+    App\Models\RegistrationModel,
     Helpers;
 
 

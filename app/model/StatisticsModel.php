@@ -3,7 +3,7 @@
  * @author Ronald Luc
  */
 
-namespace App\Model;
+namespace App\Models;
 
 use Nette;
 
@@ -23,4 +23,14 @@ class StatisticsModel
 
         return $value;
     }
+
+    public function getMaxLenght($id)
+    {
+        $selection = $this->database->table('trip');
+        $value = $selection->where('user_id = ?', $id)->max('lenght');
+
+        return $value;
+    }
+
+
 }

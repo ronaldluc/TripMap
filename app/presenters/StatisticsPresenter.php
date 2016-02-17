@@ -6,7 +6,7 @@
 namespace App\Presenters;
 
 use Nette,
-    App\Model\StatisticsModel;
+    App\Models\StatisticsModel;
 
 class StatisticsPresenter extends Nette\Application\UI\Presenter
 {

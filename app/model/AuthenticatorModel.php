@@ -3,7 +3,7 @@
  * @author Ronald Luc
  */
 
-namespace App\Model;
+namespace App\Models;
 
 use Nette,
     Nette\Security as NS;
