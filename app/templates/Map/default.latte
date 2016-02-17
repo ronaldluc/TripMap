@@ -49,18 +49,25 @@
             {*data: { trip: trip}*}
         {*});*}
         console.log(trip); //tady to je v poradku, je tam to co ma
-    }</script>
+    }
 
-<script src="{$basePath}/assets/js/map2.js"></script>
+    function changeTrip(trip, id) {
+        console.log(trip, id);
+        $.nette.ajax({
+        type: "POST",
+        url: {link ChangeTrip!},
+        data: { trip: trip, id: id}
+        });
+    }
+    </script>
 
 
-
-
+<script src="{$basePath}/assets/js/map.js"></script>
 
 
 {foreach $trips as $trip}
     <script>
-        loadTrips({$trip->polygon});
+        loadTrip({$trip->polygon},{$trip->id});
     </script>
 {/foreach}
 

@@ -58,17 +58,28 @@ class MapPresenter extends Nette\Application\UI\Presenter
     {
         $this->redrawControl("newTrip");
         $this->mapModel->addNewTrip($values, $this->user->id);
+
+        $this->redirect('this');
     }
 
-    public function handleNewTrip($trip) {
+    public function handleNewTrip($trip)
+    {
         $this->mapModel->addTrip($trip, $this->user->id);
     }
 //        $this->redirect('default');
 //        dump($polygon);
 
 
-    public function renderDefault() {
+    public function renderDefault()
+    {
         $this->template->trips = $this->mapModel->loadTrips($this->user->id);
+    }
+
+    public function handleChangeTrip()
+    {
+        $polygon = $this->getHttpRequest()->getPost('trip');
+        $id = $this->getHttpRequest()->getPost('id');
+        $this->mapModel->changeTrip($polygon, $id);
     }
 
 }

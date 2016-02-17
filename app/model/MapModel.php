@@ -49,6 +49,13 @@ class MapModel
 //    '[[1860993.2184021152,6315838.773147544],[1836323.1675230744,6315876.991661686],[1798219.308922914,6309742.920141801],[1860993.2184021152,6315838.773147544]]'
 }
 
+    public function changeTrip($values, $id)
+    {
+        $this->database->table($this->tableName)->where('id = ?', $id)->fetch()->update([
+            'polygon' => $values
+        ]);
+    }
+
     public function loadTrips($id)
     {
         $selection = $this->database->table('trip');
