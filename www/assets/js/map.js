@@ -113,6 +113,26 @@ var map = new ol.Map({
     })
 });
 
+// select interaction working on "click"
+var selectClick = new ol.interaction.Select({
+    condition: ol.events.condition.click
+});
+
+// select interaction working on "pointermove"
+var selectPointerMove = new ol.interaction.Select({
+    condition: ol.events.condition.pointerMove
+});
+
+var select = selectClick;
+
+map.addInteraction(select);
+select.on('select', function(e) {
+    $('#status').html('&nbsp;' + e.target.getFeatures().getLength() +
+        ' selected features (last operation selected ' + e.selected.length +
+        ' and deselected ' + e.deselected.length + ' features)');
+});
+
+
 var modify = new ol.interaction.Modify({
     features: features,
     source: vectorSource,
@@ -125,6 +145,7 @@ var modify = new ol.interaction.Modify({
     }
 });
 map.addInteraction(modify);
+
 
 addInteraction();
 
@@ -202,6 +223,7 @@ function addInteraction() {
             ol.Observable.unByKey(listener);
             // get polygon coords
             var geom = evt.target;
+            console.log(evt);
             console.log(JSON.stringify(geom.S));
             newTrip(JSON.stringify(geom.S));
         }, this);
@@ -308,16 +330,21 @@ addInteraction();
 /**
  * Loads trips from DB into map vectorLayer
  */
-function loadTrips(text) {
+function loadTrip(text, id) {
     var trip = JSON.parse(text);
     var polygon = new ol.geom.Polygon([trip]);
     console.log(polygon);
 
     // Create feature with polygon.
     var feature = new ol.Feature(polygon);
+    polygon.on('change', function(e) {
+        //changeTrip(JSON.stringify(e.g.B.geometry.A), id)
+        console.log(e);
+    });
 
-    // Create vector source and the feature to it.
-    vectorSource.addFeature(feature);
+     //Create vector source and the feature to it. function(e){console.log(e.g.B.geometry.A);console.log(id)}
+    features.push(feature);
+
 
 };
 

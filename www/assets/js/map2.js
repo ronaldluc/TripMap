@@ -79,7 +79,7 @@ function loadTrips(text) {
     var feature = new ol.Feature(polygon);
 
     // Create vector source and the feature to it.
-    vectorSource.addFeature(feature);
+    features.push(feature);
 
 };
 
