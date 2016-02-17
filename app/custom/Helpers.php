@@ -8,7 +8,8 @@ use Nette\Forms\Controls;
 
 class Helpers
 {
-    public static function bootstrapForm(Form $form){
+    public static function bootstrapForm(Form $form)
+    {
         // setup form rendering
         $renderer = $form->getRenderer();
         $renderer->wrappers['controls']['container'] = NULL;
@@ -31,5 +32,40 @@ class Helpers
                 $control->getSeparatorPrototype()->setName('div')->addClass($control->getControlPrototype()->type);
             }
         }
+    }
+
+    public static function modifyPolygon($string)
+    {
+        $output = '[[';
+        $counter = 0;
+        $iter = 2;
+
+
+
+        for ($i = 1; $i < strlen($string); $i++)
+        {
+            if (($string[$i] == ','))
+            {
+                if ($counter == 1)
+                {
+                    $output[$iter] = ']';
+                    $output[$iter+1] = ',';
+                    $output[$iter+2] = '[';
+                    $iter += 3;
+                    $counter = 0;
+                } else {
+                    $output[$iter] = ',';
+                    $iter++;
+                    $counter = 1;
+                }
+            } else {
+                $output[$iter] = $string[$i];
+                $iter++;
+            }
+        }
+
+        $output[$iter] = ']';
+
+        return $output;
     }
 }

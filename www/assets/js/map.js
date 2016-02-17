@@ -338,8 +338,8 @@ function loadTrip(text, id) {
     // Create feature with polygon.
     var feature = new ol.Feature(polygon);
     polygon.on('change', function(e) {
-        //changeTrip(JSON.stringify(e.g.B.geometry.A), id)
-        console.log(e);
+        changeTrip(JSON.stringify(e.target.l), id)
+        console.log(e.target.l);
     });
 
      //Create vector source and the feature to it. function(e){console.log(e.g.B.geometry.A);console.log(id)}
