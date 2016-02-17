@@ -1,0 +1,26 @@
+{block content}
+
+<div class="container">
+    <div class="shadow">
+        <div class="heading-shadow"><h1>Správa výletů</h1></div>
+        <div class="body-shadow">
+            <table class="table shadow">
+                <tbody>
+                <div n:foreach="$trips as $trip" class="trip">
+                    <tr>
+                        <th class="col-md-3">{$trip->name}</th>
+                        <td class="text-center" rowspan="4">{$trip->text}</td>
+                        <td class="col-md-1" rowspan="2"><a n:href="change! $trip">Schválit</a></td>
+                    </tr>
+                    <tr><th>{$trip->date|date:'%d. %m. %Y'}</th></tr>
+                    <tr><td>{$trip->duration} dní</td>
+                        <td rowspan="2"><a n:href="delete! $trip->id">Smazat</a></td>
+                    </tr>
+                    <tr><td>{$trip->area} km<sup>2</sup></td></tr>
+                    <tr class="shadow"><td colspan="3"></td></tr>
+                </div>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

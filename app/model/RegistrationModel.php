@@ -3,7 +3,7 @@
  * @author Ronald Luc
  */
 
-namespace App\Model;
+namespace App\Models;
 
 use Nette,
     Nette\Security as NS,
@@ -21,9 +21,8 @@ class RegistrationModel
 
     public function createUser($values)
     {
-        $selection = $this->database->table('user');
-        $temp = $selection->where('email = ?', $values->email)->fetch();
-        $temp2 = $selection->where('username = ?', $values->username)->fetch();
+        $temp = $this->database->table('user')->where('email = ?', $values->email)->fetch();
+        $temp2 = $this->database->table('user')->where('username = ?', $values->username)->fetch();
 
         $check = 0;
         if ((!$temp)and(!$temp2)) $check = 1;

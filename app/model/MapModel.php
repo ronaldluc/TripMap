@@ -3,7 +3,7 @@
  * @author Ronald Luc
  */
 
-namespace App\Model;
+namespace App\Models;
 
 use Nette,
     Nette\Utils\DateTime;
@@ -32,6 +32,22 @@ class MapModel
             'distance' => 16,
         ]);
     }
+
+    public function addNewTrip($values, $userId)
+{
+    $this->database->table($this->tableName)->insert([
+        'user_id' => $userId,
+        'name' => $values->name,
+        'text' => $values->text,
+        'date' => new DateTime(),
+        'duration' => 10,
+        'area' => 2,
+        'lenght' => $values->lenght,
+        'polygon' => $values->polygon,
+        'distance' => 5,
+    ]);
+//    '[[1860993.2184021152,6315838.773147544],[1836323.1675230744,6315876.991661686],[1798219.308922914,6309742.920141801],[1860993.2184021152,6315838.773147544]]'
+}
 
     public function loadTrips($id)
     {
