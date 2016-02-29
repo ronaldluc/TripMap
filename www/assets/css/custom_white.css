@@ -1,0 +1,189 @@
+/* Special class on .container surrounding .navbar, used for positioning it into place. */
+.navbar-wrapper {
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 20;
+    position: absolute;
+}
+
+/* Flip around the padding for proper display in narrow viewports */
+.navbar-wrapper > .container {
+    padding-right: 0;
+    padding-left: 0;
+}
+.navbar-wrapper .navbar {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.navbar-wrapper .navbar .container {
+    width: 100%;
+}
+
+.navbar-shadow {
+    background: rgba(255, 255, 255, 1);
+    color: black;
+    /*box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.4);*/
+}
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+    background: rgb(250, 250, 250);
+    color: black;
+}
+
+.navbar-inverse .navbar-brand {
+    color: black;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+    color: black;
+}
+
+html {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 1);
+}
+
+body {
+    background-image: url("../img/backgroundMapSmooth.png");
+    background-attachment: fixed;
+
+
+}
+
+.container {
+    padding: 0px;
+    padding-top: 150px;
+}
+
+/* Modal */
+.modal-content {
+    margin-top: 30%;
+}
+
+/* Panel */
+.shadow {
+    background: rgb(235, 235, 235);
+    color: rgb(14, 14, 14);
+    /*box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.98);*/
+    border-radius: 10px;
+    padding: 0px;
+}
+
+.heading-shadow {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background: rgba(255, 255, 255, 1);
+    padding-top: 1px;
+    padding-left: 4%;
+    padding-right: 10px;
+    padding-bottom: 5px;
+}
+
+.body-shadow {
+    padding-top: 24px;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 15px;
+}
+
+.body-wrapper{
+    margin-left: auto;
+    margin-right: auto;
+    width: 950px;
+}
+
+.fixed {
+    position: fixed;
+
+}
+
+.white {
+    background: rgba(255, 255, 255, 1);
+}
+/* Form */
+.form-control-shadow {
+    background-color: rgba(255, 255, 255, 1);
+    border-color: black;
+    color: black;
+}
+
+.btn-shadow {
+    background: rgb(255, 255, 255);
+}
+
+.sub-wraper {
+    margin-top: 50px;
+}
+
+.container-wraper {
+    position: static;
+    width: 100%;
+    height: 100%;
+}
+
+.map-wraper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+/* Map */
+.map {
+    position: static;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.ol-control button{
+    background-color: rgba(255, 255, 255, 1) !important;
+}
+.ol-control button:hover{
+    background-color: rgb(244, 244, 244) !important;
+}
+
+.ol-control button {
+    color: black;
+}
+
+.ol-control {
+    background-color: transparent;
+}
+
+.ol-geocoder-btn-search {
+url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAABHNCSVQICAgIfAhkiAAAAGxJREFUKJGdkN0JwDAIhO+kkAWySUZw/5nsS/NXNNgeSEjidycCU/YuVTU44gKcxPVynT4jM0mkuFCUsr5txuI0ppKyywiTBvis2wCA9CafQFillOMko7G1ZiQNQD9zqrUOk0+giPwD+5gA7AZ5ZCuAD4rfBQAAAABJRU5ErkJggg==)
+
+/* measure CSS */
+
+.tooltip {
+    position: relative;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    color: whitesmoke;
+    padding: 4px 8px;
+    opacity: 0.7;
+    white-space: nowrap;
+}
+.tooltip-measure {
+    opacity: 1;
+    font-weight: bold;
+}
+.tooltip-static {
+    background-color: rgba(0, 0, 0, 0.76);
+    color: whitesmoke;
+    border: 1px solid whitesmoke;
+}
+.tooltip-measure:before,
+.tooltip-static:before {
+    border-top: 6px solid rgba(0, 0, 0, 0.5);
+    border-right: 6px solid transparent;
+    border-left: 6px solid transparent;
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    margin-left: -7px;
+    left: 50%;
+}
+.tooltip-static:before {
+    border-top-color: rgba(0, 0, 0, 0.82);
+}
+
