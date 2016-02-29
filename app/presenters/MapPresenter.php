@@ -10,7 +10,7 @@ use Nette,
     Nette\Application\UI\Form,
     Helpers,
     App\Models\MapModel,
-    IPub\FormDateTime\DI\FormDateTimeExtension;
+    Nette\Utils\DateTime;
 
 
 class MapPresenter extends Nette\Application\UI\Presenter
@@ -34,17 +34,29 @@ class MapPresenter extends Nette\Application\UI\Presenter
     {
         $form = new Nette\Application\UI\Form;
 
-        $form->getElementPrototype()->class = "ajax";
-
         $form->addHidden('polygon');
 
         $form->addText('name', 'Název')
             ->setRequired();
 
-        $form->addText('text', 'Poznámka')
+        $form->addTextArea('text', 'Poznámka')
             ->setRequired();
 
-        $form->addDatePicker('date', 'Začátek:');
+        $form->addText('date', 'Začátek')
+            ->setType('date')
+            ->setAttribute('value', new DateTime());
+
+        $form->addText('duration', 'Počet dní')
+            ->setType('number')
+            ->setAttribute('min', 1)
+            ->setAttribute('value', 1)
+            ->setRequired();
+
+//        $form->addDatePicker('date', 'Začátek:')
+//            // Enable trigger button to open date/time picker
+//            ->enableTriggerButton()
+//            ->setDateFormat('yyyy/dd/mm')
+//            ->setTemplateFile('bootstrap.latte');;
 
         $form->addText('lenght', 'Délka trasy');
 
@@ -54,15 +66,17 @@ class MapPresenter extends Nette\Application\UI\Presenter
 
         Helpers::bootstrapForm($form);
 
+        $form->getElementPrototype()->addClass('ajax');
+
         return $form;
     }
 
     public function newTripFormSucceeded($form, $values)
     {
-        $this->redrawControl("newTrip");
         $this->mapModel->addNewTrip($values, $this->user->id);
 
-        $this->redirect('this');
+        $this->redrawControl("newTrip");
+//        $this->redirect('this');
     }
 
     public function handleNewTrip($trip)

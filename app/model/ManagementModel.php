@@ -19,7 +19,17 @@ class ManagementModel
     public function allTrips($id)
     {
         $selection = $this->database->table('trip');
-        $value = $selection->where('user_id = ?', $id)->fetchAll();
+        $value = $selection->where('user_id = ?', $id)
+            ->order('date DESC')
+            ->fetchAll();
+
+        return $value;
+    }
+
+    public function getTrip($id)
+    {
+        $selection = $this->database->table('trip');
+        $value = $selection->where('id = ?', $id)->fetch();
 
         return $value;
     }
@@ -32,4 +42,13 @@ class ManagementModel
         return $value;
     }
 
+    public function editTrip($trip)
+    {
+        $selection = $this->database->table('trip');
+        $selection->where('id = ?', $trip->id)->fetch()->update([
+            'name' => $trip->name,
+            'text' => $trip->text,
+            'lenght' => $trip->lenght,
+        ]);
+    }
 }

@@ -25,6 +25,8 @@ services:
 	- App\Models\MapModel
 	- App\Models\StatisticsModel
 	- App\Models\ManagementModel
+	- Nette\Mail\Message
+	- Nette\Mail\SendmailMailer
 
 extensions:
     formDateTime: IPub\FormDateTime\DI\FormDateTimeExtension

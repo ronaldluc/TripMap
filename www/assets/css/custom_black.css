@@ -29,11 +29,17 @@ body {
     background-image: url("../img/backgroundMapSmooth.png");
     background-attachment: fixed;
 
+
 }
 
 .container {
     padding: 0px;
     padding-top: 150px;
+}
+
+/* Modal */
+.modal-content {
+    margin-top: 30%;
 }
 
 /* Panel */
@@ -68,6 +74,10 @@ body {
     width: 950px;
 }
 
+.fixed {
+    position: fixed;
+
+}
 /* Form */
 .form-control-shadow {
     background-color: rgba(0, 0, 0, 0.58);
@@ -116,7 +126,7 @@ body {
     position: relative;
     background: rgba(0, 0, 0, 0.5);
     border-radius: 4px;
-    color: white;
+    color: whitesmoke;
     padding: 4px 8px;
     opacity: 0.7;
     white-space: nowrap;
@@ -127,8 +137,8 @@ body {
 }
 .tooltip-static {
     background-color: rgba(0, 0, 0, 0.76);
-    color: white;
-    border: 1px solid white;
+    color: whitesmoke;
+    border: 1px solid whitesmoke;
 }
 .tooltip-measure:before,
 .tooltip-static:before {

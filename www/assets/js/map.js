@@ -110,6 +110,25 @@ var map = new ol.Map({
     view: new ol.View({
         center: [1849078.596618163,6308254.135275547],
         zoom: 13
+    }),
+    style: new ol.style.Style({
+        fill: new ol.style.Fill({
+            color: 'rgba(0, 0, 0, 0.2)'
+        }),
+        stroke: new ol.style.Stroke({
+            color: 'rgba(0, 0, 0, 0.5)',
+            lineDash: [10, 10],
+            width: 2
+        }),
+        image: new ol.style.Circle({
+            radius: 5,
+            stroke: new ol.style.Stroke({
+                color: 'rgba(0, 0, 0, 0.7)'
+            }),
+            fill: new ol.style.Fill({
+                color: 'rgba(0, 0, 0, 0.8)'
+            })
+        })
     })
 });
 
@@ -223,8 +242,9 @@ function addInteraction() {
             ol.Observable.unByKey(listener);
             // get polygon coords
             var geom = evt.target;
-            console.log(evt);
-            console.log(JSON.stringify(geom.S));
+            //console.log(evt);
+            //output = formatArea(/** @type { ol.geom.Polygon} */ (geom))
+            //console.log(JSON.stringify(geom.S), output);
             newTrip(JSON.stringify(geom.S));
         }, this);
 }
@@ -338,7 +358,7 @@ function loadTrip(text, id) {
     // Create feature with polygon.
     var feature = new ol.Feature(polygon);
     polygon.on('change', function(e) {
-        changeTrip(JSON.stringify(e.target.l), id)
+        changeTrip(JSON.stringify(e.target.l), id);
         console.log(e.target.l);
     });
 
