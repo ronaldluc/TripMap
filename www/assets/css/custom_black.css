@@ -26,9 +26,10 @@
 }
 
 body {
+    background-color: black;
     background-image: url("../img/backgroundMapSmooth.png");
     background-attachment: fixed;
-
+    background-repeat: repeat-x;
 
 }
 
