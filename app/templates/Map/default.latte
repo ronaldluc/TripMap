@@ -12,6 +12,8 @@
         </div>
     </div>
 
+
+
 <!-- Modal -->
 <div id="newTripModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -23,6 +25,19 @@
             </div>
             <div class="modal-body body-shadow">
                 {snippet newTrip}
+                    {if $showModal == TRUE}
+                        <script type="text/javascript">
+                            $('#newTripModal').modal('show');
+                            console.log('Lol');
+                        </script>
+                    {else}
+                        <script type="text/javascript">
+                            $('#newTripModal').modal('hide');
+                            console.log('Pog');
+                            $('body').removeClass('modal-open');
+                            $('.modal-backdrop').remove();
+                        </script>
+                    {/if}
                     {control newTripForm}
                 {/snippet}
             </div>

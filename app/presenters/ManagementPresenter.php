@@ -15,12 +15,16 @@ class ManagementPresenter extends Nette\Application\UI\Presenter
     /** @var ManagementModel @inject*/
     public $managementModel;
 
+    public $showModal;
+
+    public $invalidateTrips;
+
     public function renderDefault()
     {
-        $this->template->showModal = FALSE;
-        if ($this->isAjax()) {
-            $id = $this->params['id'];
-            $chosen = $this->managementModel->getTrip($id);
+        $id = $this->params['id'];
+        if (($this->isAjax()) and ($id != NULL))
+        {
+                    $chosen = $this->managementModel->getTrip($id);
 
             $this['editTripForm']->setDefaults([
                 'id' => $id,
@@ -28,11 +32,23 @@ class ManagementPresenter extends Nette\Application\UI\Presenter
                 'text' => $chosen->text,
                 'lenght' => $id,
             ]);
-            $this->template->showModal = TRUE;
-            $this->redrawControl('editTripModal');
+
         } else {
+            $this->showModal = FALSE;
             $this->template->trips = $this->managementModel->allTrips($this->user->id);
         }
+
+        if ($this->invalidateTrips)
+        {
+//            $this->template->trips = NULL;
+            $this->redrawControl('tripContainer');
+            $this->template->trips = $this->managementModel->allTrips($this->user->id);
+            $this->invalidateTrips = FALSE;
+            $this->redrawControl('tripContainer');
+        }
+
+        $this->template->showModal = $this->showModal;
+        $this->redrawControl('editTripModal');
 
 //        $this->template->trips = $this->isAjax()
 //            ? array()
@@ -43,12 +59,12 @@ class ManagementPresenter extends Nette\Application\UI\Presenter
     {
         $this->managementModel->deleteTrip($id);
 
-        $this->redrawControl('tripContainer');
+        $this->invalidateTrips = TRUE;
     }
 
     public function handleEdit($id)
     {
-
+        $this->showModal = TRUE;
  //přidat vyskakovací modal
 
 //        $this['editTripForm']->setDefaults([
@@ -92,9 +108,12 @@ class ManagementPresenter extends Nette\Application\UI\Presenter
     public function editFormSucceeded($form, $values)
     {
         $this->managementModel->editTrip($values);
-
-        $this->redrawControl('editTripModal');
-        $this->redrawControl('tripContainer');
+        $this->showModal = FALSE;
+        $this->invalidateTrips = TRUE;
+//        $this->template->showModal = FALSE;
+//
+//        $this->redrawControl('editTripModal');
+//        $this->redrawControl('tripContainer');
     }
 
     public function createComponentFilterForm()

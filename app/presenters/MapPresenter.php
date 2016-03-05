@@ -75,7 +75,6 @@ class MapPresenter extends Nette\Application\UI\Presenter
     {
         $this->mapModel->addNewTrip($values, $this->user->id);
 
-        $this->redrawControl("newTrip");
 //        $this->redirect('this');
     }
 
@@ -90,6 +89,16 @@ class MapPresenter extends Nette\Application\UI\Presenter
     public function renderDefault()
     {
         $this->template->trips = $this->mapModel->loadTrips($this->user->id);
+
+        $this->template->showModal = FALSE;
+        $this['newTripForm']->setDefaults([
+            'name' => ' ',
+            'text' => ' ',
+            'lenght' => ' ',
+        ]);
+
+        $this->redrawControl("newTrip");
+
     }
 
     public function handleChangeTrip()
