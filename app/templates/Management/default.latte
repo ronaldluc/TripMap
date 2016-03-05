@@ -1,13 +1,15 @@
 {block content}
 
+{*{snippet tripContainer}*}
 <div class="container">
     <div class="shadow col-sm-9 row-offcanvas">
         <div class="heading-shadow"><h1>Správa výletů</h1></div>
+
         <div class="body-shadow">
             <table n:snippet="tripContainer" class="table shadow white">
                 <tbody >
                     <div n:foreach="$trips as $trip" class="trip">
-                        {snippet $trip->id}
+                        {*{snippet $trip->id}*}
                             <tr>
                                 <th class="col-md-3">{$trip->name}</th>
                                 <td class="text-center" rowspan="4">{$trip->text}</td>
@@ -19,14 +21,14 @@
                                 <td rowspan="2"><a n:href="delete! $trip->id" class="shadow white">Smazat</a></td>
                             </tr>
                             <tr class="white"><td colspan="3"></td></tr>
-                        {/snippet}
+                        {*{/snippet}*}
                     </div>
                 </tbody>
             </table>
             {*{snippet editTripModal}*}
                 {*{control editTripForm}*}
-            {*{/snippet}*}
         </div>
+
     </div>
 
     <div class="col-sm-3 sidebar-offcanvas">
@@ -38,16 +40,25 @@
         </div>
     </div>
 
-
 </div>
+{*{/snippet}*}
 
 <!-- Modal -->
 {snippet editTripModal}
 {if $showModal == TRUE}
-<script type="text/javascript">
-        $('#editTripModal').modal('show');
-    console.log('Lol');
-</script>
+    <script type="text/javascript">
+            $('#editTripModal').modal('show');
+        console.log('Lol');
+    </script>
+{else}
+    <script type="text/javascript">
+        $('#editTripModal').modal('hide');
+        console.log('Pog');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+    </script>
+{/if}
+
     <div id="editTripModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
@@ -66,6 +77,5 @@
 
         </div>
     </div>
-{/if}
 {/snippet}
 

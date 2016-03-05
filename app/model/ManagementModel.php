@@ -26,6 +26,11 @@ class ManagementModel
         return $value;
     }
 
+    public function getFilteredTrips($id, $start, $end, $string)
+    {
+
+    }
+
     public function getTrip($id)
     {
         $selection = $this->database->table('trip');
