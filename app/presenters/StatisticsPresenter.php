@@ -13,9 +13,21 @@ class StatisticsPresenter extends Nette\Application\UI\Presenter
     /** @var StatisticsModel @inject*/
     public $statisticsModel;
 
+    protected function startUp()
+    {
+        parent::startup();
+        if (!$this->user->isLoggedIn())
+        {
+            $this->flashMessage('Pro přístup k mapám je nutné se přihlásit.', 'danger');
+            $this->redirect('Login:');
+        }
+    }
+
     public function renderDefault()
     {
-        $this->template->maxArea = $this->statisticsModel->getMaxArea($this->user->id);
+        $this->template->userStats = $this->statisticsModel->getUserStats($this->user->id);
+
+        $this->template->globalStats = $this->statisticsModel->getglobalStats();
     }
 
 }
