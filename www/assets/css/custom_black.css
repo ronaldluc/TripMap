@@ -1,25 +1,4 @@
 /* Special class on .container surrounding .navbar, used for positioning it into place. */
-.navbar-wrapper {
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 20;
-    position: absolute;
-}
-
-/* Flip around the padding for proper display in narrow viewports */
-.navbar-wrapper > .container {
-    padding-right: 0;
-    padding-left: 0;
-}
-.navbar-wrapper .navbar {
-    padding-right: 15px;
-    padding-left: 15px;
-}
-.navbar-wrapper .navbar .container {
-    width: 100%;
-}
-
 .navbar-shadow {
     background: linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9));
     box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.4);
@@ -30,17 +9,6 @@ body {
     background-image: url("../img/backgroundMapSmooth.png");
     background-attachment: fixed;
     background-repeat: repeat-x;
-
-}
-
-.container {
-    padding: 0px;
-    padding-top: 150px;
-}
-
-/* Modal */
-.modal-content {
-    margin-top: 30%;
 }
 
 /* Panel */
@@ -62,23 +30,6 @@ body {
     padding-bottom: 5px;
 }
 
-.body-shadow {
-    padding-top: 24px;
-    padding-left: 10%;
-    padding-right: 10%;
-    padding-bottom: 15px;
-}
-
-.body-wrapper{
-    margin-left: auto;
-    margin-right: auto;
-    width: 950px;
-}
-
-.fixed {
-    position: fixed;
-
-}
 /* Form */
 .form-control-shadow {
     background-color: rgba(0, 0, 0, 0.58);
@@ -88,30 +39,6 @@ body {
 
 .btn-shadow {
     background: linear-gradient(rgba(0, 0, 0, 0.58), rgba(0, 0, 0, 0.70));
-}
-
-.sub-wraper {
-    margin-top: 50px;
-}
-
-.container-wraper {
-    position: static;
-    width: 100%;
-    height: 100%;
-}
-
-.map-wraper {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-}
-
-/* Map */
-.map {
-    position: static;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
 }
 
 .ol-control button{
