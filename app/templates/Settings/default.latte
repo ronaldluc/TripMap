@@ -1,10 +1,22 @@
 {block content}
 
 <div class="container">
-    <div class="shadow">
-        <div class="heading-shadow"><h1>Přihlášení</h1></div>
-        <div class="body-shadow">
-            {control loginForm}
+    <div class="row">
+        <div class="col-sm-8 center-block">
+            <div class="shadow inner">
+                <div class="heading-shadow"><h1>Změnit přihlašovací údaje</h1></div>
+                <div class="body-shadow">
+                    {control editUserForm}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 center-block">
+            <div class="shadow inner">
+                <div class="heading-shadow"><h1>Nastavení vzhledu</h1></div>
+                <div class="body-shadow">
+                    {control editUserForm}
+                </div>
+            </div>
         </div>
     </div>
 </div>
