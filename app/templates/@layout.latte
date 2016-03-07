@@ -73,7 +73,7 @@
                                 <li {ifCurrent Statistics:* }class="active"{/ifCurrent}><a n:href="Statistics:">Statistiky</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
-                                <li n:if="$user->loggedIn"><a href="#">Nastavení</a></li>
+                                <li n:if="$user->loggedIn"><a n:href="Settings:">Nastavení</a></li>
                                 <li n:if="!$user->loggedIn" {ifCurrent Registration: }class="active"{/ifCurrent}><a n:href="Registration:">Registrace</a></li>
                                 <li n:if="!$user->loggedIn" {ifCurrent Login: }class="active"{/ifCurrent}><a n:href="Login:">Přihlásit</a></li>
                                 <li n:if="$user->loggedIn" {ifCurrent Login:}class="active"{/ifCurrent}><a n:href="Login:out">Odhlásit</a></li>
