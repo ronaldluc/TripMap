@@ -1,54 +1,55 @@
 {block content}
 
-{*{snippet tripContainer}*}
+{snippet tripContainer}
 <div class="container">
-    <div class="shadow col-sm-9 row-offcanvas">
+    <div class="shadow col-xs-12 col-sm-9 row-offcanvas">
         <div class="heading-shadow"><h1>Správa výletů</h1></div>
 
         <div class="body-shadow">
-            <table n:snippet="tripContainer" class="table shadow white">
+            <table n:snippet="tripContainerR" class="table shadow white">
                 <tbody >
                     <div n:foreach="$trips as $trip" class="trip">
-                        {*{snippet $trip->id}*}
                             <tr>
-                                <th class="col-md-3">{$trip->name}</th>
+                                <th colspan="2" class="col-md-3">{$trip->name}</th>
                                 <td class="text-center" rowspan="4">{$trip->text}</td>
                                 <td class="col-md-1" rowspan="2"><a n:href="edit! $trip->id" class="shadow white ajax">Editovat</a></td>
                             </tr>
-                            <tr><th>{$trip->date|date:'%d. %m. %Y'}</th></tr>
+                            <tr><th colspan="2">{$trip->date|date:'%d. %m. %Y'}</th></tr>
                             <tr><td>{$trip->duration} {if $trip->duration==1}den
-                                    {elseif $trip->duration > 4}dní{else}dny{/if}</td>
-                                <td rowspan="2"><a n:href="delete! $trip->id" class="shadow white">Smazat</a></td>
+                                    {elseif $trip->duration > 4}dní{else}dny{/if}</td><td>{if $trip->lenght}{$trip->lenght} km{/if}</td>
+                                <td><a n:href="delete! $trip->id" class="shadow white ajax">Smazat</a></td>
                             </tr>
-                            <tr class="white"><td colspan="3"></td></tr>
-                        {*{/snippet}*}
+                            <tr class="white"><td colspan="4"></td></tr>
                     </div>
                 </tbody>
             </table>
-            {*{snippet editTripModal}*}
-                {*{control editTripForm}*}
         </div>
-
     </div>
 
-    <div class="col-sm-3 sidebar-offcanvas">
+    <div class="col-xs-12 col-sm-3 sidebar-offcanvas">
         <div class="shadow fixed">
             <div class="heading-shadow"><h2>Filtr</h2></div>
             <div class="body-shadow">
                 {control filterForm}
+                <br />
+                <div class="row center">
+                    <div class="col-sm-6"> <a n:href="resetFilter!" type="button" class="btn btn-shadow ajax">Zrušit filtr</a></div>
+                    <div class="col-sm-6"> <a n:href="showMap!" type="button" class="btn btn-shadow">V mapě</a></div>
+                </div>
+
             </div>
         </div>
     </div>
 
 </div>
-{*{/snippet}*}
+{/snippet}
 
 <!-- Modal -->
 {snippet editTripModal}
 {if $showModal == TRUE}
     <script type="text/javascript">
             $('#editTripModal').modal('show');
-        console.log('Lol');
+
     </script>
 {else}
     <script type="text/javascript">
