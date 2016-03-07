@@ -16,19 +16,54 @@ class ManagementModel
         $this->database = $database;
     }
 
-    public function allTrips($id)
+    public function allTrips($user_id)
     {
         $selection = $this->database->table('trip');
-        $value = $selection->where('user_id = ?', $id)
+        $value = $selection->where('user_id = ?', $user_id)
             ->order('date DESC')
             ->fetchAll();
 
         return $value;
     }
 
-    public function getFilteredTrips($id, $start, $end, $string)
+    public function getFilteredTrips($user_id, $start, $end, $string)
     {
+        $selection = $this->database->table('trip')->where('user_id = ?', $user_id);
 
+        if ($string != NULL) {
+            $selection = $selection->where('LCASE(name) LIKE LCASE(?)', '%' . $string . '%');
+        }
+
+        if ($start != NULL) {
+            $selection = $selection->where('DATE_ADD(date, INTERVAL +duration DAY) >= ?', $start);
+        }
+
+        if ($end != NULL) {
+            $selection = $selection->where('date <= ?', $end);
+        }
+
+        $value = $selection->order('date DESC')->fetchAll();
+        return $value;
+    }
+
+    public function getFilteredId($user_id, $start, $end, $string)
+    {
+        $selection = $this->database->table('trip')->where('user_id = ?', $user_id);
+
+        if ($string != NULL) {
+            $selection = $selection->where('LCASE(name) LIKE LCASE(?)', '%' . $string . '%');
+        }
+
+        if ($start != NULL) {
+            $selection = $selection->where('DATE_ADD(date, INTERVAL +duration DAY) >= ?', $start);
+        }
+
+        if ($end != NULL) {
+            $selection = $selection->where('date <= ?', $end);
+        }
+
+        $value = $selection->order('date DESC')->select('id')->fetchAll();
+        return $value;
     }
 
     public function getTrip($id)
@@ -53,6 +88,8 @@ class ManagementModel
         $selection->where('id = ?', $trip->id)->fetch()->update([
             'name' => $trip->name,
             'text' => $trip->text,
+            'date' => $trip->date,
+            'duration' => $trip->duration,
             'lenght' => $trip->lenght,
         ]);
     }

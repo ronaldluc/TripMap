@@ -52,12 +52,6 @@ class MapPresenter extends Nette\Application\UI\Presenter
             ->setAttribute('value', 1)
             ->setRequired();
 
-//        $form->addDatePicker('date', 'Začátek:')
-//            // Enable trigger button to open date/time picker
-//            ->enableTriggerButton()
-//            ->setDateFormat('yyyy/dd/mm')
-//            ->setTemplateFile('bootstrap.latte');;
-
         $form->addText('lenght', 'Délka trasy');
 
         $form->addSubmit('send', 'Vytvořit');
