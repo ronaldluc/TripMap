@@ -33,12 +33,13 @@ body {
 /* Form */
 .form-control-shadow {
     background-color: rgba(0, 0, 0, 0.58);
-    border-color: black;
+    border-color: white;
     color: whitesmoke;
 }
 
 .btn-shadow {
     background: linear-gradient(rgba(0, 0, 0, 0.58), rgba(0, 0, 0, 0.70));
+    color: white;
 }
 
 .ol-control button{

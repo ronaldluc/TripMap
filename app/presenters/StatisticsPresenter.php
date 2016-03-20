@@ -8,7 +8,7 @@ namespace App\Presenters;
 use Nette,
     App\Models\StatisticsModel;
 
-class StatisticsPresenter extends Nette\Application\UI\Presenter
+class StatisticsPresenter extends BasePresenter
 {
     /** @var StatisticsModel @inject*/
     public $statisticsModel;

@@ -10,7 +10,7 @@ use Nette,
     Nette\Application\UI\Form,
     Helpers;
 
-class ManagementPresenter extends Nette\Application\UI\Presenter
+class ManagementPresenter extends BasePresenter
 {
     /** @var ManagementModel @inject*/
     public $managementModel;
@@ -50,8 +50,12 @@ class ManagementPresenter extends Nette\Application\UI\Presenter
         if ($this->filter != NULL)
         {
             $this->template->trips = $this->managementModel->getFilteredTrips($this->user->id, $this->filter->from, $this->filter->to, $this->filter->name);
+            $this->template->tripsId = $this->managementModel->getFilteredId($this->user->id, $this->filter->from, $this->filter->to, $this->filter->name);
+            dump($this->template->tripsId);
+            die;
         } else {
             $this->template->trips = $this->managementModel->allTrips($this->user->id);
+            $this->template->tripsId = 1;
         }
 
         $this->template->showModal = $this->showModal;
@@ -151,14 +155,14 @@ class ManagementPresenter extends Nette\Application\UI\Presenter
         $this->invalidateTrips = TRUE;
     }
 
-    public function handleShowMap()
+    public function handleShowMap($tripsId)
     {
-        if ($this->filter != NULL)
-        {
-            $tripsId = $this->managementModel->getFilteredId($this->user->id, $this->filter->from, $this->filter->to, $this->filter->name);
-        } else {
-            $tripsId = $this->managementModel->getFilteredId($this->user->id, NULL, NULL, NULL);
-        }
+//        if ($this->filter != NULL)
+//        {
+//            $tripsId = $this->managementModel->getFilteredId($this->user->id, $this->filter->from, $this->filter->to, $this->filter->name);
+//        } else {
+//            $tripsId = $this->managementModel->getFilteredId($this->user->id, NULL, NULL, NULL);
+//        }
 
         dump($tripsId);
         die;

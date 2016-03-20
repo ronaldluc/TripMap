@@ -20,10 +20,21 @@
     width: 100%;
 }
 
-.container {
+.container-content {
     align-content: center;
     padding: 0px;
     padding-top: 150px;
+    padding-bottom: 30px;
+}
+
+.flash-message {
+    align-content: center;
+    padding: 0px;
+    padding-top: 60px;
+}
+
+.margin-flash-message {
+    margin: 10px;
 }
 
 /* Modal */
