@@ -6,9 +6,13 @@
 
 	<title>{ifset title}{include title|striptags} | {/ifset}TripMap</title>
 
-    {*<!-- jQuerry -->*}
-    {*<script src="{$basePath}/jquery/dist/jquery.min.js"></script>*}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <!-- jQuerry -->
+    <script src="{$basePath}/jquery/dist/jquery.min.js"></script>
+    {*<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>*}
+
+    <!-- Bootstrap -->
+    <script src="{$basePath}/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link href="{$basePath}/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Open Layers -->
     <script src="{$basePath}/v3.11.2/build/ol.js"></script>
@@ -34,17 +38,19 @@
 
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
 
-    <link href="{$basePath}/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
 
 
     {*<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">*}
     {*<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>*}
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    {*<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>*}
+    {*<script src="{$basePath}/jquery/dist/jquery.min.js"></script>*}
     {*TODO predelat na local*}
 
     <!-- Custom styles for this template -->
-    <link href="{$basePath}/assets/css/custom_white.css" rel="stylesheet">
+    {if $userCss == 1}<link href="{$basePath}/assets/css/custom_white.css" rel="stylesheet">{else}
+        <link href="{$basePath}/assets/css/custom_black.css" rel="stylesheet">
+    {/if}
     <link href="{$basePath}/assets/css/global.css" rel="stylesheet">
     {*<link href="{$basePath}/assets/fonts/css/font-awesome.min.css" rel="stylesheet">*}
 </head>
@@ -86,11 +92,19 @@
             </div>
         </div>
 
-        <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
-
-                {include content}
-
+        <div class="container">
+            <div n:foreach="$flashes as $flash" class="flash-message">
+                        <div n:foreach="$flashes as $flash" class="alert shadow heading-shadow text-center"><h2 class="margin-flash-message">{$flash->message}</h2></div>
+                        {*<h2>Tady je super text</h2>*}
+            </div>
+            {*<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type} text-center">{$flash->message}</div>*}
         </div>
+
+        {include content}
+
+
+
+    </div>
 	{block scripts}
 
 

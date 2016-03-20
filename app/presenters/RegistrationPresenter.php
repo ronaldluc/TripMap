@@ -11,7 +11,7 @@ use Nette,
     Helpers;
 
 
-class RegistrationPresenter extends Nette\Application\UI\Presenter
+class RegistrationPresenter extends BasePresenter
 {
     /** @var RegistrationModel */
     private $registrationModel; //TODO change to best practise

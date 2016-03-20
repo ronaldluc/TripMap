@@ -11,7 +11,7 @@ use Nette,
     Helpers;
 
 
-class LoginPresenter extends Nette\Application\UI\Presenter
+class LoginPresenter extends BasePresenter
 {
     /** @var AuthenticatorModel */
     private $authenticatorModel;
@@ -43,7 +43,6 @@ class LoginPresenter extends Nette\Application\UI\Presenter
 
     public function loginFormSucceeded($form)
     {
-        //$this->user->setAuthenticator(AuthenticatorModel); zkoušel jsem, nic nefaká
         try {
             //$this->user->AuthenticatorModel;
             $this->getUser()->login($form->values->username, $form->values->password);

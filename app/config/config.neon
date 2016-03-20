@@ -24,7 +24,9 @@ services:
 	authenticator: App\Models\AuthenticatorModel
 	- App\Models\MapModel
 	- App\Models\StatisticsModel
+	- App\Models\SettingsModel
 	- App\Models\ManagementModel
+	- App\Models\BaseModel
 	- Nette\Mail\Message
 	- Nette\Mail\SendmailMailer
 

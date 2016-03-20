@@ -13,7 +13,7 @@ use Nette,
     Nette\Utils\DateTime;
 
 
-class MapPresenter extends Nette\Application\UI\Presenter
+class MapPresenter extends BasePresenter
 {
     /** @var MapModel @inject*/
     public $mapModel;

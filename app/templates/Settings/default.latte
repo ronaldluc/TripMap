@@ -1,6 +1,6 @@
 {block content}
 
-<div class="container">
+<div class="container container-content">
     <div class="row">
         <div class="col-sm-8 center-block">
             <div class="shadow inner">
@@ -14,7 +14,8 @@
             <div class="shadow inner">
                 <div class="heading-shadow"><h1>Nastavení vzhledu</h1></div>
                 <div class="body-shadow">
-                    {control editUserForm}
+                    <a type="button" class="btn btn-shadow" n:href="changeCss! 1">Bílé</a><br><br>
+                    <a type="button" class="btn btn-shadow" n:href="changeCss! 0">Černé</a>
                 </div>
             </div>
         </div>

@@ -58,6 +58,10 @@ body {
     color: black;
 }
 
+/*.form-control-shadow>.focus {*/
+    /*background-color: #ccff4b;*/
+/*}*/
+
 .btn-shadow {
     background: rgb(255, 255, 255);
     color: #000;
@@ -79,6 +83,18 @@ body {
 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAABHNCSVQICAgIfAhki AAAAGxJREFUKJGdkN0JwDAIhO+kkAWySUZw/5nsS/NXNNgeSEjidycCU/YuVTU44gKcxPVynT4jM0mkuFCUsr5txuI0 ppKyywiTBvis2wCA9CafQFillOMko7G1ZiQNQD9zqrUOk0+giPwD+5gA7AZ5ZCuAD4rfBQAAAABJRU5ErkJggg==)
 }
 
+.navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a:hover {
+    color: #575757;
+    background: rgb(250, 250, 250);
+}
+
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+    background: #b5b5b5;
+}
+
+.navbar-inverse .navbar-brand:hover {
+    color: #000;
+}
 /* measure CSS */
 
 .tooltip {
