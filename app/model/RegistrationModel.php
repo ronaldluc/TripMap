@@ -8,7 +8,8 @@ namespace App\Models;
 use Nette,
     Nette\Security as NS,
     Nette\Utils\DateTime,
-    Nette\Security\Passwords;
+    Nette\Security\Passwords,
+    Nette\Utils\Random;
 
 class RegistrationModel
 {
@@ -33,15 +34,35 @@ class RegistrationModel
                 'password' => Passwords::hash($values->password),
                 'email' => $values->email,
                 'joined' => new DateTime(),
+
             ]);
 
-            /*$mail = new Message;
-            $mail->setFrom('BrNOC bot <bot@brnoc.cz>')
-                ->addTo($values->email)
-                ->setSubject('Potvrzení příhlášení')
-                ->setBody("Byl jsi přihlášen jako účastník BrNOCi 2015. \n \nBrNOC tým");*/
+            $check =  Random::generate(10, "a-zA-Z0-9");
+
+            $user_id = $this->database->table('user')->where('username', $values->username)->fetch();
+
+            $this->database->table('user_validation')->insert([
+                'user_id' => $user_id,
+                'key' => $check,
+            ]);
         }
 
         return $check;
+    }
+
+    public function validateUser($check, $user_name)
+    {
+        $user = $this->database->table('user')->where('username', $user_name)->fetch();
+        $key = $this->database->table('user_validation')->where('user_id', $user->id)->fetch();
+
+        if ($key->key == $check) {
+            $this->database->table('user')->where('id', $user->id)->update([
+                'checked' => 1,
+            ]);
+            $this->database->table('user_validation')->where('user_id', $user->id)->delete();
+
+            return 1;
+        }
+        return 0;
     }
 }
