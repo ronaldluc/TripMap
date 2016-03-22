@@ -69,7 +69,7 @@ class RegistrationPresenter extends LoginPresenter
                     pro dokončení registrace na webu TripMap.cz je nutné aktivovat účet. Na tento email Ti budou chodit zprávy o veškerých změnách Tvého účtu a v případě zapomenutí hesla
                     Ti na tento email ti přijde nové.<br><br>
 
-                    <a href=\"www.tripmap.cz$url\">Odkaz pro aktivaci: www.tripmap.cz$url.</a> <br><br>
+                    Odkaz pro aktivaci: <a href=\"http://www.tripmap.cz$url\">http://www.tripmap.cz$url.</a> <br><br>
 
                     Příjemné používání aplikace
                     <a href=\"mailto:ronald.luc@tripmap.cz\"></a>Ronald Luc</a>"

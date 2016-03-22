@@ -46,13 +46,14 @@ class ManagementPresenter extends BasePresenter
                 'lenght' => $chosen->lenght,
             ]);
         }
+//        $this->redrawControl('tripContainer');
 
         if ($this->filter != NULL)
         {
             $this->template->trips = $this->managementModel->getFilteredTrips($this->user->id, $this->filter->from, $this->filter->to, $this->filter->name);
-            $this->template->tripsId = $this->managementModel->getFilteredId($this->user->id, $this->filter->from, $this->filter->to, $this->filter->name);
-            dump($this->template->tripsId);
-            die;
+//            $this->template->tripsId = $this->managementModel->getFilteredId($this->user->id, $this->filter->from, $this->filter->to, $this->filter->name);
+//            dump($this->template->tripsId);
+//            die;
         } else {
             $this->template->trips = $this->managementModel->allTrips($this->user->id);
             $this->template->tripsId = 1;

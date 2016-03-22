@@ -24,9 +24,12 @@ class AuthenticatorModel implements NS\IAuthenticator
             ->where('username', $username)->fetch();
 
         if (!$row) {
-            throw new NS\AuthenticationException('Uživatel nenalezen.');
+            $row = $this->database->table('user')
+                ->where('email', $username)->fetch();
+            if (!$row) {
+                throw new NS\AuthenticationException('Uživatel nenalezen.');
+            }
         }
-
 
         if (!NS\Passwords::verify($password, $row->password)) {
             throw new NS\AuthenticationException('Špatné heslo.');
