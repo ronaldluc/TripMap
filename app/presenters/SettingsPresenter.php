@@ -26,12 +26,21 @@ class SettingsPresenter extends BasePresenter
         $this->authenticatorModel = $authenticatorModel;
     }
 
+    protected function startUp()
+    {
+        parent::startup();
+        if (!$this->user->isLoggedIn())
+        {
+            $this->flashMessage('Pro přístup k mapám je nutné se přihlásit.', 'danger');
+            $this->redirect('Login:');
+        }
+    }
+
     protected function createComponentEditUserForm()
     {
         $form = new Form;
 
-        $form->addText('username', 'Uživatelské jméno')
-            ->setRequired();
+        $form->addText('username', 'Uživatelské jméno');
 
         $form->addPassword('oldPassword', 'Původní heslo')
             ->setRequired();
@@ -50,7 +59,6 @@ class SettingsPresenter extends BasePresenter
 
         return $form;
     }
-
 
     public function editUserFormSucceeded($form, $values)
     {

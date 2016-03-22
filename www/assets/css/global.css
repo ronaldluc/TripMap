@@ -23,8 +23,12 @@
 .container-content {
     align-content: center;
     padding: 0px;
-    padding-top: 150px;
+    padding-top: 0px;
     padding-bottom: 30px;
+}
+
+.header {
+    height: 150px;
 }
 
 .flash-message {
