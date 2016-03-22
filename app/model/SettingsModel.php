@@ -28,12 +28,16 @@ class SettingsModel
 //            throw new NS\AuthenticationException('Špatné heslo.');
             $check = 0;
         } else {
-            if ($values->newPassword == NULL) $values->newPassword = 'a';
-
-            $this->database->table('user')->where('id', $user_id)->update([
-                'username' => $values->username,
-                'password' => Passwords::hash($values->newPassword),
-            ]);
+            if ($values->newPassword != NULL) {
+                $this->database->table('user')->where('id', $user_id)->update([
+                    'password' => Passwords::hash($values->newPassword),
+                ]);
+            }
+            if ($values->username != NULL) {
+                $this->database->table('user')->where('id', $user_id)->update([
+                    'username' => $values->username,
+                ]);
+            }
             $check = 1;
         }
 
