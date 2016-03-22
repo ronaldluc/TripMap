@@ -39,10 +39,13 @@ class RegistrationModel
 
             $check =  Random::generate(10, "a-zA-Z0-9");
 
-            $user_id = $this->database->table('user')->where('username', $values->username)->fetch();
-
+            dump($check);
+            dump('ahoj!');
+//
+            $user = $this->database->table('user')->where('username', $values->username)->fetch();
+//
             $this->database->table('user_validation')->insert([
-                'user_id' => $user_id,
+                'user_id' => $user->id,
                 'key' => $check,
             ]);
         }

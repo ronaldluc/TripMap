@@ -27,7 +27,7 @@ class StatisticsPresenter extends BasePresenter
     {
         $this->template->userStats = $this->statisticsModel->getUserStats($this->user->id);
 
-        $this->template->globalStats = $this->statisticsModel->getglobalStats();
+        $this->template->globalStats = $this->statisticsModel->getGlobalStats();
     }
 
 }
