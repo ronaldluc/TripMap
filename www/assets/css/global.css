@@ -46,6 +46,10 @@
     margin-top: 30%;
 }
 
+body {
+    background-image: url("../img/backgroundMapSmooth.png");
+}
+
 /* body */
 .body-shadow {
     padding-top: 24px;
@@ -69,6 +73,12 @@
     font-size: 200%;
 }
 
+.img-border {
+    border: solid;
+    border-width: 2px;
+    border-color: rgba(5, 5, 5, 1);
+}
+
 .table-pure{
     width:100%;
     max-width:100%;
@@ -82,9 +92,10 @@
     vertical-align:top;
 }
 
-.fixed {
-    position: fixed;
-
+@media (min-width:992px){
+    .fixed {
+        position: fixed;
+    }
 }
 
 .sub-wraper {
