@@ -24,7 +24,6 @@ html {
 
 body {
     background-color: white;
-    background-image: url("../img/backgroundMapSmooth.png");
     background-attachment: fixed;
     background-repeat: repeat-x;
 }

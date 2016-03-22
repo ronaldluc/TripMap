@@ -13,9 +13,9 @@
         <div class="col-sm-4 center-block">
             <div class="shadow inner">
                 <div class="heading-shadow"><h1>Nastavení vzhledu</h1></div>
-                <div class="body-shadow">
-                    <a type="button" class="btn btn-shadow" n:href="changeCss! 1">Bílé</a><br><br>
-                    <a type="button" class="btn btn-shadow" n:href="changeCss! 0">Černé</a>
+                <div class="body-shadow" height="500px">
+                    <a n:if="$userCss == 0" n:href="changeCss! 1"><img class="img-rounded img-responsive" src="{$basePath}/assets/img/LightTheme.png" alt="Noční Brno" width="100%"></a>
+                    <a n:if="$userCss == 1" n:href="changeCss! 0"><img class="img-rounded img-responsive" src="{$basePath}/assets/img/DarkTheme.png" alt="Noční Brno" width="100%"></a><br><br>
                 </div>
             </div>
         </div>
