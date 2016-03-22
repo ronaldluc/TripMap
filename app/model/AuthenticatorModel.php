@@ -22,10 +22,7 @@ class AuthenticatorModel implements NS\IAuthenticator
         list($username, $password) = $credentials;
         $row = $this->database->table('user')
             ->where('username', $username)->fetch();
-//        dump($username);
-//        dump($password);
-//        dump($row->password);
-        //die();
+
         if (!$row) {
             throw new NS\AuthenticationException('Uživatel nenalezen.');
         }
@@ -33,6 +30,10 @@ class AuthenticatorModel implements NS\IAuthenticator
 
         if (!NS\Passwords::verify($password, $row->password)) {
             throw new NS\AuthenticationException('Špatné heslo.');
+        }
+
+        if($row->checked == 0) {
+            throw new NS\AuthenticationException('Neaktivovaný účet');
         }
 
         return new NS\Identity($row->id, $row->role, array('username' => $row->username));

@@ -69,19 +69,21 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand" href="#">TripMap</a>
+                            <a class="navbar-brand">TripMap</a>
                         </div>
                         <div id="navbar" class="navbar-collapse collapse">
                             <ul class="nav navbar-nav">
                                 <li {ifCurrent Homepage:* }class="active"{/ifCurrent}><a n:href="Homepage:default">Home</a></li>
                                 <li n:if="$user->loggedIn" {ifCurrent Map:* }class="active"{/ifCurrent}><a n:href="Map:default">Mapa</a></li>
                                 <li n:if="$user->loggedIn" {ifCurrent Management:* }class="active"{/ifCurrent}><a n:href="Management:default">Správa</a></li>
-                                <li {ifCurrent Statistics:* }class="active"{/ifCurrent}><a n:href="Statistics:">Statistiky</a></li>
+                                <li n:if="$user->loggedIn" {ifCurrent Statistics:* }class="active"{/ifCurrent}><a n:href="Statistics:">Statistiky</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
+                                <li n:if="$user->loggedIn"><a n:href="UserSupport:">Zpětná vazba</a></li>
                                 <li n:if="$user->loggedIn"><a n:href="Settings:">Nastavení</a></li>
-                                <li n:if="!$user->loggedIn" {ifCurrent Registration: }class="active"{/ifCurrent}><a n:href="Registration:">Registrace</a></li>
-                                <li n:if="!$user->loggedIn" {ifCurrent Login: }class="active"{/ifCurrent}><a n:href="Login:">Přihlásit</a></li>
+                                <li n:if="!$user->loggedIn"><a n:href="Settings:">Nastavení</a></li>
+                                {*<li n:if="!$user->loggedIn" {ifCurrent Registration: }class="active"{/ifCurrent}><a n:href="Registration:">Registrace</a></li>*}
+                                {*<li n:if="!$user->loggedIn" {ifCurrent Login: }class="active"{/ifCurrent}><a n:href="Login:">Přihlásit</a></li>*}
                                 <li n:if="$user->loggedIn" {ifCurrent Login:}class="active"{/ifCurrent}><a n:href="Login:out">Odhlásit</a></li>
 
                                 <li class=""><a href="#" class="navbar-link"><i class="fa fa-facebook-square"></i></a></li>
@@ -92,13 +94,15 @@
             </div>
         </div>
 
-        <div class="container">
+        {ifCurrent Map:}{else}
+        <div class="container header">
             <div n:foreach="$flashes as $flash" class="flash-message">
                         <div n:foreach="$flashes as $flash" class="alert shadow heading-shadow text-center"><h2 class="margin-flash-message">{$flash->message}</h2></div>
                         {*<h2>Tady je super text</h2>*}
             </div>
             {*<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type} text-center">{$flash->message}</div>*}
         </div>
+        {/ifCurrent}
 
         {include content}
 

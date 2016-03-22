@@ -46,7 +46,12 @@ class LoginPresenter extends BasePresenter
         try {
             //$this->user->AuthenticatorModel;
             $this->getUser()->login($form->values->username, $form->values->password);
-            $this->flashMessage('Jsi přihlášen.', 'success');
+//            if ($this->authenticatorModel->checkUser($this->user->id)) {
+                $this->flashMessage('Jsi přihlášen.', 'success');
+//            } else {
+//                $this->getUser()->logout();
+//                $this->flashMessage('Neaktivovaný účet', 'success');
+//            }
             $this->redirect('Homepage:');
         } catch (Nette\Security\AuthenticationException $e) {
             $this->flashMessage($e->getMessage(), 'danger');

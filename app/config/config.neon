@@ -27,8 +27,10 @@ services:
 	- App\Models\SettingsModel
 	- App\Models\ManagementModel
 	- App\Models\BaseModel
+	- App\Models\UserSupportModel
 	- Nette\Mail\Message
 	- Nette\Mail\SendmailMailer
+	- App\Presenters\RegistrationPresenter
 
 extensions:
     formDateTime: IPub\FormDateTime\DI\FormDateTimeExtension
