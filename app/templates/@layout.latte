@@ -73,15 +73,16 @@
                         </div>
                         <div id="navbar" class="navbar-collapse collapse">
                             <ul class="nav navbar-nav">
-                                <li {ifCurrent Homepage:* }class="active"{/ifCurrent}><a n:href="Homepage:default">Home</a></li>
+                                <li n:if="!$user->loggedIn" {ifCurrent Homepage:default}class="active"{/ifCurrent}><a n:href="Homepage:default">Home</a></li>
+                                <li {ifCurrent Homepage:showCase }class="active"{/ifCurrent}><a n:href="Homepage:showCase">Ukázka</a></li>
                                 <li n:if="$user->loggedIn" {ifCurrent Map:* }class="active"{/ifCurrent}><a n:href="Map:default">Mapa</a></li>
                                 <li n:if="$user->loggedIn" {ifCurrent Management:* }class="active"{/ifCurrent}><a n:href="Management:default">Správa</a></li>
                                 <li n:if="$user->loggedIn" {ifCurrent Statistics:* }class="active"{/ifCurrent}><a n:href="Statistics:">Statistiky</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
-                                <li n:if="$user->loggedIn"><a n:href="UserSupport:">Zpětná vazba</a></li>
-                                <li n:if="$user->loggedIn"><a n:href="Settings:">Nastavení</a></li>
-                                <li n:if="!$user->loggedIn"><a n:href="Settings:">Nastavení</a></li>
+                                <li n:if="$user->loggedIn" {ifCurrent UserSupport:* }class="active"{/ifCurrent}><a n:href="UserSupport:">Zpětná vazba</a></li>
+                                <li {ifCurrent Contact:* }class="active"{/ifCurrent}"><a n:href="Contact:">Kontakt</a></li>
+                                <li n:if="$user->loggedIn" {ifCurrent Settings:* }class="active"{/ifCurrent}><a n:href="Settings:">Nastavení</a></li>
                                 {*<li n:if="!$user->loggedIn" {ifCurrent Registration: }class="active"{/ifCurrent}><a n:href="Registration:">Registrace</a></li>*}
                                 {*<li n:if="!$user->loggedIn" {ifCurrent Login: }class="active"{/ifCurrent}><a n:href="Login:">Přihlásit</a></li>*}
                                 <li n:if="$user->loggedIn" {ifCurrent Login:}class="active"{/ifCurrent}><a n:href="Login:out">Odhlásit</a></li>
@@ -109,6 +110,18 @@
 
 
     </div>
+
+    {*<div class="filler"> </div>*}
+
+    {*{ifCurrent Map:}{else}*}
+    {*<div class="footer">*}
+        {*<!-- FOOTER -->*}
+        {*<footer class="container">*}
+            {*<p class="pull-right"><a href="#">Nahoru</a></p>*}
+            {*<p class="footer-text">&copy; 2016 by <a href="mailto:ron.norik&#64gmail.com">Ronald Luc</a> &middot; PúS &middot;</p>*}
+        {*</footer>*}
+    {*</div>*}
+    {*{/ifCurrent}*}
 	{block scripts}
 
 

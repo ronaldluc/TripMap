@@ -129,3 +129,11 @@ url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAABHNCSV
     border-top-color: rgba(0, 0, 0, 0.82);
 }
 
+/* footer */
+.footer {
+    background-color: white;
+    border-top: solid;
+    border-color: black;
+    border-width: 1px;
+    padding-top: 5px;
+}
