@@ -82,3 +82,9 @@ body {
 .tooltip-static:before {
     border-top-color: rgba(0, 0, 0, 0.69);
 }
+
+/* footer */
+.footer {
+    background-color: white;
+    border-top: solid;
+}

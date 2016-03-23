@@ -64,6 +64,10 @@ body {
     width: 950px;
 }
 
+.filler {
+    height: 100%;
+}
+
 /* Stats */
 .inner{
     margin-bottom: 15px;
