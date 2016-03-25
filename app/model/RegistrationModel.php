@@ -68,4 +68,15 @@ class RegistrationModel
         }
         return 0;
     }
+
+    public function newPassword($user_email)
+    {
+        $newPassword =  Random::generate(10, "a-zA-Z0-9");
+
+        $this->database->table('user')->where('email', $user_email)->update([
+            'password' => Passwords::hash($newPassword),
+        ]);
+
+        return $newPassword;
+    }
 }

@@ -88,3 +88,12 @@ body {
     background-color: white;
     border-top: solid;
 }
+
+/* other */
+.link {
+    color: white;
+}
+
+.link:hover {
+    color: #e9e9e9;
+}

@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="cz">
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<title>{ifset title}{include title|striptags} | {/ifset}TripMap</title>
+
+    <!-- Meta information -->
+    <meta name="description" content="Správa turistických cest, výletů a dovolených">
+    <meta name="keywords" content="správa, deník, deníček, cestování, turistické cesty, výlety, výlet, dovolené, dovolená">
+    <meta name="author" content="Ronald Luc">
+    <link rel="alternate" hreflang="cz-cz">
 
     <!-- jQuerry -->
     <script src="{$basePath}/jquery/dist/jquery.min.js"></script>
@@ -53,6 +59,24 @@
     {/if}
     <link href="{$basePath}/assets/css/global.css" rel="stylesheet">
     {*<link href="{$basePath}/assets/fonts/css/font-awesome.min.css" rel="stylesheet">*}
+
+    <link rel="apple-touch-icon" sizes="57x57" href="{$basePath}/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="{$basePath}/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="{$basePath}/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="{$basePath}/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="{$basePath}/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="{$basePath}/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="{$basePath}/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="{$basePath}/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="{$basePath}/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="{$basePath}/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{$basePath}/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="{$basePath}/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{$basePath}/favicon/favicon-16x16.png">
+    <link rel="manifest" href="{$basePath}/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="{$basePath}/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
 </head>
 
 <body>
@@ -74,6 +98,7 @@
                         <div id="navbar" class="navbar-collapse collapse">
                             <ul class="nav navbar-nav">
                                 <li n:if="!$user->loggedIn" {ifCurrent Homepage:default}class="active"{/ifCurrent}><a n:href="Homepage:default">Home</a></li>
+                                <li n:if="$user->loggedIn" {ifCurrent Homepage:news}class="active"{/ifCurrent}><a n:href="Homepage:news">Home</a></li>
                                 <li {ifCurrent Homepage:showCase }class="active"{/ifCurrent}><a n:href="Homepage:showCase">Ukázka</a></li>
                                 <li n:if="$user->loggedIn" {ifCurrent Map:* }class="active"{/ifCurrent}><a n:href="Map:default">Mapa</a></li>
                                 <li n:if="$user->loggedIn" {ifCurrent Management:* }class="active"{/ifCurrent}><a n:href="Management:default">Správa</a></li>
@@ -81,6 +106,7 @@
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 <li n:if="$user->loggedIn" {ifCurrent UserSupport:* }class="active"{/ifCurrent}><a n:href="UserSupport:">Zpětná vazba</a></li>
+                                <li n:if="!$user->loggedIn" {ifCurrent Registration:newPassword }class="active"{/ifCurrent}><a n:href="Registration:newPassword">Zapomenuté heslo</a></li>
                                 <li {ifCurrent Contact:* }class="active"{/ifCurrent}"><a n:href="Contact:">Kontakt</a></li>
                                 <li n:if="$user->loggedIn" {ifCurrent Settings:* }class="active"{/ifCurrent}><a n:href="Settings:">Nastavení</a></li>
                                 {*<li n:if="!$user->loggedIn" {ifCurrent Registration: }class="active"{/ifCurrent}><a n:href="Registration:">Registrace</a></li>*}
