@@ -44,6 +44,9 @@
 
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
 
+    <!-- Font Awesome -->
+    <link href="{$basePath}/assets/fonts/css/font-awesome.min.css" rel="stylesheet">
+
 
 
 
@@ -99,6 +102,8 @@
                                 <li n:if="!$user->loggedIn" {ifCurrent Homepage:default}class="active"{/ifCurrent}><a n:href="Homepage:default">Home</a></li>
                                 <li n:if="$user->loggedIn" {ifCurrent Homepage:news}class="active"{/ifCurrent}><a n:href="Homepage:news">Home</a></li>
                                 <li {ifCurrent Homepage:showCase }class="active"{/ifCurrent}><a n:href="Homepage:showCase">Výhody</a></li>
+                                <li n:if="!$user->loggedIn" {ifCurrent Login:guide}class="active"{/ifCurrent}><a n:href="Login:guide">Návod</a></li>
+                                <li n:if="$user->loggedIn" {ifCurrent Homepage:guide}class="active"{/ifCurrent}><a n:href="Homepage:guide">Návod</a></li>
                                 <li n:if="$user->loggedIn" {ifCurrent Map:* }class="active"{/ifCurrent}><a n:href="Map:default">Mapa</a></li>
                                 <li n:if="$user->loggedIn" {ifCurrent Management:* }class="active"{/ifCurrent}><a n:href="Management:default">Správa</a></li>
                                 <li n:if="$user->loggedIn" {ifCurrent Statistics:* }class="active"{/ifCurrent}><a n:href="Statistics:">Statistiky</a></li>
@@ -112,7 +117,7 @@
                                 {*<li n:if="!$user->loggedIn" {ifCurrent Login: }class="active"{/ifCurrent}><a n:href="Login:">Přihlásit</a></li>*}
                                 <li n:if="$user->loggedIn" {ifCurrent Login:}class="active"{/ifCurrent}><a n:href="Login:out">Odhlásit</a></li>
 
-                                <li class=""><a href="#" class="navbar-link"><i class="fa fa-facebook-square"></i></a></li>
+                                {*<li class=""><a href="#" class="navbar-link"><i class="fa fa-facebook-square"></i></a></li>*}
                             </ul>
                         </div>
                 </nav>
@@ -123,7 +128,7 @@
         {ifCurrent Map:}{else}
         <div class="container header">
             <div n:foreach="$flashes as $flash" class="flash-message">
-                        <div n:foreach="$flashes as $flash" class="alert shadow heading-shadow text-center"><h2 class="margin-flash-message">{$flash->message}</h2></div>
+                        <div class="alert shadow heading-shadow text-center"><h2 class="margin-flash-message">{$flash->message}</h2></div>
                         {*<h2>Tady je super text</h2>*}
             </div>
             {*<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type} text-center">{$flash->message}</div>*}
