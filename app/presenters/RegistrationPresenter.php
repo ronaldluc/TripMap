@@ -61,7 +61,7 @@ class RegistrationPresenter extends LoginPresenter
 
             $mail = new Message;
 
-            $mail->setFrom('bot@tripmap.cz', 'TripMap bot')
+            $mail->setFrom('system@tripmap.cz', 'TripMap')
                 ->addTo($values->email, $values->username)
                 ->setSubject('Registrace | TripMap.cz')
                 ->setHTMLBody(
@@ -74,7 +74,7 @@ class RegistrationPresenter extends LoginPresenter
                     Aplikace je stále v aktivním vývoji, můžeš počítat s novinkami každý týden.<br><br>
 
                     Příjemné používání aplikace<br>
-                    <a href=\"mailto:ronald.luc&#64tripmap.cz\"></a>Ronald Luc</a>"
+                    <a href=\"mailto:ronald.luc&#64tripmap.cz\">Ronald Luc</a> "
                 );
 
             $mailer = new SendmailMailer;
@@ -90,12 +90,14 @@ class RegistrationPresenter extends LoginPresenter
 
     public function renderActivation($check, $user_name)
     {
-        if ($this->registrationModel->validateUser($check, $user_name)) {
-            $this->flashMessage('Účet úspěšně aktivován', 'success');
-        } else {
-            $this->flashMessage('Klíče se neshodují '.$check, 'danger');
+        if ($check and $user_name) {
+            if ($this->registrationModel->validateUser($check, $user_name)) {
+                $this->flashMessage('Účet úspěšně aktivován', 'success');
+            } else {
+                $this->flashMessage('Klíče se neshodují '.$check, 'danger');
+            }
         }
-        $this->redirect('Login:');
+        $this->redirect('Login:guide');
     }
 
     protected function createComponentNewPasswordForm()
@@ -118,13 +120,14 @@ class RegistrationPresenter extends LoginPresenter
     {
         $newPassword = $this->registrationModel->newPassword($values->email);
 
-        $mail = new Message;
+        if ($newPassword) {
+            $mail = new Message;
 
-        $mail->setFrom('bot@tripmap.cz', 'TripMap bot')
-            ->addTo($values->email, $values->username)
-            ->setSubject('Obnovení hesla | TripMap.cz')
-            ->setHTMLBody(
-                "Vážený uživateli,<br><br>
+            $mail->setFrom('system@tripmap.cz', 'TripMap')
+                ->addTo($values->email)
+                ->setSubject('Obnovení hesla | TripMap.cz')
+                ->setHTMLBody(
+                    "Vážený uživateli,<br><br>
                     zažádal jsi o obnovení hesla na <a href=\"http://www.tripmap.cz\">webu TripMap.cz</a>. Tvoje nové heslo je:<br><br>
 
                     $newPassword<br><br>
@@ -132,14 +135,19 @@ class RegistrationPresenter extends LoginPresenter
                     V nastavení si ho můžeš změnit.<br><br>
 
                     Příjemné používání aplikace<br>
-                    <a href=\"mailto:ronald.luc&#64tripmap.cz\"></a>Ronald Luc</a>"
-            );
+                    <a href=\"mailto:ronald.luc&#64tripmap.cz\">Ronald Luc</a> "
+                );
 
-        $mailer = new SendmailMailer;
+            $mailer = new SendmailMailer;
 
-        $mailer->send($mail);
+            $mailer->send($mail);
 
-        $this->flashMessage('Registrace proběhla úspěšně, byl ti odeslán aktivační email', 'success');
+            $this->flashMessage('By ti zaslán email s novým heslem', 'success');
+        } else {
+            $this->flashMessage('Neexistující email'.$newPassword, 'danger');
+        }
+
+        $this->redirect('Login:default');
     }
 
 }

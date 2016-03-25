@@ -67,7 +67,7 @@ var measureTooltip;
  * Message to show when the user is drawing a polygon.
  * @type {  string }
  */
-var continuePolygonMsg = 'Klikněte pro dokončení výletu';
+var continuePolygonMsg = 'Dvojklikem dokončíte výlet';
 
 
 /**
