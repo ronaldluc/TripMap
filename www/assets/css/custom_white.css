@@ -137,3 +137,12 @@ url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAABHNCSV
     border-width: 1px;
     padding-top: 5px;
 }
+
+/* other */
+.link {
+    color: black;
+}
+
+.link:hover {
+    color: #454545;
+}

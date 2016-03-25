@@ -45,7 +45,7 @@ class RegistrationPresenter extends LoginPresenter
 
         $form->onSuccess[] = array($this, 'registrationFormSucceeded');
 
-    Helpers::bootstrapForm($form);
+        Helpers::bootstrapForm($form);
 
         return $form;
     }
@@ -63,16 +63,18 @@ class RegistrationPresenter extends LoginPresenter
 
             $mail->setFrom('bot@tripmap.cz', 'TripMap bot')
                 ->addTo($values->email, $values->username)
-                ->setSubject('Registrace na TripMap.cz')
+                ->setSubject('Registrace | TripMap.cz')
                 ->setHTMLBody(
-                    "Vážený uživateli<br><br>
-                    pro dokončení registrace na webu TripMap.cz je nutné aktivovat účet. Na tento email Ti budou chodit zprávy o veškerých změnách Tvého účtu a v případě zapomenutí hesla
-                    Ti na tento email ti přijde nové.<br><br>
+                    "Vážený uživateli,<br><br>
+                    pro dokončení registrace na webu TripMap.cz je nutné účet aktivovat. Na tento email Ti budou chodit zprávy o veškerých změnách Tvého účtu a v případě zapomenutí hesla
+                    Ti na tento email přijde nové.<br><br>
 
                     Odkaz pro aktivaci: <a href=\"http://www.tripmap.cz$url\">http://www.tripmap.cz$url.</a> <br><br>
 
-                    Příjemné používání aplikace
-                    <a href=\"mailto:ronald.luc@tripmap.cz\"></a>Ronald Luc</a>"
+                    Aplikace je stále v aktivním vývoji, můžeš počítat s novinkami každý týden.<br><br>
+
+                    Příjemné používání aplikace<br>
+                    <a href=\"mailto:ronald.luc&#64tripmap.cz\"></a>Ronald Luc</a>"
                 );
 
             $mailer = new SendmailMailer;
@@ -84,7 +86,6 @@ class RegistrationPresenter extends LoginPresenter
             $this->flashMessage('Toto uživatelské jméno je už zabrané', 'danger');
         }
         $this->redirect('this');
-
     }
 
     public function renderActivation($check, $user_name)
@@ -95,6 +96,50 @@ class RegistrationPresenter extends LoginPresenter
             $this->flashMessage('Klíče se neshodují '.$check, 'danger');
         }
         $this->redirect('Login:');
+    }
+
+    protected function createComponentNewPasswordForm()
+    {
+        $form = new Form;
+
+        $form->addText('email', 'Email')
+            ->setRequired()->addRule($form::EMAIL);
+
+        $form->addSubmit('send', 'Zaslat nové heslo');
+
+        $form->onSuccess[] = array($this, 'newPasswordFormSucceeded');
+
+        Helpers::bootstrapForm($form);
+
+        return $form;
+    }
+
+    public function newPasswordFormSucceeded($form, $values)
+    {
+        $newPassword = $this->registrationModel->newPassword($values->email);
+
+        $mail = new Message;
+
+        $mail->setFrom('bot@tripmap.cz', 'TripMap bot')
+            ->addTo($values->email, $values->username)
+            ->setSubject('Obnovení hesla | TripMap.cz')
+            ->setHTMLBody(
+                "Vážený uživateli,<br><br>
+                    zažádal jsi o obnovení hesla na <a href=\"http://www.tripmap.cz\">webu TripMap.cz</a>. Tvoje nové heslo je:<br><br>
+
+                    $newPassword<br><br>
+
+                    V nastavení si ho můžeš změnit.<br><br>
+
+                    Příjemné používání aplikace<br>
+                    <a href=\"mailto:ronald.luc&#64tripmap.cz\"></a>Ronald Luc</a>"
+            );
+
+        $mailer = new SendmailMailer;
+
+        $mailer->send($mail);
+
+        $this->flashMessage('Registrace proběhla úspěšně, byl ti odeslán aktivační email', 'success');
     }
 
 }
