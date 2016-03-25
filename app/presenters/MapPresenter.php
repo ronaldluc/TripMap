@@ -39,8 +39,7 @@ class MapPresenter extends BasePresenter
         $form->addText('name', 'Název')
             ->setRequired();
 
-        $form->addTextArea('text', 'Poznámka')
-            ->setRequired();
+        $form->addTextArea('text', 'Poznámka');
 
         $form->addText('date', 'Začátek')
             ->setType('date')
