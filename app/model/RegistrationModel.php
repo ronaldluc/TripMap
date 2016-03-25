@@ -73,10 +73,17 @@ class RegistrationModel
     {
         $newPassword =  Random::generate(10, "a-zA-Z0-9");
 
-        $this->database->table('user')->where('email', $user_email)->update([
-            'password' => Passwords::hash($newPassword),
-        ]);
+        $count = $this->database->table('user')->where('email', $user_email)->count('*');
 
-        return $newPassword;
+        if ($count > 0) {
+            $this->database->table('user')->where('email', $user_email)->update([
+                'password' => Passwords::hash($newPassword),
+            ]);
+
+            return $newPassword;
+        } else {
+            return NULL;
+        }
+
     }
 }
