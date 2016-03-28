@@ -3,24 +3,24 @@
 {snippet tripContainer}
 <div class="container container-content">
     <div class="shadow col-xs-12 col-md-9 row-offcanvas">
-        <div class="heading-shadow"><h1>Správa výletů</h1></div>
+        <div class="heading-shadow"><h1>Přehled navštívených míst</h1></div>
 
         <div class="body-shadow">
             <div class="table-responsive">
                 <table n:snippet="tripContainerR" class="table shadow white">
                     <tbody >
                         <div n:foreach="$trips as $trip" class="trip">
-                                <tr>
-                                    <th colspan="2" class="col-md-3">{$trip->name}</th>
-                                    <td class="text-center" rowspan="4">{$trip->text}</td>
-                                    <td class="col-md-1" rowspan="2"><a n:href="edit! $trip->id" class="shadow white ajax">Editovat</a></td>
-                                </tr>
-                                <tr><th colspan="2">{$trip->date|date:'%d. %m. %Y'}</th></tr>
-                                <tr><td>{$trip->duration} {if $trip->duration==1}den
-                                        {elseif $trip->duration > 4}dní{else}dny{/if}</td><td>{if $trip->lenght}{$trip->lenght} km{/if}</td>
-                                    <td><a n:href="delete! $trip->id" class="shadow white ajax">Smazat</a></td>
-                                </tr>
-                                <tr class="white"><td colspan="4"></td></tr>
+                            <tr>
+                                <th colspan="2" class="col-md-3">{$trip->name}</th>
+                                <td class="text-center" rowspan="4">{$trip->text}</td>
+                                <td class="col-md-1" rowspan="2"><a n:href="edit! $trip->id" class="shadow white ajax">Editovat</a></td>
+                            </tr>
+                            <tr><th colspan="2">{$trip->date|date:'%d. %m. %Y'}</th></tr>
+                            <tr><td>{$trip->duration} {if $trip->duration==1}den
+                                    {elseif $trip->duration > 4}dní{else}dny{/if}</td><td>{if $trip->lenght}{$trip->lenght} km{/if}</td>
+                                <td><a n:href="delete! $trip->id" class="shadow white ajax">Smazat</a></td>
+                            </tr>
+                            <tr class="white"><td colspan="4"></td></tr>
                         </div>
                     </tbody>
                 </table>

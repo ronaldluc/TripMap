@@ -74,7 +74,7 @@ class RegistrationPresenter extends LoginPresenter
                     Aplikace je stále v aktivním vývoji, můžeš počítat s novinkami každý týden.<br><br>
 
                     Příjemné používání aplikace<br>
-                    <a href=\"mailto:ronald.luc&#64tripmap.cz\">Ronald Luc</a> "
+                    <a href=\"mailto:ron.norik@gmail.com\">Ronald Luc</a> "
                 );
 
             $mailer = new SendmailMailer;
@@ -94,7 +94,7 @@ class RegistrationPresenter extends LoginPresenter
             if ($this->registrationModel->validateUser($check, $user_name)) {
                 $this->flashMessage('Účet úspěšně aktivován', 'success');
             } else {
-                $this->flashMessage('Klíče se neshodují '.$check, 'danger');
+                $this->flashMessage('Klíče se neshodují', 'danger');
             }
         }
         $this->redirect('Login:guide');
@@ -135,7 +135,7 @@ class RegistrationPresenter extends LoginPresenter
                     V nastavení si ho můžeš změnit.<br><br>
 
                     Příjemné používání aplikace<br>
-                    <a href=\"mailto:ronald.luc&#64tripmap.cz\">Ronald Luc</a> "
+                    <a href=\"mailto:ron.norik@gmail.com\">Ronald Luc</a> "
                 );
 
             $mailer = new SendmailMailer;
@@ -144,7 +144,7 @@ class RegistrationPresenter extends LoginPresenter
 
             $this->flashMessage('By ti zaslán email s novým heslem', 'success');
         } else {
-            $this->flashMessage('Neexistující email'.$newPassword, 'danger');
+            $this->flashMessage('Neexistující email', 'danger');
         }
 
         $this->redirect('Login:default');
