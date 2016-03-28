@@ -177,7 +177,7 @@ $(map.getViewport()).on('mouseout', function() {
 var draw; // global so we can remove it later
 function addInteraction() {
     var type = 'Polygon';
-    console.log(type);
+    //console.log(type);
     draw = new ol.interaction.Draw({
         source: vectorSource,
         type: /** @type { ol.geom.GeometryType} */ (type),
@@ -345,12 +345,10 @@ var formatArea = function(polygon) {
 addInteraction();
 
 
-
-
 /**
  * Loads trips from DB into map vectorLayer
  */
-function loadTrip(text, id) {
+function loadTrip(text, id, red, green, blue) {
     var trip = JSON.parse(text);
     var polygon = new ol.geom.Polygon([trip]);
     console.log(polygon);
@@ -362,10 +360,18 @@ function loadTrip(text, id) {
         console.log(e.target.l);
     });
 
+    feature.setStyle(new ol.style.Style({
+        fill: new ol.style.Fill({
+            color: 'rgba('+red+','+green+','+blue+', 0.6)'
+        }),
+        stroke: new ol.style.Stroke({
+            color: 'rgba(0, 0, 0, 0.8)',
+            width: 2
+        })
+    }));
+
      //Create vector source and the feature to it. function(e){console.log(e.g.B.geometry.A);console.log(id)}
     features.push(feature);
-
-
 };
 
 

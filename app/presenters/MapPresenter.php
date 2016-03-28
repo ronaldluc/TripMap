@@ -81,7 +81,34 @@ class MapPresenter extends BasePresenter
 
     public function renderDefault()
     {
-        $this->template->trips = $this->mapModel->loadTrips($this->user->id);
+        $trips =  $this->mapModel->loadTrips($this->user->id);
+
+        $filters = $this->mapModel->loadFilters($this->user->id);
+
+        $newTrips = [];
+
+        foreach ($trips as $trip) {
+            if ($trip->filter_id) {
+                $newTrips[] = [
+                    'id' => $trip->id,
+                    'polygon' => $trip->polygon,
+                    'red' => $filters[$trip->filter_id]->red,
+                    'green' => $filters[$trip->filter_id]->green,
+                    'blue' => $filters[$trip->filter_id]->blue,
+//                    'name' => $filters[$trip->filter_id]->name,
+                    ];
+            } else {
+                $newTrips[] = [
+                    'id' => $trip->id,
+                    'polygon' => $trip->polygon,
+                    'red' => 0,
+                    'green' => 0,
+                    'blue' => 0,
+                    ];
+            }
+        }
+
+        $this->template->trips = $newTrips;
 
         $this->template->showModal = FALSE;
         $this['newTripForm']->setDefaults([
@@ -91,7 +118,6 @@ class MapPresenter extends BasePresenter
         ]);
 
         $this->redrawControl("newTrip");
-
     }
 
     public function handleChangeTrip()

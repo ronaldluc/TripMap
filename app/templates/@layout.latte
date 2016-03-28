@@ -105,7 +105,7 @@
                                 <li n:if="!$user->loggedIn" {ifCurrent Login:guide}class="active"{/ifCurrent}><a n:href="Login:guide">Návod</a></li>
                                 <li n:if="$user->loggedIn" {ifCurrent Homepage:guide}class="active"{/ifCurrent}><a n:href="Homepage:guide">Návod</a></li>
                                 <li n:if="$user->loggedIn" {ifCurrent Map:* }class="active"{/ifCurrent}><a n:href="Map:default">Mapa</a></li>
-                                <li n:if="$user->loggedIn" {ifCurrent Management:* }class="active"{/ifCurrent}><a n:href="Management:default">Správa</a></li>
+                                <li n:if="$user->loggedIn" {ifCurrent Management:* }class="active"{/ifCurrent}><a n:href="Management:default">Přehled</a></li>
                                 <li n:if="$user->loggedIn" {ifCurrent Statistics:* }class="active"{/ifCurrent}><a n:href="Statistics:">Statistiky</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">

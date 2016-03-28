@@ -55,11 +55,18 @@ class MapModel
         ]);
     }
 
-    public function loadTrips($id)
+    public function loadTrips($user_id)
     {
         $selection = $this->database->table('trip');
-        $trips = $selection->where('user_id = ?', $id)->fetchAll();
+        $trips = $selection->where('user_id = ?', $user_id)->fetchAll();
 
         return $trips;
+    }
+
+    public function loadFilters($user_id)
+    {
+        $filters = $this->database->table('filter')->where('user_id', $user_id)->fetchAll();
+
+        return $filters;
     }
 }
