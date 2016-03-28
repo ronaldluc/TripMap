@@ -6,7 +6,7 @@
 
             {*<div class="row-fluid">*}
                 {*<div class="span12">*}
-                    <div id="map" class="map"></div>
+            <div id="map" class="map"></div>
                 {*</div>*}
             {*</div>*}
         </div>
@@ -78,7 +78,7 @@
 
 {foreach $trips as $trip}
     <script>
-        loadTrip({$trip->polygon},{$trip->id});
+        loadTrip({$trip[polygon]},{$trip[id]}, {$trip[red]} ,{$trip[green]}, {$trip[blue]});
     </script>
 {/foreach}
 
