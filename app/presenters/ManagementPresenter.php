@@ -21,6 +21,8 @@ class ManagementPresenter extends BasePresenter
 
     public $filter;
 
+    public $showNewCategoryModal;
+
     protected function startUp()
     {
         parent::startup();
@@ -46,7 +48,6 @@ class ManagementPresenter extends BasePresenter
                 'lenght' => $chosen->lenght,
             ]);
         }
-//        $this->redrawControl('tripContainer');
 
         if ($this->filter != NULL)
         {
@@ -59,10 +60,14 @@ class ManagementPresenter extends BasePresenter
             $this->template->tripsId = 1;
         }
 
+        $this->template->showNewCategoryModal = $this->showNewCategoryModal;
+
+
         $this->template->showModal = $this->showModal;
 
         $this->redrawControl('tripContainer');
         $this->redrawControl('editTripModal');
+        $this->redrawControl('newCategoryModal');
     }
 
     public function handleDelete($id)
@@ -167,5 +172,47 @@ class ManagementPresenter extends BasePresenter
 
         dump($tripsId);
         die;
+    }
+
+    public function handleNewCategory()
+    {
+        $this->showNewCategoryModal = TRUE;
+    }
+
+    public function createComponentNewCategoryForm()
+    {
+        $form = new Nette\Application\UI\Form;
+
+
+        $form->addText('name', 'Název')
+            ->setRequired('Název je povinný');
+
+        $form->addText('color', 'Barva')
+            ->setType('color')
+            ->setRequired('Barva je povinná');
+
+        $form->addSubmit('send', 'Vytvořit');
+
+        $form->onSuccess[] = array($this, 'newCategoryFormSucceeded');
+
+        Helpers::bootstrapForm($form);
+
+        $form->getElementPrototype()->addClass('ajax');
+
+        return $form;
+    }
+
+    public function newCategoryFormSucceeded($form, $values)
+    {
+        $color = $values->color;
+
+        $array['name'] = $values->name;
+        $array['red'] = base_convert($color[1].$color[2], 16, 10);
+        $array['green'] = base_convert($color[3].$color[4], 16, 10);
+        $array['blue'] = base_convert($color[5].$color[6], 16, 10);
+
+        $this->managementModel->newCategory($array, $this->user->id);
+
+        $this->showNewCategoryModal = FALSE;
     }
 }

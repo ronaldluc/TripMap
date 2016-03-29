@@ -37,6 +37,10 @@
                 <div class="row center">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-9"> <a n:href="resetFilter!" type="button" class="btn btn-shadow ajax">Zrušit filtr</a></div>
+                </div><br><br>
+                <div class="row center">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-9"> <a n:href="newCategory!" type="button" class="btn btn-shadow ajax">Nová kategorie</a></div>
                     {*<div class="col-sm-6"> <a n:href="showMap!" type="button" class="btn btn-shadow">V mapě</a></div>*}
                 </div>
             </div>
@@ -46,11 +50,11 @@
 </div>
 {/snippet}
 
-<!-- Modal -->
+<!-- Modal editTrip-->
 {snippet editTripModal}
 {if $showModal == TRUE}
     <script type="text/javascript">
-            $('#editTripModal').modal('show');
+        $('#editTripModal').modal('show');
 
     </script>
 {else}
@@ -72,6 +76,42 @@
                 </div>
                 <div class="modal-body body-shadow">
                     {control editTripForm}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-shadow" data-dismiss="modal">Zrušit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{/snippet}
+
+<!-- Modal newCategory-->
+{snippet newCategoryModal}
+{if $showNewCategoryModal == TRUE}
+    <script type="text/javascript">
+        $('#newCategoryModal').modal('show');
+
+    </script>
+{else}
+    <script type="text/javascript">
+        $('#newCategoryModal').modal('hide');
+        console.log('Pog');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+    </script>
+{/if}
+
+    <div id="newCategoryModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content shadow">
+                <div class="modal-header heading-shadow">
+                    <h4><strong>Nová kategorie</strong></h4>
+                </div>
+                <div class="modal-body body-shadow">
+                    {control newCategoryForm}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-shadow" data-dismiss="modal">Zrušit</button>
