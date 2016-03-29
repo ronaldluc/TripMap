@@ -29,10 +29,59 @@ class MapPresenter extends BasePresenter
         }
     }
 
+    public function renderDefault()
+    {
+        $trips =  $this->mapModel->loadTrips($this->user->id);
+
+        $categories = $this->mapModel->loadCategories($this->user->id);
+
+        $newTrips = [];
+
+        foreach ($trips as $trip) {
+            if ($trip->category_id) {
+                $newTrips[] = [
+                    'id' => $trip->id,
+                    'polygon' => $trip->polygon,
+                    'red' => $categories[$trip->category_id]->red,
+                    'green' => $categories[$trip->category_id]->green,
+                    'blue' => $categories[$trip->category_id]->blue,
+//                    'name' => $filters[$trip->filter_id]->name,
+                ];
+            } else {
+                $newTrips[] = [
+                    'id' => $trip->id,
+                    'polygon' => $trip->polygon,
+                    'red' => 0,
+                    'green' => 0,
+                    'blue' => 0,
+                ];
+            }
+        }
+
+        $this->template->trips = $newTrips;
+
+        $this->template->showModal = FALSE;
+        $this['newTripForm']->setDefaults([
+            'name' => ' ',
+            'text' => ' ',
+            'lenght' => ' ',
+        ]);
+
+        $this->redrawControl("newTrip");
+    }
 
     protected function createComponentNewTripForm()
     {
+        $categories = $this->mapModel->loadCategories($this->user->id);
+
+        $categoryNames[NULL] = 'Žádná';
+        foreach ($categories as $category) {
+            $categoryNames[$category->id] = $category->name;
+        }
+
         $form = new Nette\Application\UI\Form;
+
+        $form->addGroup();
 
         $form->addHidden('polygon');
 
@@ -52,6 +101,8 @@ class MapPresenter extends BasePresenter
             ->setRequired();
 
         $form->addText('lenght', 'Délka trasy');
+
+        $form->addSelect('category', 'Kategorie', $categoryNames);
 
         $form->addSubmit('send', 'Vytvořit');
 
@@ -74,50 +125,6 @@ class MapPresenter extends BasePresenter
     public function handleNewTrip($trip)
     {
         $this->mapModel->addTrip($trip, $this->user->id);
-    }
-//        $this->redirect('default');
-//        dump($polygon);
-
-
-    public function renderDefault()
-    {
-        $trips =  $this->mapModel->loadTrips($this->user->id);
-
-        $filters = $this->mapModel->loadFilters($this->user->id);
-
-        $newTrips = [];
-
-        foreach ($trips as $trip) {
-            if ($trip->filter_id) {
-                $newTrips[] = [
-                    'id' => $trip->id,
-                    'polygon' => $trip->polygon,
-                    'red' => $filters[$trip->filter_id]->red,
-                    'green' => $filters[$trip->filter_id]->green,
-                    'blue' => $filters[$trip->filter_id]->blue,
-//                    'name' => $filters[$trip->filter_id]->name,
-                    ];
-            } else {
-                $newTrips[] = [
-                    'id' => $trip->id,
-                    'polygon' => $trip->polygon,
-                    'red' => 0,
-                    'green' => 0,
-                    'blue' => 0,
-                    ];
-            }
-        }
-
-        $this->template->trips = $newTrips;
-
-        $this->template->showModal = FALSE;
-        $this['newTripForm']->setDefaults([
-            'name' => ' ',
-            'text' => ' ',
-            'lenght' => ' ',
-        ]);
-
-        $this->redrawControl("newTrip");
     }
 
     public function handleChangeTrip()

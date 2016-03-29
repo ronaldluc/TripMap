@@ -374,7 +374,6 @@ function loadTrip(text, id, red, green, blue) {
     features.push(feature);
 };
 
-
 /**
  * Search engine
  */

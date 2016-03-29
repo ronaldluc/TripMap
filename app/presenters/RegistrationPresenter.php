@@ -36,7 +36,8 @@ class RegistrationPresenter extends LoginPresenter
 
         $form->addPassword('passwordVerify', 'Heslo pro kontrolu:')
             ->setRequired('Zadejte prosím heslo ještě jednou pro kontrolu')
-            ->addRule(Form::EQUAL, 'Hesla se neshodují', $form['password']);
+            ->addRule(Form::EQUAL, 'Hesla se neshodují', $form['password'])
+            ->setOmitted(TRUE);
 
         $form->addText('email', 'Email')
             ->setRequired()->addRule($form::EMAIL);

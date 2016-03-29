@@ -39,6 +39,7 @@ class MapModel
         'user_id' => $userId,
         'name' => $values->name,
         'text' => $values->text,
+        'category_id' => $values->category,
         'date' => $values->date,
         'duration' => $values->duration,
         'area' => 2,
@@ -63,10 +64,10 @@ class MapModel
         return $trips;
     }
 
-    public function loadFilters($user_id)
+    public function loadCategories($user_id)
     {
-        $filters = $this->database->table('filter')->where('user_id', $user_id)->fetchAll();
+        $categories = $this->database->table('category')->where('user_id', $user_id)->fetchAll();
 
-        return $filters;
+        return $categories;
     }
 }

@@ -93,4 +93,15 @@ class ManagementModel
             'lenght' => $trip->lenght,
         ]);
     }
+
+    public function newCategory($values, $user_id)
+    {
+        $this->database->table('category')->insert([
+            'user_id' => $user_id,
+            'name' => $values['name'],
+            'red' => $values['red'],
+            'green' => $values['green'],
+            'blue' => $values['blue'],
+        ]);
+    }
 }
