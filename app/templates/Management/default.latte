@@ -7,18 +7,19 @@
 
         <div class="body-shadow">
             <div class="table-responsive">
-                <table n:snippet="tripContainerR" class="table shadow white">
+                <table class="table shadow white">
                     <tbody >
                         <div n:foreach="$trips as $trip" class="trip">
                             <tr>
-                                <th colspan="2" class="col-md-3">{$trip->name}</th>
-                                <td class="text-center" rowspan="4">{$trip->text}</td>
-                                <td class="col-md-1" rowspan="2"><a n:href="edit! $trip->id" class="shadow white ajax">Editovat</a></td>
+                                <th colspan="2" class="col-md-3">{if $trip->category_id}{$trip->category->name|truncate:20}{/if}</th>
+                                <th class="text-center">{$trip->name}</th>
+                                <td class="col-md-1" rowspan="2"><a n:href="edit! $trip->id" class="link white ajax">Editovat</a></td>
                             </tr>
-                            <tr><th colspan="2">{$trip->date|date:'%d. %m. %Y'}</th></tr>
+                            <tr><th colspan="2">{$trip->date|date:'%d. %m. %Y'}</th>
+                                <td class="text-center" rowspan="3">{$trip->text}</td></tr>
                             <tr><td>{$trip->duration} {if $trip->duration==1}den
                                     {elseif $trip->duration > 4}dní{else}dny{/if}</td><td>{if $trip->lenght}{$trip->lenght} km{/if}</td>
-                                <td><a n:href="delete! $trip->id" class="shadow white ajax">Smazat</a></td>
+                                <td><a n:href="delete! $trip->id" class="link white ajax">Smazat</a></td>
                             </tr>
                             <tr class="white"><td colspan="4"></td></tr>
                         </div>
@@ -29,20 +30,41 @@
     </div>
 
     <div class="col-xs-12 col-md-3 sidebar-offcanvas">
-        <div class="shadow fixed">
-            <div class="heading-shadow"><h2>Filtr</h2></div>
-            <div class="body-shadow">
-                {control filterForm}
-                <br />
-                <div class="row center">
-                    <div class="col-sm-3"></div>
-                    <div class="col-sm-9"> <a n:href="resetFilter!" type="button" class="btn btn-shadow ajax">Zrušit filtr</a></div>
-                </div><br><br>
-                <div class="row center">
-                    <div class="col-sm-3"></div>
-                    <div class="col-sm-9"> <a n:href="newCategory!" type="button" class="btn btn-shadow ajax">Nová kategorie</a></div>
-                    {*<div class="col-sm-6"> <a n:href="showMap!" type="button" class="btn btn-shadow">V mapě</a></div>*}
+        <div class="fixed">
+            <div class="shadow">
+                <div class="heading-shadow"><h2>Filtr</h2></div>
+                <div class="body-shadow">
+                    {control filterForm}
+                    <br />
+                    {*<div class="row center">*}
+                        {*<div class="col-sm-3"></div>*}
+                        {*<div class="col-sm-9"> <a n:href="resetFilter!" type="button" class="btn btn-shadow">Zrušit filtr</a></div>*}
+                        {*<div class="col-sm-6"> <a n:href="newCategory!" type="button" class="btn btn-shadow ajax">V mapě</a></div>*}
+                    {*</div><br>*}
                 </div>
+            </div>
+
+            <div>
+                <a n:href="resetFilter!" type="button" class="btn btn-off ajax">
+                    <div class="shadow">
+                        <div class="heading-shadow heading-alone"><h2>Zrušit filtr</h2></div>
+                    </div>
+                </a>
+            </div>
+
+            <div>
+                <a n:href="newCategory!" type="button" class="btn btn-off ajax">
+                    <div class="shadow">
+                        <div class="heading-shadow heading-alone"><h2>Nová kategorie</h2></div>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a n:href="Management:category" type="button" class="btn btn-off">
+                    <div class="shadow">
+                        <div class="heading-shadow heading-alone"><h2>Všechny kategorie</h2></div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
@@ -55,12 +77,11 @@
 {if $showModal == TRUE}
     <script type="text/javascript">
         $('#editTripModal').modal('show');
-
     </script>
 {else}
     <script type="text/javascript">
         $('#editTripModal').modal('hide');
-        console.log('Pog');
+//        console.log('editTrip');
         $('body').removeClass('modal-open');
         $('.modal-backdrop').remove();
     </script>
@@ -96,9 +117,9 @@
 {else}
     <script type="text/javascript">
         $('#newCategoryModal').modal('hide');
-        console.log('Pog');
-        $('body').removeClass('modal-open');
-        $('.modal-backdrop').remove();
+//        console.log('Pog');
+//        $('body').removeClass('modal-open');
+//        $('.modal-backdrop').remove();
     </script>
 {/if}
 

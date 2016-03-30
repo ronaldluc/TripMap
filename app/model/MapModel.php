@@ -35,6 +35,7 @@ class MapModel
 
     public function addNewTrip($values, $userId)
 {
+    if(!$values->category) $values->category = NULL;
     $this->database->table($this->tableName)->insert([
         'user_id' => $userId,
         'name' => $values->name,
@@ -47,6 +48,8 @@ class MapModel
         'polygon' => $values->polygon,
         'distance' => 5,
     ]);
+
+
 }
 
     public function changeTrip($values, $id)

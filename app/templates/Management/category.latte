@@ -1,0 +1,88 @@
+{block content}
+
+{snippet categoryContainer}
+    <div class="container container-content">
+        <div class="shadow col-xs-12 col-md-9 row-offcanvas">
+            <div class="heading-shadow"><h1>Přehled kategorií</h1></div>
+
+            <div class="body-shadow">
+                <div class="table-responsive">
+                    <table class="table shadow white">
+                        <tbody >
+                            <div n:foreach="$categories as $category" class="trip">
+                                <tr>
+                                    <th class="col-md-4">{$category->name}</th>
+                                    <td class="col-md-7 text-center" bgcolor="{Helpers::rgb2html($category->red, $category->green, $category->blue)}"></td>
+                                    <td class="col-md-1"><a n:href="editCategory! $category->id" class="link white ajax">Editovat</a></td>
+                                    <td class="col-md-1"><a n:href="deleteCategory! $category->id" class="link white ajax">Smazat</a></td>
+                                </tr>
+                                <tr class="white"><td colspan="4"></td></tr>
+                            </div>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-3 sidebar-offcanvas">
+            <div>
+                <a n:href="newCategory!" type="button" class="btn btn-off ajax">
+                    <div class="shadow">
+                        <div class="heading-shadow heading-alone"><h2>Nová kategorie</h2></div>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a n:href="Management:default" type="button" class="btn btn-off">
+                    <div class="shadow">
+                        <div class="heading-shadow heading-alone"><h2>Zpět na přehled</h2></div>
+                    </div>
+                </a>
+            </div>
+            {*<div>*}
+                {*<div class="row">                    *}{*<div class="heading-shadow"><h2>Nová kategorie</h2></div>*}
+                    {*<a n:href="newCategory!" type="button" class="col-xs-6 col-md-12 heading-shadow heading-alone btn btn-shadow ajax"><h2>Nová kategorie</h2></a>*}
+                    {*<a n:href="Management:default" type="button" class="col-xs-6 col-md-12 heading-shadow heading-alone Zbtn btn-shadow "><h2>Zpět na přehled</h2></a>*}
+                {*</div>*}
+            {*</div>*}
+        </div>
+
+    </div>
+{/snippet}
+
+<!-- Modal newCategory-->
+{snippet newCategoryModal}
+{if $showNewCategoryModal == TRUE}
+    <script type="text/javascript">
+        $('#newCategoryModal').modal('show');
+        {*console.log({$color});*}
+    </script>
+{else}
+    <script type="text/javascript">
+        $('#newCategoryModal').modal('hide');
+//        console.log('Pog');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+    </script>
+{/if}
+
+    <div id="newCategoryModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content shadow">
+                <div class="modal-header heading-shadow">
+                    <h4><strong>Nová kategorie</strong></h4>
+                </div>
+                <div class="modal-body body-shadow">
+                    {control newCategoryForm}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-shadow" data-dismiss="modal">Zrušit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{/snippet}
+
