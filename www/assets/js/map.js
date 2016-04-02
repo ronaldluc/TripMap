@@ -108,8 +108,8 @@ var map = new ol.Map({
     layers: [raster, vectorLayer],
     target: 'map',
     view: new ol.View({
-        center: [1849078.596618163,6308254.135275547],
-        zoom: 13
+        center: [1738178.0232049078,6367357.330211753],
+        zoom: 9
     }),
     style: new ol.style.Style({
         fill: new ol.style.Fill({
@@ -362,11 +362,13 @@ function loadTrip(text, id, red, green, blue) {
 
     feature.setStyle(new ol.style.Style({
         fill: new ol.style.Fill({
-            color: 'rgba('+red+','+green+','+blue+', 0.6)'
+            color: 'rgba('+red+','+green+','+blue+', 0.42)'
+            //color: 'rgba(0, 0, 0, 0.4)',
         }),
         stroke: new ol.style.Stroke({
-            color: 'rgba(0, 0, 0, 0.8)',
-            width: 2
+            color: 'rgba(0, 0, 0, 1)',
+            //color: 'rgba('+red+','+green+','+blue+', 1)',
+            width: 2.42
         })
     }));
 

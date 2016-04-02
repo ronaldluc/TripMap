@@ -78,6 +78,8 @@ body {
 
 .shadow {
     margin-bottom: 15px;
+    border-radius: 10px;
+    padding: 0px;
 }
 
 /* Stats */
@@ -108,7 +110,16 @@ body {
     vertical-align:top;
 }
 
+.table-category {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
 /* Management */
+.shadow.table {
+    margin-bottom: 0;
+}
+
 .category-color {
     display: block;
     width: 100%;
@@ -123,6 +134,24 @@ td a {
 .btn-off {
     margin: 0px;
     padding: 0px;
+}
+
+.link {
+    font-size: 100%;
+}
+
+.link-wrapper:hover {
+    font-size: 120%;
+}
+
+.link-wrapper {
+    height: 12px;
+    width: 12px;
+    margin-right: 4px;
+}
+
+.link-last {
+    margin-bottom: 4px;
 }
 
 @media (min-width:992px){

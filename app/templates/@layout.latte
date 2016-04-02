@@ -128,7 +128,7 @@
         {ifCurrent Map:}{else}
         <div class="container header">
             <div n:foreach="$flashes as $flash" class="flash-message">
-                        <div class="alert shadow heading-shadow text-center"><h2 class="margin-flash-message">{$flash->message}</h2></div>
+                        <div class="alert shadow heading-shadow heading-alone text-center"><h2 class="margin-flash-message">{$flash->message}</h2></div>
                         {*<h2>Tady je super text</h2>*}
             </div>
             {*<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type} text-center">{$flash->message}</div>*}
@@ -167,6 +167,14 @@
         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
         ga('create', 'UA-75589935-1', 'auto');
+        ga('send', 'pageview');
+
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-75589935-4', 'auto');
         ga('send', 'pageview');
 
     </script>

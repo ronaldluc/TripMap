@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-sm-6 center-block">
             <div class="shadow inner">
-                <div class="heading-shadow"><h1>Statistiky moje</h1></div>
+                <div class="heading-shadow"><h1>Moje statistiky</h1></div>
                 <div class="body-shadow larger-text">
                     <table class="table-pure">
                         {*<tr><td>Maximální plocha</td> <td align="right">{$userStats['maxArea']}</td><td> km<sup>2</sup></td></tr>*}
@@ -40,7 +40,7 @@
                         <tr><td>Průměrná délka</td> <td align="right">{$globalStats['avgDuration'] |number:1:',':' '}</td> <td align="right">
                                 {if $globalStats['avgDuration']==1}den{elseif $globalStats['avgDuration']>4}dní{else}dny{/if}</td></tr>
                         <tr><td></td></tr>
-                        <tr><td>První výlet</td> <td colspan="2" align="right">{$globalStats['first']|date:'%d. %m. %Y'}</td></tr>
+                        {*<tr><td>První výlet</td> <td colspan="2" align="right">{$globalStats['first']|date:'%d. %m. %Y'}</td></tr>*}
                         <tr><td>Poslední výlet</td> <td colspan="2" align="right">{$globalStats['last']|date:'%d. %m. %Y'}</td></tr>
                     </table>
                 </div>

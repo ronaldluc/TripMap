@@ -4,23 +4,20 @@
     <div class="container container-content">
         <div class="shadow col-xs-12 col-md-9 row-offcanvas">
             <div class="heading-shadow"><h1>Přehled kategorií</h1></div>
-
-            <div class="body-shadow">
-                <div class="table-responsive">
-                    <table class="table shadow white">
-                        <tbody >
-                            <div n:foreach="$categories as $category" class="trip">
-                                <tr>
-                                    <th class="col-md-4">{$category->name}</th>
-                                    <td class="col-md-7 text-center" bgcolor="{Helpers::rgb2html($category->red, $category->green, $category->blue)}"></td>
-                                    <td class="col-md-1"><a n:href="editCategory! $category->id" class="link white ajax">Editovat</a></td>
-                                    <td class="col-md-1"><a n:href="deleteCategory! $category->id" class="link white ajax">Smazat</a></td>
-                                </tr>
-                                <tr class="white"><td colspan="4"></td></tr>
-                            </div>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="table-responsive">
+                <table class="table table-category shadow white">
+                    <tbody >
+                        <div n:foreach="$categories as $category" class="trip">
+                            <tr>
+                                <th class="col-md-4">{$category->name}</th>
+                                <td class="col-md-8 text-center" bgcolor="{Helpers::rgb2html($category->red, $category->green, $category->blue)}"></td>
+                                <td class=""><a n:href="editCategory! $category->id" class="ajax"><div class="link link-wrapper link-last"><i class="fa fa-lg fa-pencil"></i></div></a></td>
+                                <td class=""><a n:href="deleteCategory! $category->id" class="ajax"><div class="link link-wrapper link-last"><i class="fa fa-lg fa-trash-o"></i></div></a></td>
+                            </tr>
+                            {*<tr class="white"><td colspan="4"></td></tr>*}
+                        </div>
+                    </tbody>
+                </table>
             </div>
         </div>
 
