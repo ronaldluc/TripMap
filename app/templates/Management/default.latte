@@ -5,28 +5,48 @@
     <div class="shadow col-xs-12 col-md-9 row-offcanvas">
         <div class="heading-shadow"><h1>Přehled navštívených míst</h1></div>
 
-        <div class="body-shadow">
-            <div class="table-responsive">
-                <table class="table shadow white">
-                    <tbody >
-                        <div n:foreach="$trips as $trip" class="trip">
-                            <tr>
-                                <th colspan="2" class="col-md-3">{if $trip->category_id}{$trip->category->name|truncate:20}{/if}</th>
-                                <th class="text-center">{$trip->name}</th>
-                                <td class="col-md-1" rowspan="2"><a n:href="edit! $trip->id" class="link white ajax">Editovat</a></td>
-                            </tr>
-                            <tr><th colspan="2">{$trip->date|date:'%d. %m. %Y'}</th>
-                                <td class="text-center" rowspan="3">{$trip->text}</td></tr>
-                            <tr><td>{$trip->duration} {if $trip->duration==1}den
-                                    {elseif $trip->duration > 4}dní{else}dny{/if}</td><td>{if $trip->lenght}{$trip->lenght} km{/if}</td>
-                                <td><a n:href="delete! $trip->id" class="link white ajax">Smazat</a></td>
-                            </tr>
-                            <tr class="white"><td colspan="4"></td></tr>
-                        </div>
-                    </tbody>
-                </table>
-            </div>
+        {*<div class="body-shadow"></div>*}
+        <div class="table-responsive">
+            <table class="table shadow white">
+                <tbody >
+                <div n:foreach="$trips as $trip" class="trip">
+                    <tr>
+                        <th class="col-md-3">{$trip->name}</th>
+                        <th class="col-md-2">{if $trip->category_id}{$trip->category->name|truncate:20}{/if}</th>
+                        <td class="col-md-5 text-center">{$trip->text}</td>
+                        <th class="col-md-2">{$trip->date|date:'%d. %m. %Y'}<br>
+                            {$trip->duration} {if $trip->duration==1}den
+                            {elseif $trip->duration > 4}dní{else}dny{/if}
+                            {if $trip->lenght}{$trip->lenght} km{/if}</th>
+                        <td class="col-md-1"><a n:href="edit! $trip->id" class="ajax"><div class="link link-wrapper"><i class="fa fa-lg fa-pencil"></i></div></a><br>
+                            <a n:href="delete! $trip->id" class="ajax"><div class="link link-wrapper link-last"><i class="fa fa-lg fa-trash-o"></i></div></a></td>
+                    </tr>
+                    {*<tr class="white"><td colspan="5"></td></tr>*}
+                </div>
+                </tbody>
+            </table>
         </div>
+
+        {*<div class="table-responsive">*}
+            {*<table class="table shadow white">*}
+                {*<tbody >*}
+                {*<div n:foreach="$trips as $trip" class="trip">*}
+                    {*<tr>*}
+                        {*<th colspan="2" class="col-md-3">{if $trip->category_id}{$trip->category->name|truncate:20}{/if}</th>*}
+                        {*<th class="text-center">{$trip->name}</th>*}
+                        {*<td class="col-md-1" rowspan="2"><a n:href="edit! $trip->id" class="link white ajax">Editovat</a></td>*}
+                    {*</tr>*}
+                    {*<tr><th colspan="2">{$trip->date|date:'%d. %m. %Y'}</th>*}
+                        {*<td class="text-center" rowspan="3">{$trip->text}</td></tr>*}
+                    {*<tr><td>{$trip->duration} {if $trip->duration==1}den*}
+                            {*{elseif $trip->duration > 4}dní{else}dny{/if}</td><td>{if $trip->lenght}{$trip->lenght} km{/if}</td>*}
+                        {*<td><a n:href="delete! $trip->id" class="link white ajax">Smazat</a></td>*}
+                    {*</tr>*}
+                    {*<tr class="white"><td colspan="4"></td></tr>*}
+                {*</div>*}
+                {*</tbody>*}
+            {*</table>*}
+        {*</div>*}
     </div>
 
     <div class="col-xs-12 col-md-3 sidebar-offcanvas">

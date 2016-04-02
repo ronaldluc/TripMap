@@ -92,7 +92,8 @@ class MapPresenter extends BasePresenter
 
         $form->addText('date', 'Začátek')
             ->setType('date')
-            ->setAttribute('value', new DateTime());
+            ->setAttribute('value', new DateTime())
+            ->setRequired();
 
         $form->addText('duration', 'Počet dní')
             ->setType('number')

@@ -15,8 +15,6 @@ body {
     background: linear-gradient(rgba(0, 0, 0, 0.60) , rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.60));
     color: rgba(255, 255, 255, 1);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.98);
-    border-radius: 10px;
-    padding: 0px;
 }
 
 .heading-shadow {
@@ -33,12 +31,31 @@ body {
 .form-control-shadow {
     background-color: rgba(0, 0, 0, 0.58);
     border-color: white;
-    color: whitesmoke;
+    color: white;
+}
+
+.form-control-shadow:focus {
+    box-shadow: 0px 0px 12px rgba(241, 241, 241, 0.84);
+    border-color: #ffffff;
+    border-width: 2px;
 }
 
 .btn-shadow {
     background: linear-gradient(rgba(0, 0, 0, 0.58), rgba(0, 0, 0, 0.70));
     color: white;
+}
+
+.btn-shadow:hover, .btn>.shadow>.heading-shadow.heading-alone:hover {
+    background-color: rgba(242, 242, 242, 0.69);
+    color: white;
+    border-radius: 7px;
+}
+
+
+.modal-body, .modal-footer {
+    background: linear-gradient(rgba(42, 42, 42, 0.80), rgba(42, 42, 42, 0.60));
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .ol-control button{
@@ -48,13 +65,18 @@ body {
     background-color: rgba(40, 40, 40, 1) !important;
 }
 
+/* table */
+.table:not(.table-category) > tbody > tr:nth-child(2n+1) > td, .table:not(.table-category) > tbody > tr:nth-child(2n+1) > th {
+    background-color: rgba(77, 77, 77, 0.43);
+}
+
 /* measure CSS */
 
 .tooltip {
     position: relative;
     background: rgba(0, 0, 0, 0.5);
     border-radius: 4px;
-    color: whitesmoke;
+    color: white;
     padding: 4px 8px;
     opacity: 0.7;
     white-space: nowrap;
@@ -65,7 +87,7 @@ body {
 }
 .tooltip-static {
     background-color: rgba(0, 0, 0, 0.76);
-    color: whitesmoke;
+    color: white;
     border: 1px solid whitesmoke;
 }
 .tooltip-measure:before,

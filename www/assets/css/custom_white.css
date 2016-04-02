@@ -30,11 +30,9 @@ body {
 
 /* Panel */
 .shadow {
-    background: rgb(235, 235, 235);
+    background: rgb(243, 243, 243);
     color: rgb(14, 14, 14);
     /*box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.98);*/
-    border-radius: 10px;
-    padding: 0px;
 }
 
 .heading-shadow {
@@ -45,6 +43,13 @@ body {
     padding-left: 4%;
     padding-right: 10px;
     padding-bottom: 5px;
+    border-color: rgb(186, 186, 186);
+}
+
+.heading-shadow:not(.heading-alone) {
+    border-style: solid;
+    border-width: 0;
+    border-bottom-width: 1px;
 }
 
 .white {
@@ -57,6 +62,12 @@ body {
     color: black;
 }
 
+.form-control-shadow:focus {
+    box-shadow: none;
+    border-color: #000000;
+    border-width: 2px;
+}
+
 /*.form-control-shadow>.focus {*/
     /*background-color: #ccff4b;*/
 /*}*/
@@ -66,6 +77,11 @@ body {
     color: #000;
 }
 
+.btn-shadow:hover, .btn>.shadow>.heading-shadow.heading-alone:hover {
+    background-color: rgb(242, 242, 242);
+    border-color: rgb(186, 186, 186);
+    border-width: 1px;
+}
 
 .ol-control button{
     background-color: rgba(255, 255, 255, 1) !important;
@@ -94,8 +110,13 @@ url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAABHNCSV
 .navbar-inverse .navbar-brand:hover {
     color: #000;
 }
-/* measure CSS */
 
+/* table */
+.table:not(.table-category) > tbody > tr:nth-child(2n+1) > td, .table:not(.table-category) > tbody > tr:nth-child(2n+1) > th{
+    background-color: rgba(242, 242, 242, 0.4);
+}
+
+/* measure CSS */
 .tooltip {
     position: relative;
     background: rgba(0, 0, 0, 0.5);
