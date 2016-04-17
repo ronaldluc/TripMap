@@ -379,20 +379,21 @@ function loadTrip(text, id, red, green, blue) {
 /**
  * Search engine
  */
-var geocoder = new Geocoder('nominatim', {
+var geocoder = new Geocoder('Nominatim', {
     provider: 'osm',
     lang: 'cz-CZ', //en-US, fr-FR
     placeholder: 'Vyhledat ...',
     limit: 5,
-    keepOpen: true
+    keepOpen: true,
+    //debug: true
 });
 map.addControl(geocoder);
 
 geocoder.on('addresschosen', function(evt){
-    var
-        feature = evt.feature,
+    console.log(evt);
+    var feature = evt.feature,
         coord = evt.coordinate,
-        address_html = feature.get('address_html')
-        ;
+        address_html = feature.get('address_html');
+    content.innerHTML = '<p>'+address_html+'</p>';
     overlay.setPosition(coord);
 });
