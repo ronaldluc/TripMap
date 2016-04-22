@@ -28,6 +28,34 @@ var vectorLayer = new ol.layer.Vector({
 });
 
 
+///**
+// * Elements that make up the popup.
+// */
+//var container = document.getElementById('popup');
+//var content = document.getElementById('popup-content');
+//var closer = document.getElementById('popup-closer');
+//
+///**
+// * Add a click handler to hide the popup.
+// * @return {boolean} Don't follow the href.
+// */
+//closer.onclick = function() {
+//    overlay.setPosition(undefined);
+//    closer.blur();
+//    return false;
+//};
+//
+///**
+// * Create an overlay to anchor the popup to the map.
+// */
+//var overlay = new ol.Overlay(/** @type {olx.OverlayOptions} */ ({
+//    element: container,
+//    autoPan: true,
+//    autoPanAnimation: {
+//        duration: 250
+//    }
+//}));
+
 /**
  * Currently drawn feature.
  * @type { ol.Feature }
@@ -106,6 +134,7 @@ var pointerMoveHandler = function(evt) {
 
 var map = new ol.Map({
     layers: [raster, vectorLayer],
+    //overlays: [overlay],
     target: 'map',
     view: new ol.View({
         center: [1738178.0232049078,6367357.330211753],
@@ -132,9 +161,11 @@ var map = new ol.Map({
     })
 });
 
+map.removeInteraction(ol.interaction.DragRotate);
+
 // select interaction working on "click"
 var selectClick = new ol.interaction.Select({
-    condition: ol.events.condition.click
+    condition: ol.events.condition.singleClick
 });
 
 // select interaction working on "pointermove"
@@ -142,15 +173,61 @@ var selectPointerMove = new ol.interaction.Select({
     condition: ol.events.condition.pointerMove
 });
 
-var select = selectClick;
-
-map.addInteraction(select);
-select.on('select', function(e) {
-    $('#status').html('&nbsp;' + e.target.getFeatures().getLength() +
-        ' selected features (last operation selected ' + e.selected.length +
-        ' and deselected ' + e.deselected.length + ' features)');
+var selectShiftClick = new ol.interaction.Select({
+    condition: function(mapBrowserEvent) {
+        return ol.events.condition.altKeyOnly(mapBrowserEvent) && ol.events.condition.click(mapBrowserEvent);
+    }
 });
 
+var select = selectClick;
+
+//map.addInteraction(select);
+
+select.on('select', function(e) {
+    var chosen = e.selected[0];
+    console.log(selectShiftClick);
+    //console.log(chosen[0].getId());
+    //console.log(chosen[0].getProperties());
+    //console.log(chosen[0].getGeometry());
+    //console.log(chosen[0].getGeometry().getInteriorPoint());
+    //console.log(chosen[0].getGeometry().getInteriorPoint().getCoordinates());
+    var coordinates = chosen.getGeometry().getInteriorPoint().getCoordinates();
+
+    var popup = new ol.Overlay({
+        element: document.getElementById('popup'),
+        //autoPan: true,
+        //autoPanAnimation: {
+        //    duration: 250
+        //
+        //},
+        //autoPanMargin: 160
+    });
+    map.addOverlay(popup);
+
+    var element = popup.getElement();
+
+    //$(element).popover('destroy');
+    popup.setPosition(coordinates);
+    // the keys are quoted to prevent renaming in ADVANCED mode.
+    //$(element).popover({
+    //    'placement': 'top',
+    //    'animation': false,
+    //    'html': true,
+    //    'content': '<p>The location you clicked was:</p><code>LoL</code>'
+    //});
+
+    getTrip(chosen.getId());
+    //$(element).popover('show');
+});
+
+
+//var disableDraw = selectPointerMove;
+//
+//map.addInteraction(disableDraw);
+//
+//disableDraw.on('select', function (e) {
+//    var chosen = e.selected;
+//});
 
 var modify = new ol.interaction.Modify({
     features: features,
@@ -164,7 +241,6 @@ var modify = new ol.interaction.Modify({
     }
 });
 map.addInteraction(modify);
-
 
 addInteraction();
 
@@ -200,8 +276,10 @@ function addInteraction() {
                 })
             })
         })
+        //condition: function(mapBrowserEvent) {
+        //    return ol.events.condition.altKeyOnly(mapBrowserEvent) && ol.events.condition.click(mapBrowserEvent);
+        //}
     });
-    map.addInteraction(draw);
 
     createMeasureTooltip();
     createHelpTooltip();
@@ -218,15 +296,15 @@ function addInteraction() {
             listener = sketch.getGeometry().on('change', function(evt) {
                 var geom = evt.target;
                 var output;
-                if (geom instanceof ol.geom.Polygon) {
-                    output = formatArea(/** @type { ol.geom.Polygon} */ (geom));
-                    tooltipCoord = geom.getInteriorPoint().getCoordinates();
-                } else if (geom instanceof ol.geom.LineString) {
-                    output = formatLength( /** @type { ol.geom.LineString} */ (geom));
-                    tooltipCoord = geom.getLastCoordinate();
-                }
-                measureTooltipElement.innerHTML = output;
-                measureTooltip.setPosition(tooltipCoord);
+                //if (geom instanceof ol.geom.Polygon) {
+                //    output = formatArea(/** @type { ol.geom.Polygon} */ (geom));
+                //    tooltipCoord = geom.getInteriorPoint().getCoordinates();
+                //} else if (geom instanceof ol.geom.LineString) {
+                //    output = formatLength( /** @type { ol.geom.LineString} */ (geom));
+                //    tooltipCoord = geom.getLastCoordinate();
+                //}
+                //measureTooltipElement.innerHTML = output;
+                //measureTooltip.setPosition(tooltipCoord);
             });
         }, this);
 
@@ -248,6 +326,40 @@ function addInteraction() {
             newTrip(JSON.stringify(geom.S));
         }, this);
 }
+
+$(document).ready(function() {
+    console.log('Jsem tu!');
+    map.addInteraction(draw);
+});
+
+$(document).keyup(function(e) {
+    console.log('Vazne');
+    if (e.keyCode === 13 || e.keyCode == 18) {
+        console.log(e);
+        var interactions = map.getInteractions();
+        interactions.forEach(function(interaction) {
+            if (interaction == draw) {
+                console.log(interaction);
+                map.removeInteraction(draw);
+                map.addInteraction(select);
+            }
+            if (interaction == select) {
+                console.log(interaction);
+                map.removeInteraction(select);
+                map.addInteraction(draw);
+            }
+        });
+    }
+    //if ((e.keyCode === 27) || (keySwitch == 2)) {
+    //    map.removeInteraction(select);
+    //    map.addInteraction(draw);
+    //    keySwitch = 0;
+    //}     // enter
+    //if (e.keyCode === 27 && keySwitch == 0) {
+
+    //    keySwitch = 1;
+    //}
+});
 
 /**
  * Creates a new help tooltip
@@ -351,14 +463,28 @@ addInteraction();
 function loadTrip(text, id, red, green, blue) {
     var trip = JSON.parse(text);
     var polygon = new ol.geom.Polygon([trip]);
-    console.log(polygon);
+    //console.log(polygon);
 
     // Create feature with polygon.
     var feature = new ol.Feature(polygon);
     polygon.on('change', function(e) {
         changeTrip(JSON.stringify(e.target.l), id);
-        console.log(e.target.l);
+        //console.log(e.target.l);
     });
+
+    polygon.on('select', function(e) {
+        //changeTrip(JSON.stringify(e.target.l), id);
+        console.log('Trolol');
+    });
+
+    var lol = {id:id};
+
+    feature.setId(id);
+
+    feature.setProperties(lol);
+
+    //console.log(polygon.getProperties());
+
 
     feature.setStyle(new ol.style.Style({
         fill: new ol.style.Fill({
@@ -390,10 +516,11 @@ var geocoder = new Geocoder('Nominatim', {
 map.addControl(geocoder);
 
 geocoder.on('addresschosen', function(evt){
-    console.log(evt);
+    //console.log(evt);
     var feature = evt.feature,
         coord = evt.coordinate,
         address_html = feature.get('address_html');
     content.innerHTML = '<p>'+address_html+'</p>';
     overlay.setPosition(coord);
 });
+
