@@ -202,7 +202,7 @@ select.on('select', function(e) {
         //},
         //autoPanMargin: 160
     });
-    map.addOverlay(popup);
+    //map.addOverlay(popup);
 
     var element = popup.getElement();
 
@@ -216,10 +216,19 @@ select.on('select', function(e) {
     //    'content': '<p>The location you clicked was:</p><code>LoL</code>'
     //});
 
+    $.get('http://localhost/tripMap/www/map/test', function(data) {
+       console.log(data);
+    });
+
+
     getTrip(chosen.getId());
     //$(element).popover('show');
 });
 
+
+$.get('http://localhost/tripMap/www/map/test', function(data) {
+    console.log(data);
+});
 
 //var disableDraw = selectPointerMove;
 //
@@ -460,7 +469,7 @@ addInteraction();
 /**
  * Loads trips from DB into map vectorLayer
  */
-function loadTrip(text, id, red, green, blue) {
+function loadTrip(text, id, red, green, blue, info) {
     var trip = JSON.parse(text);
     var polygon = new ol.geom.Polygon([trip]);
     //console.log(polygon);
@@ -471,6 +480,28 @@ function loadTrip(text, id, red, green, blue) {
         changeTrip(JSON.stringify(e.target.l), id);
         //console.log(e.target.l);
     });
+
+    var coordinates = feature.getGeometry().getInteriorPoint().getCoordinates();
+
+    var popup = new ol.Overlay({
+        element: document.getElementById('popup')
+    });
+
+    map.addOverlay(popup);
+
+    var element = popup.getElement();
+
+    $(element).popover('destroy');
+    popup.setPosition(coordinates);
+    // the keys are quoted to prevent renaming in ADVANCED mode.
+    $(element).popover({
+        'placement': 'top',
+        'animation': false,
+        'html': true,
+        'content': '<p>The location you clicked was:</p><code>'+info['data1']+'</code>'
+    });
+
+    $(element).popover('show');
 
     polygon.on('select', function(e) {
         //changeTrip(JSON.stringify(e.target.l), id);
