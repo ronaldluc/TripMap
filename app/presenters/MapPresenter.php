@@ -46,6 +46,7 @@ class MapPresenter extends BasePresenter
                     'green' => $categories[$trip->category_id]->green,
                     'blue' => $categories[$trip->category_id]->blue,
 //                    'name' => $filters[$trip->filter_id]->name,
+                    'info' => ['data1' => 'text', 'data2' => 'text2'],
                 ];
             } else {
                 $newTrips[] = [
@@ -134,6 +135,15 @@ class MapPresenter extends BasePresenter
         $id = $this->getHttpRequest()->getPost('id');
         $modified = Helpers::modifyPolygon($polygon);
         $this->mapModel->changeTrip($modified, $id);
+    }
+
+    public function actionTest()
+    {
+        $kvak = [
+            'lol' => 40,
+            'boj' => 'asdlkj'
+        ];
+        $this->sendJson($kvak);
     }
 
 }
