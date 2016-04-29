@@ -202,27 +202,29 @@ select.on('select', function(e) {
         //},
         //autoPanMargin: 160
     });
-    //map.addOverlay(popup);
+    map.addOverlay(popup);
+    var data = chosen.get('data');
 
     var element = popup.getElement();
 
-    //$(element).popover('destroy');
+    $(element).popover('destroy');
     popup.setPosition(coordinates);
     // the keys are quoted to prevent renaming in ADVANCED mode.
-    //$(element).popover({
-    //    'placement': 'top',
-    //    'animation': false,
-    //    'html': true,
-    //    'content': '<p>The location you clicked was:</p><code>LoL</code>'
-    //});
+    $(element).popover({
+        'placement': 'top',
+        'animation': false,
+        'html': true,
+        'content': '<p>'+data['date']+'</p>',
+        'title' : '<strong>'+data['name']+'</strong>'
+    });
+
+    console.log(data['date']);
 
     $.get('http://localhost/tripMap/www/map/test', function(data) {
        console.log(data);
     });
 
-
-    getTrip(chosen.getId());
-    //$(element).popover('show');
+    $(element).popover('show');
 });
 
 
@@ -469,7 +471,7 @@ addInteraction();
 /**
  * Loads trips from DB into map vectorLayer
  */
-function loadTrip(text, id, red, green, blue, info) {
+function loadTrip(text, id, red, green, blue, data) {
     var trip = JSON.parse(text);
     var polygon = new ol.geom.Polygon([trip]);
     //console.log(polygon);
@@ -483,36 +485,15 @@ function loadTrip(text, id, red, green, blue, info) {
 
     var coordinates = feature.getGeometry().getInteriorPoint().getCoordinates();
 
-    var popup = new ol.Overlay({
-        element: document.getElementById('popup')
-    });
+    var properties = {data:data};
 
-    map.addOverlay(popup);
+    var changes;
 
-    var element = popup.getElement();
-
-    $(element).popover('destroy');
-    popup.setPosition(coordinates);
-    // the keys are quoted to prevent renaming in ADVANCED mode.
-    $(element).popover({
-        'placement': 'top',
-        'animation': false,
-        'html': true,
-        'content': '<p>The location you clicked was:</p><code>'+info['data1']+'</code>'
-    });
-
-    $(element).popover('show');
-
-    polygon.on('select', function(e) {
-        //changeTrip(JSON.stringify(e.target.l), id);
-        console.log('Trolol');
-    });
-
-    var lol = {id:id};
+    //This should have changed the doc enough for new commit
 
     feature.setId(id);
 
-    feature.setProperties(lol);
+    feature.setProperties(properties);
 
     //console.log(polygon.getProperties());
 
