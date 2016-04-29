@@ -1,5 +1,10 @@
 {block content}
 
+    <style>
+        .popover-content {
+            min-width: 250em;
+        }
+    </style>
 
     <div class="sub-wraper">
         <div class="map-wraper">
@@ -7,6 +12,7 @@
             {*<div class="row-fluid">*}
                 {*<div class="span12">*}
             <div id="map" class="map"></div>
+            <div id="popup""></div>
                 {*</div>*}
             {*</div>*}
         </div>
@@ -78,6 +84,7 @@
 
 {foreach $trips as $trip}
     <script>
+        {$trip[info]['date'] = $trip[info]['date']|date:'%d.%m.%Y'}
         loadTrip({$trip[polygon]},{$trip[id]}, {$trip[red]} ,{$trip[green]}, {$trip[blue]}, {$trip[info]});
     </script>
 {/foreach}

@@ -45,8 +45,10 @@ class MapPresenter extends BasePresenter
                     'red' => $categories[$trip->category_id]->red,
                     'green' => $categories[$trip->category_id]->green,
                     'blue' => $categories[$trip->category_id]->blue,
-//                    'name' => $filters[$trip->filter_id]->name,
-                    'info' => ['data1' => 'text', 'data2' => 'text2'],
+                    'info' => ['name' => $trip->name,
+                        'date' => $trip->date,
+                        'duration' => $trip->duration,
+                        'category' => $categories[$trip->category_id]->name]
                 ];
             } else {
                 $newTrips[] = [
@@ -55,6 +57,10 @@ class MapPresenter extends BasePresenter
                     'red' => 0,
                     'green' => 0,
                     'blue' => 0,
+                    'info' => ['name' => $trip->name,
+                        'date' => $trip->date,
+                        'duration' => $trip->duration,
+                        'category' => NULL]
                 ];
             }
         }
