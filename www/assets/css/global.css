@@ -198,6 +198,25 @@ td a {
     font-weight: bold;
 }
 
+.popover {
+    width: 24em;
+    margin: 0;
+}
+
+.table-map {
+    width: 100%;
+}
+
+.table-map>tbody>tr>td:not(.left) {
+    width: 8em;
+    text-align: right;
+}
+
+.table-map>tbody>tr>td.left {
+    width: 8em;
+    text-align: left;
+}
+
 .ol-popup {
     position: absolute;
     background-color: white;
