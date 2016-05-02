@@ -10,7 +10,8 @@ use Nette,
     Nette\Application\UI\Form,
     Helpers,
     App\Models\MapModel,
-    Nette\Utils\DateTime;
+    Nette\Utils\DateTime,
+    Nette\Utils;
 
 
 class MapPresenter extends BasePresenter
@@ -38,31 +39,42 @@ class MapPresenter extends BasePresenter
         $newTrips = [];
 
         foreach ($trips as $trip) {
+
+            if ($trip->duration == 1) {
+                $duration = $trip->duration.' den';
+            } elseif ($trip->duration < 5) {
+                $duration = $trip->duration.' dny';
+            } else {
+                $duration = $trip->duration.' dní';
+            }
+
             if ($trip->category_id) {
-                $newTrips[] = [
-                    'id' => $trip->id,
-                    'polygon' => $trip->polygon,
+                $color = [
                     'red' => $categories[$trip->category_id]->red,
                     'green' => $categories[$trip->category_id]->green,
                     'blue' => $categories[$trip->category_id]->blue,
-                    'info' => ['name' => $trip->name,
-                        'date' => $trip->date,
-                        'duration' => $trip->duration,
-                        'category' => $categories[$trip->category_id]->name]
                 ];
             } else {
-                $newTrips[] = [
-                    'id' => $trip->id,
-                    'polygon' => $trip->polygon,
+                $color = [
                     'red' => 0,
                     'green' => 0,
                     'blue' => 0,
-                    'info' => ['name' => $trip->name,
-                        'date' => $trip->date,
-                        'duration' => $trip->duration,
-                        'category' => NULL]
                 ];
             }
+
+            $lol = Utils\Strings::truncate($trip->name, 20);
+
+            $newTrips[] = [
+                'id' => $trip->id,
+                'polygon' => $trip->polygon,
+                'color' => $color,
+                'info' => ['name' => Utils\Strings::truncate($trip->name, 25),
+                    'date' => $trip->date->format('d. m. Y'),
+                    'length' => $trip->lenght?$trip->lenght.' km':'',
+                    'duration' => $duration,
+                    'category' => $trip->category_id?$categories[$trip->category_id]->name:NULL
+                ],
+            ];
         }
 
         $this->template->trips = $newTrips;

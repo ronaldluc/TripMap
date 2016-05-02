@@ -161,7 +161,7 @@ var map = new ol.Map({
     })
 });
 
-map.removeInteraction(ol.interaction.DragRotate);
+//map.removeInteraction(ol.interaction.DragRotate);
 
 // select interaction working on "click"
 var selectClick = new ol.interaction.Select({
@@ -181,16 +181,8 @@ var selectShiftClick = new ol.interaction.Select({
 
 var select = selectClick;
 
-//map.addInteraction(select);
-
 select.on('select', function(e) {
     var chosen = e.selected[0];
-    console.log(selectShiftClick);
-    //console.log(chosen[0].getId());
-    //console.log(chosen[0].getProperties());
-    //console.log(chosen[0].getGeometry());
-    //console.log(chosen[0].getGeometry().getInteriorPoint());
-    //console.log(chosen[0].getGeometry().getInteriorPoint().getCoordinates());
     var coordinates = chosen.getGeometry().getInteriorPoint().getCoordinates();
 
     var popup = new ol.Overlay({
@@ -214,11 +206,10 @@ select.on('select', function(e) {
         'placement': 'top',
         'animation': false,
         'html': true,
-        'content': '<p>'+data['date']+'</p>',
+        //'content': ''+data['date']+' '+data['duration']+'  '+data['length']+' ',
+        'content': '<table class="table-map"><tr><td class="left"> '+data['date']+' </td><td> '+data['duration']+' </td><td> '+data['length']+' </td></tr></table>',
         'title' : '<strong>'+data['name']+'</strong>'
     });
-
-    console.log(data['date']);
 
     $.get('http://localhost/tripMap/www/map/test', function(data) {
        console.log(data);
@@ -251,7 +242,6 @@ var modify = new ol.interaction.Modify({
             ol.events.condition.singleClick(event);
     }
 });
-map.addInteraction(modify);
 
 addInteraction();
 
@@ -341,6 +331,7 @@ function addInteraction() {
 $(document).ready(function() {
     console.log('Jsem tu!');
     map.addInteraction(draw);
+    map.addInteraction(modify);
 });
 
 $(document).keyup(function(e) {
@@ -352,12 +343,14 @@ $(document).keyup(function(e) {
             if (interaction == draw) {
                 console.log(interaction);
                 map.removeInteraction(draw);
+                map.removeInteraction(modify);
                 map.addInteraction(select);
             }
             if (interaction == select) {
                 console.log(interaction);
                 map.removeInteraction(select);
                 map.addInteraction(draw);
+                map.addInteraction(modify);
             }
         });
     }
@@ -536,3 +529,14 @@ geocoder.on('addresschosen', function(evt){
     overlay.setPosition(coord);
 });
 
+
+//Date function
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Date.prototype.ddmmyyyy = function() {
+    var yyyy = this.getFullYear().toString();
+    var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based
+    var dd  = this.getDate().toString();
+    //return yyyy + (mm[1]?mm:"0"+mm[0]) + (dd[1]?dd:"0"+dd[0]); // padding
+    return dd +'. ' + mm + '. ' + yyyy;
+};

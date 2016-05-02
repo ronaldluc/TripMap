@@ -1,9 +1,7 @@
 {block content}
 
     <style>
-        .popover-content {
-            min-width: 250em;
-        }
+
     </style>
 
     <div class="sub-wraper">
@@ -84,8 +82,7 @@
 
 {foreach $trips as $trip}
     <script>
-        {$trip[info]['date'] = $trip[info]['date']|date:'%d.%m.%Y'}
-        loadTrip({$trip[polygon]},{$trip[id]}, {$trip[red]} ,{$trip[green]}, {$trip[blue]}, {$trip[info]});
+        loadTrip({$trip[polygon]}, {$trip[id]}, {$trip[color][red]}, {$trip[color][green]}, {$trip[color][blue]}, {$trip[info]});
     </script>
 {/foreach}
 
