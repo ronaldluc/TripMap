@@ -121,7 +121,11 @@ class RegistrationPresenter extends LoginPresenter
     {
         $newPassword = $this->registrationModel->newPassword($values->email);
 
-        if ($newPassword) {
+        if ($newPassword == 0) {
+            $this->flashMessage('Neexistující email', 'danger');
+        } elseif ($newPassword == 1) {
+            $this->flashMessage('Nelze obnovit heslo neaktivovaného účtu', 'danger');
+        } else {
             $mail = new Message;
 
             $mail->setFrom('system@tripmap.cz', 'TripMap')
@@ -144,8 +148,6 @@ class RegistrationPresenter extends LoginPresenter
             $mailer->send($mail);
 
             $this->flashMessage('By ti zaslán email s novým heslem', 'success');
-        } else {
-            $this->flashMessage('Neexistující email', 'danger');
         }
 
         $this->redirect('Login:default');

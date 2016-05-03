@@ -183,6 +183,7 @@ var select = selectClick;
 
 select.on('select', function(e) {
     var chosen = e.selected[0];
+    var id = chosen.getId();
     var coordinates = chosen.getGeometry().getInteriorPoint().getCoordinates();
 
     var popup = new ol.Overlay({
@@ -208,8 +209,13 @@ select.on('select', function(e) {
         'html': true,
         //'content': ''+data['date']+' '+data['duration']+'  '+data['length']+' ',
         'content': '<table class="table-map"><tr><td class="left"> '+data['date']+' </td><td> '+data['duration']+' </td><td> '+data['length']+' </td></tr></table>',
-        'title' : '<strong>'+data['name']+'</strong>'
+        'title' : '<strong><table class="table-map-head"><tr><td class="">'+data['name']+'</td>' +
+        '<td class="icon"><div onclick="editTrip(' + id + ')" class="link link-wrapper"><i class="fa fa-lg fa-pencil"></i></div></td>' +
+        '<td class="icon"><div onclick="deleteTrip(' + id + ')" class="link link-wrapper right"><i class="fa fa-lg fa-trash-o"></i></div></td></tr></table></strong>'
     });
+
+    console.log(chosen);
+    console.log(chosen.getId());
 
     $.get('http://localhost/tripMap/www/map/test', function(data) {
        console.log(data);
@@ -218,6 +224,13 @@ select.on('select', function(e) {
     $(element).popover('show');
 });
 
+function editTrip(id) {
+    console.log(id);
+};
+
+function deleteTrip(id) {
+    console.log(id);
+};
 
 $.get('http://localhost/tripMap/www/map/test', function(data) {
     console.log(data);

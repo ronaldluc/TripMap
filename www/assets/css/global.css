@@ -199,8 +199,9 @@ td a {
 }
 
 .popover {
-    width: 24em;
+    min-width: 20em;
     margin: 0;
+    white-space: nowrap;
 }
 
 .table-map {
@@ -215,6 +216,20 @@ td a {
 .table-map>tbody>tr>td.left {
     width: 8em;
     text-align: left;
+}
+
+.table-map-head {
+    width: 100%;
+}
+
+.table-map-head>tbody>tr>td.icon {
+    width: auto;
+    text-align: right;
+    padding-left: 1em;
+}
+
+.table-map-head>tbody>tr>td:not(.icon) {
+    width: 100%;
 }
 
 .ol-popup {
