@@ -222,10 +222,25 @@ select.on('select', function(e) {
     });
 
     $(element).popover('show');
+
 });
 
 function editTrip(id) {
-    console.log(id);
+    var feature = vectorSource.getFeatureById(id);
+    var data = feature.get('data');
+
+    $('#newTripModal').modal('show');
+    $('input[name="id"]').val(id);
+    $('input[name="name"]').val(data['name']);
+    $('textarea[name="text"]').val(data['text']);
+    $('input[name="duration"]').val(getValue(data['duration']));
+    $('input[name="lenght"]').val(getValue(data['length']));
+    $('input[name="date"]').val(reformatCzEn(data['date']));
+    $('select[name="category"]').val(data['categoryId']);
+
+    console.log(data['date']);
+    console.log(reformatCzEn(data['date']));
+    console.log(getValue(data['duration']));
 };
 
 function deleteTrip(id) {
@@ -493,10 +508,6 @@ function loadTrip(text, id, red, green, blue, data) {
 
     var properties = {data:data};
 
-    var changes;
-
-    //This should have changed the doc enough for new commit
-
     feature.setId(id);
 
     feature.setProperties(properties);
@@ -553,3 +564,13 @@ Date.prototype.ddmmyyyy = function() {
     //return yyyy + (mm[1]?mm:"0"+mm[0]) + (dd[1]?dd:"0"+dd[0]); // padding
     return dd +'. ' + mm + '. ' + yyyy;
 };
+
+//String to number converter
+function getValue(string) {
+    var idx = string.indexOf(' ');
+    return Number(string.substr(0,idx));
+}
+
+function reformatCzEn(date) {
+    return date.substr(8,4)+'-'+date.substr(4,2)+'-'+date.substr(0,2);
+}
