@@ -48,9 +48,20 @@ class MapModel
         'polygon' => $values->polygon,
         'distance' => 5,
     ]);
-
-
 }
+    public function editTrip($trip, $user_id)
+    {
+        if(!$trip->category) $trip->category = NULL;
+        $selection = $this->database->table('trip');
+        $selection->where('user_id', $user_id)->where('id = ?', $trip->id)->fetch()->update([
+            'name' => $trip->name,
+            'text' => $trip->text,
+            'date' => $trip->date,
+            'duration' => $trip->duration,
+            'lenght' => $trip->lenght,
+            'category_id' => $trip->category,
+        ]);
+    }
 
     public function changeTrip($values, $id)
     {

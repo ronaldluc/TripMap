@@ -40,13 +40,13 @@ class MapPresenter extends BasePresenter
 
         foreach ($trips as $trip) {
 
-            if ($trip->duration == 1) {
-                $duration = $trip->duration.' den';
-            } elseif ($trip->duration < 5) {
-                $duration = $trip->duration.' dny';
-            } else {
-                $duration = $trip->duration.' dní';
-            }
+//            if ($trip->duration == 1) {
+//                $duration = $trip->duration.' den';
+//            } elseif ($trip->duration < 5) {
+//                $duration = $trip->duration.' dny';
+//            } else {
+//                $duration = $trip->duration.' dní';
+//            }
 
             if ($trip->category_id) {
                 $color = [
@@ -71,7 +71,7 @@ class MapPresenter extends BasePresenter
                 'info' => ['name' => Utils\Strings::truncate($trip->name, 25),
                     'date' => $trip->date->format('d. m. Y'),
                     'length' => $trip->lenght?$trip->lenght.' km':'',
-                    'duration' => $duration,
+                    'duration' => $trip->duration,
                     'text' => $trip->text,
                     'category' => $trip->category_id?$categories[$trip->category_id]->name:NULL,
                     'categoryId' => $trip->category_id?$trip->category_id:NULL,
@@ -129,13 +129,16 @@ class MapPresenter extends BasePresenter
 
         $form->addSelect('category', 'Kategorie', $categoryNames);
 
-        $form->addSubmit('send', 'Vytvořit');
+        $form->addSubmit('send', 'Vytvořit')
+            ->getControlPrototype()
+            ->onclick('updateEditedTrip()');
 
         $form->onSuccess[] = array($this, 'newTripFormSucceeded');
 
         Helpers::bootstrapForm($form);
 
         $form->getElementPrototype()->addClass('ajax');
+
 
         return $form;
     }
@@ -145,10 +148,8 @@ class MapPresenter extends BasePresenter
         if (!$values->id) {
             $this->mapModel->addNewTrip($values, $this->user->id);
         } else {
-
+            $this->mapModel->editTrip($values, $this->user->id);
         }
-
-//        $this->redirect('this');
     }
 
     public function handleNewTrip($trip)
