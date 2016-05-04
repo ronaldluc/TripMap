@@ -72,7 +72,9 @@ class MapPresenter extends BasePresenter
                     'date' => $trip->date->format('d. m. Y'),
                     'length' => $trip->lenght?$trip->lenght.' km':'',
                     'duration' => $duration,
-                    'category' => $trip->category_id?$categories[$trip->category_id]->name:NULL
+                    'text' => $trip->text,
+                    'category' => $trip->category_id?$categories[$trip->category_id]->name:NULL,
+                    'categoryId' => $trip->category_id?$trip->category_id:NULL,
                 ],
             ];
         }
@@ -101,6 +103,9 @@ class MapPresenter extends BasePresenter
         $form = new Nette\Application\UI\Form;
 
         $form->addGroup();
+
+        $form->addHidden('id')
+            ->setDefaultValue(NULL);
 
         $form->addHidden('polygon');
 
@@ -137,7 +142,11 @@ class MapPresenter extends BasePresenter
 
     public function newTripFormSucceeded($form, $values)
     {
-        $this->mapModel->addNewTrip($values, $this->user->id);
+        if (!$values->id) {
+            $this->mapModel->addNewTrip($values, $this->user->id);
+        } else {
+
+        }
 
 //        $this->redirect('this');
     }
