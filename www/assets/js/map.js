@@ -208,7 +208,7 @@ select.on('select', function(e) {
         'animation': false,
         'html': true,
         //'content': ''+data['date']+' '+data['duration']+'  '+data['length']+' ',
-        'content': '<table class="table-map"><tr><td class="left"> '+data['date']+' </td><td> '+data['duration']+' </td><td> '+data['length']+' </td></tr></table>',
+        'content': '<table class="table-map"><tr><td class="left"> '+data['date']+' </td><td> '+humanizeDuration(data['duration'])+' </td><td> '+data['length']+' </td></tr></table>',
         'title' : '<strong><table class="table-map-head"><tr><td class="">'+data['name']+'</td>' +
         '<td class="icon"><div onclick="editTrip(' + id + ')" class="link link-wrapper"><i class="fa fa-lg fa-pencil"></i></div></td>' +
         '<td class="icon"><div onclick="deleteTrip(' + id + ')" class="link link-wrapper right"><i class="fa fa-lg fa-trash-o"></i></div></td></tr></table></strong>'
@@ -233,19 +233,36 @@ function editTrip(id) {
     $('input[name="id"]').val(id);
     $('input[name="name"]').val(data['name']);
     $('textarea[name="text"]').val(data['text']);
-    $('input[name="duration"]').val(getValue(data['duration']));
+    $('input[name="duration"]').val(data['duration']);
     $('input[name="lenght"]').val(getValue(data['length']));
     $('input[name="date"]').val(reformatCzEn(data['date']));
     $('select[name="category"]').val(data['categoryId']);
+}
 
-    console.log(data['date']);
-    console.log(reformatCzEn(data['date']));
-    console.log(getValue(data['duration']));
-};
+
+function updateEditedTrip() {
+    var id = $('input[name="id"]').val();
+    var feature = vectorSource.getFeatureById(id);
+    var data = feature.get('data');
+
+    data['name'] = $('input[name="name"]').val();
+    data['text'] = $('textarea[name="text"]').val();
+    data['duration'] = $('input[name="duration"]').val();
+    data['lenght'] = $('input[name="lenght"]').val();
+    data['date'] = reformatEnCz($('input[name="date"]').val());
+    data['categoryId'] = $('select[name="category"]').val();
+
+    //console.log(data);
+    console.log(($('input[name="date"]')));
+
+    var properties = {data:data};
+
+    feature.setProperties(properties);
+}
 
 function deleteTrip(id) {
     console.log(id);
-};
+}
 
 $.get('http://localhost/tripMap/www/map/test', function(data) {
     console.log(data);
@@ -572,5 +589,25 @@ function getValue(string) {
 }
 
 function reformatCzEn(date) {
+    console.log('Reformat Cz -> En');
+    console.log(date);
+    console.log(date.substr(8,4)+'-'+date.substr(4,2)+'-'+date.substr(0,2));
     return date.substr(8,4)+'-'+date.substr(4,2)+'-'+date.substr(0,2);
+}
+
+function reformatEnCz(date) {
+    console.log('Reformat En -> Cz');
+    console.log(date);
+    console.log(date.substr(8,2)+'. '+date.substr(5,2)+'. '+date.substr(0,4));
+    return date.substr(8,2)+'. '+date.substr(5,2)+'. '+date.substr(0,4);
+}
+
+function humanizeDuration(duration) {
+    if (duration > 4) {
+        return duration+' dní';
+    } else if (duration == 1) {
+        return duration+' den';
+    } else {
+        return duration+' dny';
+    }
 }
