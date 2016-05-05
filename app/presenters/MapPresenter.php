@@ -70,7 +70,7 @@ class MapPresenter extends BasePresenter
                 'color' => $color,
                 'info' => ['name' => Utils\Strings::truncate($trip->name, 25),
                     'date' => $trip->date->format('d. m. Y'),
-                    'length' => $trip->lenght?$trip->lenght.' km':'',
+                    'length' => $trip->lenght,
                     'duration' => $trip->duration,
                     'text' => $trip->text,
                     'category' => $trip->category_id?$categories[$trip->category_id]->name:NULL,
@@ -125,7 +125,8 @@ class MapPresenter extends BasePresenter
             ->setAttribute('value', 1)
             ->setRequired();
 
-        $form->addText('lenght', 'Délka trasy');
+        $form->addText('lenght', 'Délka trasy')
+            ->setType('number');
 
         $form->addSelect('category', 'Kategorie', $categoryNames);
 

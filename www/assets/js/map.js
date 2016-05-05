@@ -182,47 +182,50 @@ var selectShiftClick = new ol.interaction.Select({
 var select = selectClick;
 
 select.on('select', function(e) {
-    var chosen = e.selected[0];
-    var id = chosen.getId();
-    var coordinates = chosen.getGeometry().getInteriorPoint().getCoordinates();
+    if (e.selected[0]) {
+        var chosen = e.selected[0];
 
-    var popup = new ol.Overlay({
-        element: document.getElementById('popup'),
-        //autoPan: true,
-        //autoPanAnimation: {
-        //    duration: 250
-        //
-        //},
-        //autoPanMargin: 160
-    });
-    map.addOverlay(popup);
-    var data = chosen.get('data');
+        var id = chosen.getId();
+        var coordinates = chosen.getGeometry().getInteriorPoint().getCoordinates();
 
-    var element = popup.getElement();
+        var popup = new ol.Overlay({
+            element: document.getElementById('popup')
+        });
+        map.addOverlay(popup);
+        var data = chosen.get('data');
 
-    $(element).popover('destroy');
-    popup.setPosition(coordinates);
-    // the keys are quoted to prevent renaming in ADVANCED mode.
-    $(element).popover({
-        'placement': 'top',
-        'animation': false,
-        'html': true,
-        //'content': ''+data['date']+' '+data['duration']+'  '+data['length']+' ',
-        'content': '<table class="table-map"><tr><td class="left"> '+data['date']+' </td><td> '+humanizeDuration(data['duration'])+' </td><td> '+data['length']+' </td></tr></table>',
-        'title' : '<strong><table class="table-map-head"><tr><td class="">'+data['name']+'</td>' +
-        '<td class="icon"><div onclick="editTrip(' + id + ')" class="link link-wrapper"><i class="fa fa-lg fa-pencil"></i></div></td>' +
-        '<td class="icon"><div onclick="deleteTrip(' + id + ')" class="link link-wrapper right"><i class="fa fa-lg fa-trash-o"></i></div></td></tr></table></strong>'
-    });
+        var element = popup.getElement();
 
-    console.log(chosen);
-    console.log(chosen.getId());
+        $(element).popover('destroy');
+        popup.setPosition(coordinates);
+        // the keys are quoted to prevent renaming in ADVANCED mode.
+        $(element).popover({
+            'placement': 'top',
+            'animation': false,
+            'html': true,
+            //'content': ''+data['date']+' '+data['duration']+'  '+data['length']+' ',
+            'content': '<table class="table-map"><tr><td class="left"> ' + data['date'] + ' </td><td> '
+            + humanizeDuration(data['duration']) + ' </td><td> ' + humanizeLength(data['length']) + ' </td></tr></table>',
+            'title': '<strong><table class="table-map-head"><tr><td class="">' + data['name'] + '</td>' +
+            '<td class="icon"><div onclick="editTrip(' + id + ')" class="link link-wrapper"><i class="fa fa-lg fa-pencil"></i></div></td>' +
+            '<td class="icon"><div onclick="deleteTrip(' + id + ')" class="link link-wrapper right"><i class="fa fa-lg fa-trash-o"></i></div></td></tr></table></strong>'
+        });
 
-    $.get('http://localhost/tripMap/www/map/test', function(data) {
-       console.log(data);
-    });
+        $.get('http://localhost/tripMap/www/map/test', function (data) {
+            console.log(data);
+        });
 
-    $(element).popover('show');
+        $(element).popover('show');
+    } else {
+        select.getFeatures().clear();
+        var popup = new ol.Overlay({
+            element: document.getElementById('popup')
+        });
+        map.addOverlay(popup);
+        var element = popup.getElement();
 
+        $(element).popover('destroy');
+    }
 });
 
 function editTrip(id) {
@@ -234,7 +237,7 @@ function editTrip(id) {
     $('input[name="name"]').val(data['name']);
     $('textarea[name="text"]').val(data['text']);
     $('input[name="duration"]').val(data['duration']);
-    $('input[name="lenght"]').val(getValue(data['length']));
+    $('input[name="lenght"]').val(data['length']);
     $('input[name="date"]').val(reformatCzEn(data['date']));
     $('select[name="category"]').val(data['categoryId']);
 }
@@ -248,16 +251,40 @@ function updateEditedTrip() {
     data['name'] = $('input[name="name"]').val();
     data['text'] = $('textarea[name="text"]').val();
     data['duration'] = $('input[name="duration"]').val();
-    data['lenght'] = $('input[name="lenght"]').val();
+    data['length'] = $('input[name="lenght"]').val();
     data['date'] = reformatEnCz($('input[name="date"]').val());
     data['categoryId'] = $('select[name="category"]').val();
-
-    //console.log(data);
-    console.log(($('input[name="date"]')));
 
     var properties = {data:data};
 
     feature.setProperties(properties);
+
+    var coordinates = feature.getGeometry().getInteriorPoint().getCoordinates();
+
+    var popup = new ol.Overlay({
+        element: document.getElementById('popup')
+    });
+
+    map.addOverlay(popup);
+
+    var element = popup.getElement();
+
+    $(element).popover('destroy');
+    popup.setPosition(coordinates);
+    // the keys are quoted to prevent renaming in ADVANCED mode.
+    $(element).popover({
+        'placement': 'top',
+        'animation': false,
+        'html': true,
+        //'content': ''+data['date']+' '+data['duration']+'  '+data['length']+' ',
+        'content': '<table class="table-map"><tr><td class="left"> '+data['date']+' </td><td> '+humanizeDuration(data['duration'])
+        +' </td><td> '+humanizeLength(data['length'])+' </td></tr></table>',
+        'title' : '<strong><table class="table-map-head"><tr><td class="">'+data['name']+'</td>' +
+        '<td class="icon"><div onclick="editTrip(' + id + ')" class="link link-wrapper"><i class="fa fa-lg fa-pencil"></i></div></td>' +
+        '<td class="icon"><div onclick="deleteTrip(' + id + ')" class="link link-wrapper right"><i class="fa fa-lg fa-trash-o"></i></div></td></tr></table></strong>'
+    });
+
+    $(element).popover('show');
 }
 
 function deleteTrip(id) {
@@ -604,10 +631,18 @@ function reformatEnCz(date) {
 
 function humanizeDuration(duration) {
     if (duration > 4) {
-        return duration+' dní';
+        return duration + ' dní';
     } else if (duration == 1) {
-        return duration+' den';
+        return duration + ' den';
     } else {
-        return duration+' dny';
+        return duration + ' dny';
+    }
+}
+
+function humanizeLength(length) {
+    if (length) {
+        return length+' km';
+    } else {
+        return '';
     }
 }
