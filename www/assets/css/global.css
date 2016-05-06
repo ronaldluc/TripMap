@@ -275,3 +275,8 @@ td a {
     content: "✖";
 }
 
+/* Interaction Switch */
+.control-switch {
+    top: 120px;
+    left: .5em;
+}

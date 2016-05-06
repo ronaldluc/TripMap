@@ -105,6 +105,10 @@ var continuePolygonMsg = 'Dvojklikem dokončíte výlet';
 var continueLineMsg = 'Click to continue drawing the line';
 
 
+/** @type { string} */
+var helpMsg = 'Klikněte pro vytvoření nového výletu';
+
+
 /**
  * Handle pointer move.
  * @param { ol.MapBrowserEvent} evt
@@ -113,8 +117,6 @@ var pointerMoveHandler = function(evt) {
     if (evt.dragging) {
         return;
     }
-    /** @type { string} */
-    var helpMsg = 'Klikněte pro vytvoření nového výletu';
 
     if (sketch) {
         var geom = (sketch.getGeometry());
@@ -131,8 +133,56 @@ var pointerMoveHandler = function(evt) {
     $(helpTooltipElement).removeClass('hidden');
 };
 
+/**
+ * Draw / select switch
+ */
+
+window.app = {};
+var app = window.app;
+
+/**
+ * @constructor
+ * @extends {ol.control.Control}
+ * @param {Object=} opt_options Control options.
+ */
+app.interSwitchControl = function(opt_options) {
+
+    var options = opt_options || {};
+
+    var button = document.createElement('button');
+    button.innerHTML = '<i class="fa fa-pencil"></i>';
+    button.className = 'button-switch';
+
+    var this_ = this;
+    var handleInterSwitch = function(e) {
+        swapInteraction();
+    };
+
+    button.addEventListener('click', handleInterSwitch, false);
+    button.addEventListener('touchstart', handleInterSwitch, false);
+
+    var element = document.createElement('div');
+    element.className = 'control-switch ol-unselectable ol-control';
+    element.appendChild(button);
+
+    ol.control.Control.call(this, {
+        element: element,
+        target: options.target
+    });
+
+};
+ol.inherits(app.interSwitchControl, ol.control.Control);
+
+
 
 var map = new ol.Map({
+    controls: ol.control.defaults({
+        attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
+            collapsible: false
+        })
+    }).extend([
+        new app.interSwitchControl()
+    ]),
     layers: [raster, vectorLayer],
     //overlays: [overlay],
     target: 'map',
@@ -206,7 +256,7 @@ select.on('select', function(e) {
             //'content': ''+data['date']+' '+data['duration']+'  '+data['length']+' ',
             'content': '<table class="table-map"><tr><td class="left"> ' + data['date'] + ' </td><td> '
             + humanizeDuration(data['duration']) + ' </td><td> ' + humanizeLength(data['length']) + ' </td></tr></table>',
-            'title': '<strong><table class="table-map-head"><tr><td class="">' + data['name'] + '</td>' +
+            'title': '<strong><table class="table-map-head"><tr><td class="">' +wholeTruncate(data['name']) + '</td>' +
             '<td class="icon"><div onclick="editTrip(' + id + ')" class="link link-wrapper"><i class="fa fa-lg fa-pencil"></i></div></td>' +
             '<td class="icon"><div onclick="deleteTrip(' + id + ')" class="link link-wrapper right"><i class="fa fa-lg fa-trash-o"></i></div></td></tr></table></strong>'
         });
@@ -279,7 +329,7 @@ function updateEditedTrip() {
         //'content': ''+data['date']+' '+data['duration']+'  '+data['length']+' ',
         'content': '<table class="table-map"><tr><td class="left"> '+data['date']+' </td><td> '+humanizeDuration(data['duration'])
         +' </td><td> '+humanizeLength(data['length'])+' </td></tr></table>',
-        'title' : '<strong><table class="table-map-head"><tr><td class="">'+data['name']+'</td>' +
+        'title' : '<strong><table class="table-map-head"><tr><td class="">'+wholeTruncate(data['name'])+'</td>' +
         '<td class="icon"><div onclick="editTrip(' + id + ')" class="link link-wrapper"><i class="fa fa-lg fa-pencil"></i></div></td>' +
         '<td class="icon"><div onclick="deleteTrip(' + id + ')" class="link link-wrapper right"><i class="fa fa-lg fa-trash-o"></i></div></td></tr></table></strong>'
     });
@@ -407,35 +457,37 @@ $(document).ready(function() {
 });
 
 $(document).keyup(function(e) {
-    console.log('Vazne');
     if (e.keyCode === 13 || e.keyCode == 18) {
         console.log(e);
-        var interactions = map.getInteractions();
-        interactions.forEach(function(interaction) {
-            if (interaction == draw) {
-                console.log(interaction);
-                map.removeInteraction(draw);
-                map.removeInteraction(modify);
-                map.addInteraction(select);
-            }
-            if (interaction == select) {
-                console.log(interaction);
-                map.removeInteraction(select);
-                map.addInteraction(draw);
-                map.addInteraction(modify);
-            }
-        });
+        swapInteraction();
     }
-    //if ((e.keyCode === 27) || (keySwitch == 2)) {
-    //    map.removeInteraction(select);
-    //    map.addInteraction(draw);
-    //    keySwitch = 0;
-    //}     // enter
-    //if (e.keyCode === 27 && keySwitch == 0) {
-
-    //    keySwitch = 1;
-    //}
 });
+
+function swapInteraction () {
+    var interactions = map.getInteractions();
+    var swapControl = document.getElementsByClassName('control-switch');
+    interactions.forEach(function(interaction) {
+        if (interaction == draw) {
+            console.log(interaction);
+            map.removeInteraction(draw);
+            map.removeInteraction(modify);
+            map.addInteraction(select);
+            helpMsg = 'Klikni na výlet pro bližší info';
+            var button = document.getElementsByClassName('button-switch');
+            $('button.button-switch').innerHTML = 'N';
+            $(button).innerHTML = 'N';
+            console.log($(button));
+            console.log($('button.button-switch').innerHTML);
+        }
+        if (interaction == select) {
+            console.log(interaction);
+            map.removeInteraction(select);
+            map.addInteraction(draw);
+            map.addInteraction(modify);
+            helpMsg = 'Klikněte pro vytvoření nového výletu';
+        }
+    });
+}
 
 /**
  * Creates a new help tooltip
@@ -575,6 +627,8 @@ function loadTrip(text, id, red, green, blue, data) {
     features.push(feature);
 };
 
+//Controls
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * Search engine
  */
@@ -598,7 +652,7 @@ geocoder.on('addresschosen', function(evt){
 });
 
 
-//Date function
+//Help functions
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Date.prototype.ddmmyyyy = function() {
@@ -644,5 +698,14 @@ function humanizeLength(length) {
         return length+' km';
     } else {
         return '';
+    }
+}
+
+function wholeTruncate(string) {
+    console.log(string);
+    if (string.length > 27) {
+        return string.substr(0,25)+'...';
+    } else {
+        return string;
     }
 }
