@@ -934,7 +934,7 @@
   ];
   G.Nominatim.html = [
     '<div class="ol-geocoder-search ol-control">',
-    '<button type="button" class="ol-geocoder-btn-search"></button>',
+    '<button type="button" class="ol-geocoder-btn-search"><i class="fa fa-search"></i></button>',
     '<input type="text"',
     ' class="ol-geocoder-input-search"',
     ' placeholder="Search">',
