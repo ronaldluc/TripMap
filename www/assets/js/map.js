@@ -445,8 +445,10 @@ function addInteraction() {
             var geom = evt.target;
             //console.log(evt);
             //output = formatArea(/** @type { ol.geom.Polygon} */ (geom))
-            //console.log(JSON.stringify(geom.S), output);
-            newTrip(JSON.stringify(geom.S));
+            console.log(geom.sketchCoords_);
+            console.log(JSON.stringify(geom.sketchCoords_[0]));
+            //newTrip(JSON.stringify(geom.S));
+            newTrip(JSON.stringify(geom.sketchCoords_[0]));
         }, this);
 }
 
