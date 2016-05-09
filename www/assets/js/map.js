@@ -337,10 +337,6 @@ function updateEditedTrip() {
     $(element).popover('show');
 }
 
-function deleteTrip(id) {
-    console.log(id);
-}
-
 $.get('http://localhost/tripMap/www/map/test', function(data) {
     console.log(data);
 });
