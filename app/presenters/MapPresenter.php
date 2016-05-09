@@ -167,6 +167,12 @@ class MapPresenter extends BasePresenter
         $this->mapModel->changeTrip($modified, $id);
     }
 
+    public function handleDeleteTrip()
+    {
+        $id = $this->getHttpRequest()->getPost('id');
+        $this->mapModel->deleteTrip($id);
+    }
+
     public function actionTest()
     {
         $kvak = [

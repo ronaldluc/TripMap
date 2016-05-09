@@ -11,7 +11,7 @@
                 {*<div class="span12">*}
             <div id="map" class="map"></div>
             <div id="popup"></div>
-            <a class="button button-primary" id="interSwitch">Ahoj!</a>
+            <a class="button button-primary" id="interSwitch">S</a>
                 {*</div>*}
             {*</div>*}
         </div>
@@ -74,6 +74,28 @@
         url: {link ChangeTrip!},
         data: { trip: trip, id: id}
         });
+    }
+
+    function deleteTrip(id) {
+        if(confirm('Chcete vymazat výlet?'))
+        {
+            var feature = vectorSource.getFeatureById(id);
+            features.remove(feature);
+
+            select.getFeatures().clear();
+            var popup = new ol.Overlay({
+                element: document.getElementById('popup')
+            });
+            map.addOverlay(popup);
+            var element = popup.getElement();
+
+            $(element).popover('destroy');
+            $.nette.ajax({
+                type: "POST",
+                url: {link DeleteTrip!},
+                data: { id: id}
+            });
+        }
     }
     </script>
 

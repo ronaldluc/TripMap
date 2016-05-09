@@ -70,6 +70,11 @@ class MapModel
         ]);
     }
 
+    public function deleteTrip($id)
+    {
+        $this->database->table($this->tableName)->where('id', $id)->delete();
+    }
+
     public function loadTrips($user_id)
     {
         $selection = $this->database->table('trip');
