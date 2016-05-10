@@ -149,6 +149,7 @@ class MapPresenter extends BasePresenter
     {
         if (!$values->id) {
             $this->mapModel->addNewTrip($values, $this->user->id);
+//            $this->actionLastTrip();
         } else {
             $this->mapModel->editTrip($values, $this->user->id);
         }
@@ -173,13 +174,43 @@ class MapPresenter extends BasePresenter
         $this->mapModel->deleteTrip($id);
     }
 
-    public function actionTest()
+    public function actionLastTrip()
     {
-        $kvak = [
-            'lol' => 40,
-            'boj' => 'asdlkj'
-        ];
-        $this->sendJson($kvak);
+//        $trip = $this->mapModel->getLastTrip($this->user->id);
+//
+//        $categories = $this->mapModel->loadCategories($this->user->id);
+//
+//        if ($trip->category_id) {
+//            $color = [
+//                'red' => $categories[$trip->category_id]->red,
+//                'green' => $categories[$trip->category_id]->green,
+//                'blue' => $categories[$trip->category_id]->blue,
+//            ];
+//        } else {
+//            $color = [
+//                'red' => 0,
+//                'green' => 0,
+//                'blue' => 0,
+//            ];
+//        }
+//
+//        $lol = Utils\Strings::truncate($trip->name, 20);
+//
+//        $newTrips = [
+//            'id' => $trip->id,
+//            'polygon' => $trip->polygon,
+//            'color' => $color,
+//            'info' => ['name' => $trip->name,
+//                'date' => $trip->date->format('d. m. Y'),
+//                'length' => $trip->lenght,
+//                'duration' => $trip->duration,
+//                'text' => $trip->text,
+//                'category' => $trip->category_id?$categories[$trip->category_id]->name:NULL,
+//                'categoryId' => $trip->category_id?$trip->category_id:NULL,
+//            ],
+//        ];
+//
+//        $this->sendJson($newTrips);
     }
 
 }

@@ -261,10 +261,6 @@ select.on('select', function(e) {
             '<td class="icon"><div onclick="deleteTrip(' + id + ')" class="link link-wrapper right"><i class="fa fa-lg fa-trash-o"></i></div></td></tr></table></strong>'
         });
 
-        $.get('http://localhost/tripMap/www/map/test', function (data) {
-            console.log(data);
-        });
-
         $(element).popover('show');
     } else {
         select.getFeatures().clear();
@@ -295,51 +291,57 @@ function editTrip(id) {
 
 function updateEditedTrip() {
     var id = $('input[name="id"]').val();
-    var feature = vectorSource.getFeatureById(id);
-    var data = feature.get('data');
+    if (!id) {
+        //$.get('http://localhost/web-project/www/map/lasttrip', function (data) {
+        //    console.log(data.polygon, data.id, data.color['red'], data.color['green'],  data.color['blue']);
+        //    //loadTrip(data.polygon, data.id, data.color['red'], data.color['green'],  data.color['blue'], data.info);
+        //});
+        var feature = features.pop();
+        feature.setId(1);
+        features.push(feature);
+    } else {
+        var feature = vectorSource.getFeatureById(id);
+        var data = feature.get('data');
 
-    data['name'] = $('input[name="name"]').val();
-    data['text'] = $('textarea[name="text"]').val();
-    data['duration'] = $('input[name="duration"]').val();
-    data['length'] = $('input[name="lenght"]').val();
-    data['date'] = reformatEnCz($('input[name="date"]').val());
-    data['categoryId'] = $('select[name="category"]').val();
+        data['name'] = $('input[name="name"]').val();
+        data['text'] = $('textarea[name="text"]').val();
+        data['duration'] = $('input[name="duration"]').val();
+        data['length'] = $('input[name="lenght"]').val();
+        data['date'] = reformatEnCz($('input[name="date"]').val());
+        data['categoryId'] = $('select[name="category"]').val();
 
-    var properties = {data:data};
+        var properties = {data: data};
 
-    feature.setProperties(properties);
+        feature.setProperties(properties);
 
-    var coordinates = feature.getGeometry().getInteriorPoint().getCoordinates();
+        var coordinates = feature.getGeometry().getInteriorPoint().getCoordinates();
 
-    var popup = new ol.Overlay({
-        element: document.getElementById('popup')
-    });
+        var popup = new ol.Overlay({
+            element: document.getElementById('popup')
+        });
 
-    map.addOverlay(popup);
+        map.addOverlay(popup);
 
-    var element = popup.getElement();
+        var element = popup.getElement();
 
-    $(element).popover('destroy');
-    popup.setPosition(coordinates);
-    // the keys are quoted to prevent renaming in ADVANCED mode.
-    $(element).popover({
-        'placement': 'top',
-        'animation': false,
-        'html': true,
-        //'content': ''+data['date']+' '+data['duration']+'  '+data['length']+' ',
-        'content': '<table class="table-map"><tr><td class="left"> '+data['date']+' </td><td> '+humanizeDuration(data['duration'])
-        +' </td><td> '+humanizeLength(data['length'])+' </td></tr></table>',
-        'title' : '<strong><table class="table-map-head"><tr><td class="">'+wholeTruncate(data['name'])+'</td>' +
-        '<td class="icon"><div onclick="editTrip(' + id + ')" class="link link-wrapper"><i class="fa fa-lg fa-pencil"></i></div></td>' +
-        '<td class="icon"><div onclick="deleteTrip(' + id + ')" class="link link-wrapper right"><i class="fa fa-lg fa-trash-o"></i></div></td></tr></table></strong>'
-    });
+        $(element).popover('destroy');
+        popup.setPosition(coordinates);
+        // the keys are quoted to prevent renaming in ADVANCED mode.
+        $(element).popover({
+            'placement': 'top',
+            'animation': false,
+            'html': true,
+            //'content': ''+data['date']+' '+data['duration']+'  '+data['length']+' ',
+            'content': '<table class="table-map"><tr><td class="left"> ' + data['date'] + ' </td><td> ' + humanizeDuration(data['duration'])
+            + ' </td><td> ' + humanizeLength(data['length']) + ' </td></tr></table>',
+            'title': '<strong><table class="table-map-head"><tr><td class="">' + wholeTruncate(data['name']) + '</td>' +
+            '<td class="icon"><div onclick="editTrip(' + id + ')" class="link link-wrapper"><i class="fa fa-lg fa-pencil"></i></div></td>' +
+            '<td class="icon"><div onclick="deleteTrip(' + id + ')" class="link link-wrapper right"><i class="fa fa-lg fa-trash-o"></i></div></td></tr></table></strong>'
+        });
 
-    $(element).popover('show');
+        $(element).popover('show');
+    }
 }
-
-$.get('http://localhost/tripMap/www/map/test', function(data) {
-    console.log(data);
-});
 
 //var disableDraw = selectPointerMove;
 //
@@ -599,7 +601,7 @@ var formatArea = function(polygon) {
     coordinates = geom.getLinearRing(0).getCoordinates();
     area = Math.abs(wgs84Sphere.geodesicArea(coordinates));
     var output;
-    output = (Math.round(area / 1000000 * 100) / 100)
+    output = (Math.round(area / 1000000 * 100) / 100);
 
     return output;
 };
@@ -674,12 +676,23 @@ geocoder.on('addresschosen', function(evt){
     overlay.setPosition(coord);
 });
 
+function deleteLast() {
+
+}
+
 $('#newTripModal').on('hidden.bs.modal', function () {
     var feature = features.pop();
     if (feature.getId()) {
         features.push(feature);
     }
-})
+    $('input[name="id"]').val(null);
+    $('input[name="name"]').val('');
+    $('textarea[name="text"]').val('');
+    $('input[name="duration"]').val(1);
+    $('input[name="lenght"]').val(null);
+    $('input[name="date"]').val(getTodayDate());
+    $('select[name="category"]').val(null);
+});
 
 //Help functions
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -737,4 +750,13 @@ function wholeTruncate(string) {
     } else {
         return string;
     }
+}
+
+function getTodayDate() {
+    var date = new Date();
+    var mm = (date.getMonth()+1).toString();
+    var dd = date.getDate().toString();
+    if (mm.length<2) mm = '0'+mm;
+    if (dd.length<2) dd = '0'+dd;
+    return date.getFullYear().toString()+'-'+mm+'-'+dd;
 }
