@@ -18,8 +18,7 @@ class HomepagePresenter extends RegistrationPresenter
     {
         if ($this->user->isLoggedIn())
         {
-            $this->redirect('Homepage:showCase');
+            $this->redirect('Homepage:news');
         }
     }
-
 }

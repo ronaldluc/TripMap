@@ -2,7 +2,7 @@
 
 {snippet tripContainer}
 <div class="container container-content">
-    <div class="shadow col-xs-12 col-md-9 row-offcanvas">
+    <div class="shadow col-xs-12 col-md-9">
         <div class="heading-shadow"><h1>Přehled navštívených míst</h1></div>
 
         {*<div class="body-shadow"></div>*}
@@ -49,42 +49,46 @@
         {*</div>*}
     </div>
 
-    <div class="col-xs-12 col-md-3 sidebar-offcanvas">
+    <div  class="col-xs-12 col-md-3 side">
         <div class="fixed">
-            <div class="shadow">
-                <div class="heading-shadow"><h2>Filtr</h2></div>
-                <div class="body-shadow">
-                    {control filterForm}
-                    <br />
-                    {*<div class="row center">*}
-                        {*<div class="col-sm-3"></div>*}
-                        {*<div class="col-sm-9"> <a n:href="resetFilter!" type="button" class="btn btn-shadow">Zrušit filtr</a></div>*}
-                        {*<div class="col-sm-6"> <a n:href="newCategory!" type="button" class="btn btn-shadow ajax">V mapě</a></div>*}
-                    {*</div><br>*}
+            <div id="sidebar">
+                <div id="scroller">
+                    <div class="shadow">
+                        <div class="heading-shadow"><h2>Filtr</h2></div>
+                        <div class="body-shadow">
+                            {control filterForm}
+                            <br />
+                            {*<div class="row center">*}
+                                {*<div class="col-sm-3"></div>*}
+                                {*<div class="col-sm-9"> <a n:href="resetFilter!" type="button" class="btn btn-shadow">Zrušit filtr</a></div>*}
+                                {*<div class="col-sm-6"> <a n:href="newCategory!" type="button" class="btn btn-shadow ajax">V mapě</a></div>*}
+                            {*</div><br>*}
+                        </div>
+                    </div>
+
+                    <div>
+                        <a n:href="resetFilter!" type="button" class="btn btn-off ajax">
+                            <div class="shadow">
+                                <div class="heading-shadow heading-alone"><h2>Zrušit filtr</h2></div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div>
+                        <a n:href="newCategory!" type="button" class="btn btn-off ajax">
+                            <div class="shadow">
+                                <div class="heading-shadow heading-alone"><h2>Nová kategorie</h2></div>
+                            </div>
+                        </a>
+                    </div>
+                    <div>
+                        <a n:href="Management:category" type="button" class="btn btn-off">
+                            <div class="shadow">
+                                <div class="heading-shadow heading-alone"><h2>Všechny kategorie</h2></div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-            </div>
-
-            <div>
-                <a n:href="resetFilter!" type="button" class="btn btn-off ajax">
-                    <div class="shadow">
-                        <div class="heading-shadow heading-alone"><h2>Zrušit filtr</h2></div>
-                    </div>
-                </a>
-            </div>
-
-            <div>
-                <a n:href="newCategory!" type="button" class="btn btn-off ajax">
-                    <div class="shadow">
-                        <div class="heading-shadow heading-alone"><h2>Nová kategorie</h2></div>
-                    </div>
-                </a>
-            </div>
-            <div>
-                <a n:href="Management:category" type="button" class="btn btn-off">
-                    <div class="shadow">
-                        <div class="heading-shadow heading-alone"><h2>Všechny kategorie</h2></div>
-                    </div>
-                </a>
             </div>
         </div>
     </div>

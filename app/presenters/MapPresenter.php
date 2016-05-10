@@ -131,7 +131,7 @@ class MapPresenter extends BasePresenter
 
         $form->addSelect('category', 'Kategorie', $categoryNames);
 
-        $form->addSubmit('send', 'Vytvořit')
+        $form->addSubmit('send', 'Uložit')
             ->getControlPrototype()
             ->onclick('updateEditedTrip()');
 

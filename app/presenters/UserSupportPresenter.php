@@ -53,4 +53,35 @@ class UserSupportPresenter extends BasePresenter
 
         $this->redirect('this');
     }
+
+    public function createComponentSurveyForm()
+    {
+        $form = new Nette\Application\UI\Form;
+
+        $form->addRadioList('mark', 'Aplikaci', [
+            1 => 'navštěvuji denně',
+            2 => 'používám každý týden',
+            3 => 'jen když jsem někde byl',
+            4 => 'vidím poprvé a znova ji nepoužiji',
+        ])->setAttribute('class', 'zelená');
+
+        $form->addCheckboxList('mostly', 'Nejčastěji', [
+            1 => 'chodím na tůry do lesa',
+            2 => 'trávím čas u vody',
+            3 => 'cestuji do zahraničí',
+            4 => 'sedím doma',
+        ])->setAttribute('class', 'zelená');
+
+        $form->addCheckboxList('future', 'Chci', [
+            1 => 'sdílení výletů',
+            2 => 'filtrovat výlety v mapě',
+            3 => 'modul na geoCaching',
+        ])->setAttribute('class', 'zelená');
+
+        $form->addSubmit('send', 'Odeslat');
+
+        Helpers::bootstrapForm($form);
+
+        return $form;
+    }
 }

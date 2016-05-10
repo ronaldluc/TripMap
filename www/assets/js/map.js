@@ -159,7 +159,6 @@ app.interSwitchControl = function(opt_options) {
     };
 
     button.addEventListener('click', handleInterSwitch, false);
-    button.addEventListener('touchstart', handleInterSwitch, false);
 
     var element = document.createElement('div');
     element.className = 'control-switch ol-unselectable ol-control';

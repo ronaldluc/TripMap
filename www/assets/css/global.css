@@ -70,6 +70,7 @@ body {
 /* Content wrapers */
 .heading-alone {
     border-radius: 10px;
+    width: 100%;
 }
 
 .filler {
@@ -134,6 +135,7 @@ td a {
 .btn-off {
     margin: 0px;
     padding: 0px;
+    width: 100%;
 }
 
 .link {
@@ -154,10 +156,31 @@ td a {
     margin-bottom: 4px;
 }
 
+@media (max-width: 768px) {
+    .side {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .header {
+        height: auto;
+        min-height: 70px;
+    }
+
+    /*.message {*/
+        /*padding-bottom: 10px;*/
+    /*}*/
+}
+
 @media (min-width:992px){
     .fixed {
-        position: fixed;
         width: 300px;
+    }
+
+    @media (min-height: 800px) {
+        .fixed {
+            position: fixed;
+        }
     }
 
     .category {
