@@ -150,7 +150,7 @@ app.interSwitchControl = function(opt_options) {
     var options = opt_options || {};
 
     var button = document.createElement('button');
-    button.innerHTML = '<i class="fa fa-hand-pointer-o"></i>';
+    button.innerHTML = '<i class="fa fa-pencil"></i>';
     button.className = 'button-switch';
 
     var this_ = this;
@@ -506,7 +506,7 @@ function swapInteraction () {
             map.addInteraction(select);
             helpMsg = 'Klikni na výlet pro bližší info';
             var button = document.getElementsByClassName('button-switch');
-            $('button.button-switch').html('<i class="fa fa-pencil"></i>');
+            $('button.button-switch').html('<i class="fa fa-hand-pointer-o"></i>');
         }
         if (interaction == select) {
             //console.log(interaction);
@@ -514,7 +514,7 @@ function swapInteraction () {
             map.addInteraction(draw);
             map.addInteraction(modify);
             helpMsg = 'Klikněte pro vytvoření nového výletu';
-            $('button.button-switch').html('<i class="fa fa-hand-pointer-o"></i>');
+            $('button.button-switch').html('<i class="fa fa-pencil"></i>');
         }
     });
 }
