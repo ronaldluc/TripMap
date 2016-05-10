@@ -89,4 +89,12 @@ class MapModel
 
         return $categories;
     }
+
+    public function getLastTrip($user_id)
+    {
+        $maxId = $this->database->table($this->tableName)->where('user_id', $user_id)->max('id');
+        $trip = $this->database->table($this->tableName)->where('user_id', $user_id)->where('id', $maxId)->fetch();
+
+        return $trip;
+    }
 }
