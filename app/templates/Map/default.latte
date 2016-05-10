@@ -33,12 +33,12 @@
                     {if $showModal == TRUE}
                         <script type="text/javascript">
                             $('#newTripModal').modal('show');
-                            console.log('Lol');
+                            //console.log('Lol');
                         </script>
                     {else}
                         <script type="text/javascript">
                             $('#newTripModal').modal('hide');
-                            console.log('Pog');
+                            //console.log('Pog');
                             $('body').removeClass('modal-open');
                             $('.modal-backdrop').remove();
                         </script>
@@ -67,7 +67,7 @@
     }
 
     function changeTrip(trip, id) {
-        console.log(trip, id);
+        //console.log(trip, id);
         $.nette.ajax({
         type: "POST",
         url: {link ChangeTrip!},
