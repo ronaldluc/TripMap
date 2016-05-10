@@ -445,6 +445,9 @@ function addInteraction() {
             console.log(JSON.stringify(geom.sketchCoords_[0]));
             //newTrip(JSON.stringify(geom.S));
             newTrip(JSON.stringify(geom.sketchCoords_[0]));
+            vectorSource.forEachFeature( function(feature) {
+               console.log(feature.getGeometry().getCoordinates());
+            });
         }, this);
 }
 
@@ -455,13 +458,37 @@ $(document).ready(function() {
 });
 
 $(document).keyup(function(e) {
-    if (e.keyCode === 13 || e.keyCode == 18) {
+    var key = e.keyCode;
+    if (key === 13 || key == 18) {
         console.log(e);
         swapInteraction();
+    }
+    if (key == 27) {
+        var interactions = map.getInteractions();
+        var swapControl = document.getElementsByClassName('control-switch');
+        interactions.forEach(function(interaction) {
+            if (interaction == draw) {
+                map.removeInteraction(draw);
+                map.addInteraction(draw);
+                sketch = null;
+                helpMsg = 'Klikněte pro vytvoření nového výletu';
+            }
+            if (interaction == select) {
+                select.getFeatures().clear();
+                var popup = new ol.Overlay({
+                    element: document.getElementById('popup')
+                });
+                map.addOverlay(popup);
+                var element = popup.getElement();
+
+                $(element).popover('destroy');
+            }
+        });
     }
 });
 
 function swapInteraction () {
+    sketch = null;
     var interactions = map.getInteractions();
     var swapControl = document.getElementsByClassName('control-switch');
     interactions.forEach(function(interaction) {
@@ -647,6 +674,12 @@ geocoder.on('addresschosen', function(evt){
     overlay.setPosition(coord);
 });
 
+$('#newTripModal').on('hidden.bs.modal', function () {
+    var feature = features.pop();
+    if (feature.getId()) {
+        features.push(feature);
+    }
+})
 
 //Help functions
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
