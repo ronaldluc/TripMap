@@ -236,32 +236,37 @@ select.on('select', function(e) {
         var chosen = e.selected[0];
 
         var id = chosen.getId();
-        var coordinates = chosen.getGeometry().getInteriorPoint().getCoordinates();
 
-        var popup = new ol.Overlay({
-            element: document.getElementById('popup')
-        });
-        map.addOverlay(popup);
-        var data = chosen.get('data');
+        if (id>1) {
+            var coordinates = chosen.getGeometry().getInteriorPoint().getCoordinates();
 
-        var element = popup.getElement();
+            var popup = new ol.Overlay({
+                element: document.getElementById('popup')
+            });
+            map.addOverlay(popup);
+            var data = chosen.get('data');
 
-        $(element).popover('destroy');
-        popup.setPosition(coordinates);
-        // the keys are quoted to prevent renaming in ADVANCED mode.
-        $(element).popover({
-            'placement': 'top',
-            'animation': false,
-            'html': true,
-            //'content': ''+data['date']+' '+data['duration']+'  '+data['length']+' ',
-            'content': '<table class="table-map"><tr><td class="left"> ' + data['date'] + ' </td><td> '
-            + humanizeDuration(data['duration']) + ' </td><td> ' + humanizeLength(data['length']) + ' </td></tr></table>',
-            'title': '<strong><table class="table-map-head"><tr><td class="">' +wholeTruncate(data['name']) + '</td>' +
-            '<td class="icon"><div onclick="editTrip(' + id + ')" class="link link-wrapper"><i class="fa fa-lg fa-pencil"></i></div></td>' +
-            '<td class="icon"><div onclick="deleteTrip(' + id + ')" class="link link-wrapper right"><i class="fa fa-lg fa-trash-o"></i></div></td></tr></table></strong>'
-        });
+            var element = popup.getElement();
 
-        $(element).popover('show');
+            $(element).popover('destroy');
+            popup.setPosition(coordinates);
+            // the keys are quoted to prevent renaming in ADVANCED mode.
+            $(element).popover({
+                'placement': 'top',
+                'animation': false,
+                'html': true,
+                //'content': ''+data['date']+' '+data['duration']+'  '+data['length']+' ',
+                'content': '<table class="table-map"><tr><td class="left"> ' + data['date'] + ' </td><td> '
+                + humanizeDuration(data['duration']) + ' </td><td> ' + humanizeLength(data['length']) + ' </td></tr></table>',
+                'title': '<strong><table class="table-map-head"><tr><td class="">' +wholeTruncate(data['name']) + '</td>' +
+                '<td class="icon"><div onclick="editTrip(' + id + ')" class="link link-wrapper"><i class="fa fa-lg fa-pencil"></i></div></td>' +
+                '<td class="icon"><div onclick="deleteTrip(' + id + ')" class="link link-wrapper right"><i class="fa fa-lg fa-trash-o"></i></div></td></tr></table></strong>'
+            });
+
+            $(element).popover('show');
+        } else {
+            select.getFeatures().clear();
+        }
     } else {
         select.getFeatures().clear();
         var popup = new ol.Overlay({
@@ -293,7 +298,7 @@ function updateEditedTrip() {
     var id = $('input[name="id"]').val();
     if (!id) {
         //$.get('http://localhost/web-project/www/map/lasttrip', function (data) {
-        //    console.log(data.polygon, data.id, data.color['red'], data.color['green'],  data.color['blue']);
+        //    //console.log(data.polygon, data.id, data.color['red'], data.color['green'],  data.color['blue']);
         //    //loadTrip(data.polygon, data.id, data.color['red'], data.color['green'],  data.color['blue'], data.info);
         //});
         var feature = features.pop();
@@ -374,7 +379,7 @@ $(map.getViewport()).on('mouseout', function() {
 var draw; // global so we can remove it later
 function addInteraction() {
     var type = 'Polygon';
-    //console.log(type);
+    ////console.log(type);
     draw = new ol.interaction.Draw({
         source: vectorSource,
         type: /** @type { ol.geom.GeometryType} */ (type),
@@ -441,28 +446,28 @@ function addInteraction() {
             ol.Observable.unByKey(listener);
             // get polygon coords
             var geom = evt.target;
-            //console.log(evt);
+            ////console.log(evt);
             //output = formatArea(/** @type { ol.geom.Polygon} */ (geom))
-            console.log(geom.sketchCoords_);
-            console.log(JSON.stringify(geom.sketchCoords_[0]));
+            //console.log(geom.sketchCoords_);
+            //console.log(JSON.stringify(geom.sketchCoords_[0]));
             //newTrip(JSON.stringify(geom.S));
             newTrip(JSON.stringify(geom.sketchCoords_[0]));
             vectorSource.forEachFeature( function(feature) {
-               console.log(feature.getGeometry().getCoordinates());
+               //console.log(feature.getGeometry().getCoordinates());
             });
         }, this);
 }
 
 $(document).ready(function() {
-    console.log('Jsem tu!');
+    //console.log('Jsem tu!');
     map.addInteraction(draw);
     map.addInteraction(modify);
 });
 
 $(document).keyup(function(e) {
     var key = e.keyCode;
-    if (key === 13 || key == 18) {
-        console.log(e);
+    if (key === 16 || key == 18) {
+        //console.log(e);
         swapInteraction();
     }
     if (key == 27) {
@@ -495,7 +500,7 @@ function swapInteraction () {
     var swapControl = document.getElementsByClassName('control-switch');
     interactions.forEach(function(interaction) {
         if (interaction == draw) {
-            console.log(interaction);
+            //console.log(interaction);
             map.removeInteraction(draw);
             map.removeInteraction(modify);
             map.addInteraction(select);
@@ -504,7 +509,7 @@ function swapInteraction () {
             $('button.button-switch').html('<i class="fa fa-pencil"></i>');
         }
         if (interaction == select) {
-            console.log(interaction);
+            //console.log(interaction);
             map.removeInteraction(select);
             map.addInteraction(draw);
             map.addInteraction(modify);
@@ -616,13 +621,13 @@ addInteraction();
 function loadTrip(text, id, red, green, blue, data) {
     var trip = JSON.parse(text);
     var polygon = new ol.geom.Polygon([trip]);
-    //console.log(polygon);
+    ////console.log(polygon);
 
     // Create feature with polygon.
     var feature = new ol.Feature(polygon);
     polygon.on('change', function(e) {
         changeTrip(JSON.stringify(e.target.l), id);
-        //console.log(e.target.l);
+        ////console.log(e.target.l);
     });
 
     var coordinates = feature.getGeometry().getInteriorPoint().getCoordinates();
@@ -633,7 +638,7 @@ function loadTrip(text, id, red, green, blue, data) {
 
     feature.setProperties(properties);
 
-    //console.log(polygon.getProperties());
+    ////console.log(polygon.getProperties());
 
 
     feature.setStyle(new ol.style.Style({
@@ -648,7 +653,7 @@ function loadTrip(text, id, red, green, blue, data) {
         })
     }));
 
-     //Create vector source and the feature to it. function(e){console.log(e.g.B.geometry.A);console.log(id)}
+     //Create vector source and the feature to it. function(e){//console.log(e.g.B.geometry.A);//console.log(id)}
     features.push(feature);
 };
 
@@ -668,7 +673,7 @@ var geocoder = new Geocoder('Nominatim', {
 map.addControl(geocoder);
 
 geocoder.on('addresschosen', function(evt){
-    //console.log(evt);
+    ////console.log(evt);
     var feature = evt.feature,
         coord = evt.coordinate,
         address_html = feature.get('address_html');
@@ -712,16 +717,16 @@ function getValue(string) {
 }
 
 function reformatCzEn(date) {
-    console.log('Reformat Cz -> En');
-    console.log(date);
-    console.log(date.substr(8,4)+'-'+date.substr(4,2)+'-'+date.substr(0,2));
+    //console.log('Reformat Cz -> En');
+    //console.log(date);
+    //console.log(date.substr(8,4)+'-'+date.substr(4,2)+'-'+date.substr(0,2));
     return date.substr(8,4)+'-'+date.substr(4,2)+'-'+date.substr(0,2);
 }
 
 function reformatEnCz(date) {
-    console.log('Reformat En -> Cz');
-    console.log(date);
-    console.log(date.substr(8,2)+'. '+date.substr(5,2)+'. '+date.substr(0,4));
+    //console.log('Reformat En -> Cz');
+    //console.log(date);
+    //console.log(date.substr(8,2)+'. '+date.substr(5,2)+'. '+date.substr(0,4));
     return date.substr(8,2)+'. '+date.substr(5,2)+'. '+date.substr(0,4);
 }
 
@@ -744,7 +749,7 @@ function humanizeLength(length) {
 }
 
 function wholeTruncate(string) {
-    console.log(string);
+    //console.log(string);
     if (string.length > 27) {
         return string.substr(0,25)+'...';
     } else {
